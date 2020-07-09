@@ -4,8 +4,80 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6%E7%A7%BB%E5%8A%A8%E7%9B%98%E7%AC%A6.html</loc>
+    <lastmod>2020-07-09T12:49:45.145Z</lastmod>
+    <data>
+        <display>
+        <title>数据库文件移动盘符</title>
+        <pubTime>2019-09-11T16:00:00.000Z</pubTime>
+        
+        <tag>sqlserver</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/%E4%BD%BF%E7%94%A8ES%E7%B4%A2%E5%BC%95%E6%A8%A1%E6%9D%BF%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86.html</loc>
+    <lastmod>2020-07-09T12:48:39.375Z</lastmod>
+    <data>
+        <display>
+        <title>ES 索引生命周期管理</title>
+        <pubTime>2019-08-28T16:00:00.000Z</pubTime>
+        
+        <tag>ES</tag>
+         
+        <tag>索引生命周期</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/ES%E5%AE%89%E8%A3%85.html</loc>
+    <lastmod>2020-07-09T12:47:16.498Z</lastmod>
+    <data>
+        <display>
+        <title>ES 安装参数修改记录</title>
+        <pubTime>2019-08-15T16:00:00.000Z</pubTime>
+        
+        <tag>ES</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/gitlab%E6%96%87%E6%A1%A3.html</loc>
+    <lastmod>2020-07-09T12:45:34.912Z</lastmod>
+    <data>
+        <display>
+        <title>Docker 版 Gitlab 搭建</title>
+        <pubTime>2019-08-11T09:58:40.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+        <tag>gitlab</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html</loc>
-    <lastmod>2020-07-09T12:24:11.086Z</lastmod>
+    <lastmod>2020-07-09T12:37:05.988Z</lastmod>
     <data>
         <display>
         <title>gitlab拉取代码报错RPCfail code 500</title>
