@@ -4,6 +4,40 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html</loc>
+    <lastmod>2020-07-09T12:24:11.086Z</lastmod>
+    <data>
+        <display>
+        <title>gitlab拉取代码报错RPCfail code 500</title>
+        <pubTime>2019-07-28T03:45:25.000Z</pubTime>
+        
+        <tag>gitlab</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html</loc>
+    <lastmod>2020-07-09T12:22:15.127Z</lastmod>
+    <data>
+        <display>
+        <title>git提交文件后CRLF和LF的换行处理问题</title>
+        <pubTime>2019-07-01T13:05:25.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/ssl-error.html</loc>
     <lastmod>2020-06-20T01:18:17.352Z</lastmod>
     <data>

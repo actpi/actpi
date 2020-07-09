@@ -93,7 +93,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, actpi, 技术, 运维, nginx, Linux, 干货, 笔记, python" />
+  <meta name="keywords" content="git, 换行符" />
 
 
 
@@ -109,17 +109,18 @@
 
 
 
-<meta name="description" content="本文链接：&amp;lt;%=post.title &amp;gt; 作者：thinkalonely 出处：http://thinkalonely.github.io/本文基于 知识共享署名-相同方式共享 4.0 国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名 thinkalonely及链接。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="行动派博客">
-<meta property="og:url" content="http://blog.actpi.com/about/index.html">
+<meta name="description" content="问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异 原因探究 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一致 wi">
+<meta name="keywords" content="git, 换行符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git提交文件后CRLF和LF的换行处理问题">
+<meta property="og:url" content="http://blog.actpi.com/articles/git提交文件后CRLF和LF的换行处理问题.html">
 <meta property="og:site_name" content="行动派博客">
-<meta property="og:description" content="本文链接：&amp;lt;%=post.title &amp;gt; 作者：thinkalonely 出处：http://thinkalonely.github.io/本文基于 知识共享署名-相同方式共享 4.0 国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名 thinkalonely及链接。">
+<meta property="og:description" content="问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异 原因探究 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一致 wi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-10T01:42:15.246Z">
+<meta property="og:updated_time" content="2020-07-09T12:22:15.127Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="行动派博客">
-<meta name="twitter:description" content="本文链接：&amp;lt;%=post.title &amp;gt; 作者：thinkalonely 出处：http://thinkalonely.github.io/本文基于 知识共享署名-相同方式共享 4.0 国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名 thinkalonely及链接。">
+<meta name="twitter:title" content="git提交文件后CRLF和LF的换行处理问题">
+<meta name="twitter:description" content="问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异 原因探究 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一致 wi">
 
 
 
@@ -149,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.actpi.com/about/"/>
+  <link rel="canonical" href="http://blog.actpi.com/articles/git提交文件后CRLF和LF的换行处理问题.html"/>
 
 
 
 
 
-  <title> | 行动派博客</title>
+  <title>git提交文件后CRLF和LF的换行处理问题 | 行动派博客</title>
   
 
 
@@ -270,34 +271,214 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/git提交文件后CRLF和LF的换行处理问题.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="actpi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="行动派博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h2 class="post-title" itemprop="name headline"></h2>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div style="font-size:12px;border-bottom: #ddd 1px solid; BORDER-LEFT: #ddd 1px solid; BACKGROUND: #f6f6f6; HEIGHT: 120px; BORDER-TOP: #ddd 1px solid; BORDER-RIGHT: #ddd 1px solid"><br>本文链接：<br><a href="<%_ post.link %>">&lt;%=post.title &gt;</a> <br><br>作者：<br><a href="http://thinkalonely.github.io/" target="_blank" rel="external">thinkalonely</a> <br>出处：<br><a href="http://thinkalonely.github.io/" target="_blank" rel="external">http://thinkalonely.github.io/</a><br><br>本文基于<a target="_blank" title="Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)" href="http://creativecommons.org/licenses/by-sa/4.0/"> 知识共享署名-相同方式共享 4.0 </a><br>国际许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名 <a href="http://thinkalonely.github.io/" target="_blank" rel="external">thinkalonely</a>及链接。<br></div>
-
+          <h2 class="post-title" itemprop="name headline">git提交文件后CRLF和LF的换行处理问题</h2>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T21:05:25+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  380
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="问题发现"><a href="#问题发现" class="headerlink" title="问题发现"></a>问题发现</h2><p>代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异</p>
+<h2 id="原因探究"><a href="#原因探究" class="headerlink" title="原因探究"></a>原因探究</h2><ol>
+<li>怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对</li>
+<li>修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致</li>
+<li>拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题</li>
+<li>将两个环境的文件同时在 notepadd++ 打开，发现格不一致 windows(CRLF) 与 unix(LF)</li>
+<li>经检查原始文件格式为 windows(CRLF)，提交到 git 后变为 unix(LF)<h2 id="问题根源"><a href="#问题根源" class="headerlink" title="问题根源"></a>问题根源</h2>CRLF 和 LF 是文本换行的不同方式：<br>CRLF 是 carriagereturnline feed 的缩写，中文意思是回车换行，”\r\n”, windows 系统的换行方式<br>LF 是 line feed 的缩写，中文意思是换行，”\n”, 是 Linux 系统的换行方式</li>
+</ol>
+<p>git会通过CRLF和LF的配置来对源文件文本进行格式处理<br>在使用 git 提交代码的时候，git 会自动将代码文件当中 CRLF 转换为 LF，再进行同步即有差异</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>修改 git 全局配置文件，core.autocrlf <code>true</code> 改为 <code>false</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git config --global core.autocrlf true</div><div class="line"></div><div class="line">core.autocrlf 是 git 中负责处理 line endings 的变量</div><div class="line"></div><div class="line">设置为 true，添加文件到 git 仓库时，将把 crlf 变成 lf</div><div class="line">设置为 false 时，line-endings 将不做转换操作。文本文件保持原来的换行方式</div></pre></td></tr></table></figure></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    actpi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://blog.actpi.com/articles/git提交文件后CRLF和LF的换行处理问题.html" title="git提交文件后CRLF和LF的换行处理问题">http://blog.actpi.com/articles/git提交文件后CRLF和LF的换行处理问题.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/articles/ssl-error.html" rel="next" title="SSL证书校验错误 Trust anchor for certification path not found">
+                <i class="fa fa-chevron-left"></i> SSL证书校验错误 Trust anchor for certification path not found
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/articles/gitlab拉取代码报错RPCfailcode500.html" rel="prev" title="gitlab拉取代码报错RPCfail code 500">
+                gitlab拉取代码报错RPCfail code 500 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+	  
+    </div>
   </div>
 
 
@@ -332,8 +513,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -409,6 +599,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题发现"><span class="nav-number">1.</span> <span class="nav-text">问题发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因探究"><span class="nav-number">2.</span> <span class="nav-text">原因探究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题根源"><span class="nav-number">3.</span> <span class="nav-text">问题根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">4.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -565,6 +771,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
