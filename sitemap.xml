@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.actpi.com/about/index.html</loc>
+    
+    <lastmod>2020-07-09T12:50:50.997Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.actpi.com/articles/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6%E7%A7%BB%E5%8A%A8%E7%9B%98%E7%AC%A6.html</loc>
     
     <lastmod>2020-07-09T12:49:45.145Z</lastmod>
@@ -166,13 +173,6 @@
     <loc>http://blog.actpi.com/articles/ttf-404.html</loc>
     
     <lastmod>2017-09-29T13:38:43.820Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.actpi.com/about/index.html</loc>
-    
-    <lastmod>2017-09-10T01:42:15.246Z</lastmod>
     
   </url>
   
