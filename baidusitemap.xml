@@ -4,6 +4,74 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/2021/supervisor-install.html</loc>
+    <lastmod>2023-03-14T03:06:56.081Z</lastmod>
+    <data>
+        <display>
+        <title>在 Linux 系统安装 Supervisor 来管理进程</title>
+        <pubTime>2021-07-18T16:00:00.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html</loc>
+    <lastmod>2023-03-14T03:03:49.218Z</lastmod>
+    <data>
+        <display>
+        <title>jenkins 文件上传与多分支参数化构建</title>
+        <pubTime>2021-01-18T16:00:00.000Z</pubTime>
+        
+        <tag>CI</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/jenkins-install.html</loc>
+    <lastmod>2023-03-14T02:49:46.145Z</lastmod>
+    <data>
+        <display>
+        <title>jenkins 搭建过程</title>
+        <pubTime>2020-09-21T16:00:00.000Z</pubTime>
+        
+        <tag>CI</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/shellnotes.html</loc>
+    <lastmod>2023-03-14T02:49:00.576Z</lastmod>
+    <data>
+        <display>
+        <title>Shell 脚本零碎笔记</title>
+        <pubTime>2021-10-21T16:00:00.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/2021/%E5%AE%89%E8%A3%85OpenSSHServer.html</loc>
     <lastmod>2023-03-14T02:09:46.976Z</lastmod>
     <data>

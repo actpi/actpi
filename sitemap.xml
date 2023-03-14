@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.actpi.com/articles/2021/supervisor-install.html</loc>
+    
+    <lastmod>2023-03-14T03:06:56.081Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html</loc>
+    
+    <lastmod>2023-03-14T03:03:49.218Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.actpi.com/articles/jenkins-install.html</loc>
+    
+    <lastmod>2023-03-14T02:49:46.145Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/shellnotes.html</loc>
+    
+    <lastmod>2023-03-14T02:49:00.576Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.actpi.com/articles/2021/%E5%AE%89%E8%A3%85OpenSSHServer.html</loc>
     
     <lastmod>2023-03-14T02:09:46.976Z</lastmod>
