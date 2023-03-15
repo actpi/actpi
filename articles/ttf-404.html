@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="问题网站部署好了后打开发现找不到字体文件,错误代码 404 ！">
+<meta name="description" content="问题 网站部署好了后打开发现找不到字体文件,错误代码 404 ！">
 <meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx 字体文件 404 错误 解决记录">
 <meta property="og:url" content="http://blog.actpi.com/articles/ttf-404.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="问题网站部署好了后打开发现找不到字体文件,错误代码 404 ！">
+<meta property="og:description" content="问题 网站部署好了后打开发现找不到字体文件,错误代码 404 ！">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2023-03-14T01:18:32.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx 字体文件 404 错误 解决记录">
-<meta name="twitter:description" content="问题网站部署好了后打开发现找不到字体文件,错误代码 404 ！">
+<meta name="twitter:description" content="问题 网站部署好了后打开发现找不到字体文件,错误代码 404 ！">
 
 
 
@@ -389,8 +389,10 @@
       
 
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>网站部署好了后打开发现找不到字体文件,错误代码 404 ！<a id="more"></a></p>
-<h2 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h2><p>先在 nginx 的 mime.types 文件里加上下面语句：</p>
+        <h2 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h2>
+<p>网站部署好了后打开发现找不到字体文件,错误代码 404 ！<a id="more"></a></p>
+<h2 id="解决过程"><a class="markdownIt-Anchor" href="#解决过程"></a> 解决过程</h2>
+<p>先在 nginx 的 mime.types 文件里加上下面语句：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">application/font-woff    woff;</div><div class="line">application/font-ttf      ttf;</div></pre></td></tr></table></figure>
 <p>重启后仍然字体没加载成功。</p>
 <p>再到 nginx 的 vhosts.conf 也就是网站所在的配置文件里加上代码：</p>
@@ -398,7 +400,8 @@
 <p>重启后依然字体没加载成功。</p>
 <p>最后把 web 所在目录路径加入到配置里, 如下：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">location</span> <span class="regexp">~* \.(eot|otf|ttf|woff)$</span> &#123;</div><div class="line">    <span class="attribute">root</span>                html/path_to_web;</div><div class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Origin *;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再次重启后加载成功！一开始发现 404 代码的时候，以为路径不对，新建了个 test.txt 文件可以正常加载，一直以为路径是对的，所以忽略了在字体配置里面加入路径，导致搞了很久才最终解决！<br>以上！！！</p>
+<p>再次重启后加载成功！一开始发现 404 代码的时候，以为路径不对，新建了个 test.txt 文件可以正常加载，一直以为路径是对的，所以忽略了在字体配置里面加入路径，导致搞了很久才最终解决！<br>
+以上！！！</p>
 
       
     </div>
@@ -542,7 +545,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -555,7 +558,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -604,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决过程"><span class="nav-number">2.</span> <span class="nav-text">解决过程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text"> 问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决过程"><span class="nav-number">2.</span> <span class="nav-text"> 解决过程</span></a></li></ol></div>
             
 
           </div>
@@ -642,7 +645,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

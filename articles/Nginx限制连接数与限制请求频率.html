@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="nginx 限制 IP 的连接和并发用到两个模块： HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。 HttpLimitConnModul用来限制单个ip的并发连接数，使用limit_zone和limit_conn指令  这两个模块的区别前一个是对一段时间内的">
+<meta name="description" content="nginx 限制 IP 的连接和并发用到两个模块：  HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。 HttpLimitConnModul用来限制单个ip的并发连接数，使用limit_zone和limit_conn指令  这两个模块的区别前一个是对一段时间">
 <meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx限制连接数与限制请求频率">
 <meta property="og:url" content="http://blog.actpi.com/articles/Nginx限制连接数与限制请求频率.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="nginx 限制 IP 的连接和并发用到两个模块： HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。 HttpLimitConnModul用来限制单个ip的并发连接数，使用limit_zone和limit_conn指令  这两个模块的区别前一个是对一段时间内的">
+<meta property="og:description" content="nginx 限制 IP 的连接和并发用到两个模块：  HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。 HttpLimitConnModul用来限制单个ip的并发连接数，使用limit_zone和limit_conn指令  这两个模块的区别前一个是对一段时间">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2023-03-14T01:42:44.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx限制连接数与限制请求频率">
-<meta name="twitter:description" content="nginx 限制 IP 的连接和并发用到两个模块： HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。 HttpLimitConnModul用来限制单个ip的并发连接数，使用limit_zone和limit_conn指令  这两个模块的区别前一个是对一段时间内的">
+<meta name="twitter:description" content="nginx 限制 IP 的连接和并发用到两个模块：  HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。 HttpLimitConnModul用来限制单个ip的并发连接数，使用limit_zone和limit_conn指令  这两个模块的区别前一个是对一段时间">
 
 
 
@@ -389,16 +389,22 @@
       
 
       
-        <h2 id="nginx-限制-IP-的连接和并发用到两个模块："><a href="#nginx-限制-IP-的连接和并发用到两个模块：" class="headerlink" title="nginx 限制 IP 的连接和并发用到两个模块："></a>nginx 限制 IP 的连接和并发用到两个模块：</h2><ul>
+        <h2 id="nginx-限制-ip-的连接和并发用到两个模块"><a class="markdownIt-Anchor" href="#nginx-限制-ip-的连接和并发用到两个模块"></a> nginx 限制 IP 的连接和并发用到两个模块：</h2>
+<ul>
 <li><code>HttpLimitReqModul</code> 用来限制连单位时间内连接数，使用<code>limit_req_zone</code>和<code>limit_req</code> 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回<code>503</code>错误。</li>
 <li><code>HttpLimitConnModul</code>用来限制单个ip的并发连接数，使用<code>limit_zone</code>和<code>limit_conn</code>指令</li>
 </ul>
 <p>这两个模块的区别前一个是对一段时间内的连接数限制，后者是对同一时刻的连接数限制</p>
-<p><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”<br><code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制<br>其中<code>limit_req_conn</code>模块可以根据源<code>IP</code>限制单用户并发访问的连接数或连接到该服务的总并发连接数</p>
-<h2 id="什么是漏桶算法？"><a href="#什么是漏桶算法？" class="headerlink" title="什么是漏桶算法？"></a>什么是漏桶算法？</h2><p>假设系统是一个漏桶，当请求到达时，就是往漏桶里“加水”，而当请求被处理掉，就是水从漏桶的底部漏出。水漏出的速度是固定的，当“加水”太快，桶就会溢出，也就是“拒绝请求”。从而使得桶里的水的体积不可能超出桶的容量。​主要目的是控制数据注入到网络的速率，平滑网络上的突发流量。漏桶算法提供了一种机制，通过它，突发流量可以被整形以便为网络提供一个稳定的流量。</p>
-<h2 id="示例代码如下："><a href="#示例代码如下：" class="headerlink" title="示例代码如下："></a>示例代码如下：</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="section">http</span> &#123;</div><div class="line">    <span class="attribute">limit_conn_log_level</span> <span class="literal">error</span>;</div><div class="line">    <span class="attribute">limit_conn_status</span> <span class="number">503</span>;</div><div class="line">    <span class="attribute">limit_req_zone</span> <span class="variable">$binary_remote_addr</span> zone=one:<span class="number">30m</span> rate=20r/s;</div><div class="line">    <span class="attribute">limit_req_zone</span> <span class="variable">$binary_remote_addr</span> <span class="variable">$uri</span> zone=two:<span class="number">30m</span> rate=20r/s;</div><div class="line">    <span class="attribute">limit_req_zone</span> <span class="variable">$binary_remote_addr</span> <span class="variable">$request_uri</span> zone=three:<span class="number">30m</span> rate=20r/s;</div><div class="line"></div><div class="line">    <span class="section">server</span> &#123;</div><div class="line"></div><div class="line">        <span class="attribute">limit_conn</span>  one  <span class="number">50</span>;                                              </div><div class="line">        <span class="attribute">limit_conn</span> perserver <span class="number">1000</span>;</div><div class="line">        <span class="attribute">limit_req</span>   zone=one  burst=<span class="number">5</span>  nodelay;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="参数解释："><a href="#参数解释：" class="headerlink" title="参数解释："></a>参数解释：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">limit_req_zone $binary_remote_addr zone=one:30m rate=20r/s;</div><div class="line"></div><div class="line">- $binary_remote_addr 是限制同一客户端ip地址不同URL</div><div class="line">- zone：区域名one 存放session30M</div><div class="line">- rate: 每秒钟请求数</div><div class="line"></div><div class="line">limit_req_zone $binary_remote_addr $uri zone=two:30m rate=20r/s;</div><div class="line"></div><div class="line">- $binary_remote_addr $uri 是限制同一客户端ip地址 相同URL</div><div class="line">- zone：区域名two 存放session30M</div><div class="line">- rate: 每秒钟请求数</div><div class="line"></div><div class="line">limit_req_zone $binary_remote_addr $request_uri zone=three:30m rate=20r/s;</div><div class="line"></div><div class="line">- $binary_remote_addr $request_uri 是限制同一客户端ip地址 相同URL</div><div class="line">- zone：区域名two 存放session30M</div><div class="line">- rate: 每秒钟请求数</div><div class="line"></div><div class="line">limit_req   zone=one   burst=5  nodelay;</div><div class="line"></div><div class="line">- zone: 区域one 表示设置了名为“one”或“allips”的limit_req_zone存储区用来存储session，大小为20M</div><div class="line">- burst：设置一个大小为15的缓冲区，当有大量请求(爆发)过来时，访问超过了上面的限制可以先放到缓冲区内。</div><div class="line">- nodelay： 一般是和burst一起使用的，如果设置了nodelay，当访问超过了频次而且缓冲区也满的情况下会直接返回503，如果设置了，则所有大的请求会等待排队</div><div class="line"></div><div class="line">limit_conn  one  50 限制每ip每秒不超过50个请求，漏桶数burst为5.</div><div class="line"></div><div class="line">limit_conn perserver 1000表示该服务提供的总连接数不得超过1000,超过请求的会被拒绝</div></pre></td></tr></table></figure>
-<p>&gt;</p>
+<p><code>limit_req_zone</code> 用来限制单位时间内的请求数，即速率限制,采用的漏桶算法 “leaky bucket”<br>
+<code>limit_req_conn</code> 用来限制同一时间连接数，即并发限制<br>
+其中<code>limit_req_conn</code>模块可以根据源<code>IP</code>限制单用户并发访问的连接数或连接到该服务的总并发连接数</p>
+<h2 id="什么是漏桶算法"><a class="markdownIt-Anchor" href="#什么是漏桶算法"></a> 什么是漏桶算法？</h2>
+<p>假设系统是一个漏桶，当请求到达时，就是往漏桶里“加水”，而当请求被处理掉，就是水从漏桶的底部漏出。水漏出的速度是固定的，当“加水”太快，桶就会溢出，也就是“拒绝请求”。从而使得桶里的水的体积不可能超出桶的容量。​主要目的是控制数据注入到网络的速率，平滑网络上的突发流量。漏桶算法提供了一种机制，通过它，突发流量可以被整形以便为网络提供一个稳定的流量。</p>
+<h2 id="示例代码如下"><a class="markdownIt-Anchor" href="#示例代码如下"></a> 示例代码如下：</h2>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="section">http</span> &#123;</div><div class="line">    <span class="attribute">limit_conn_log_level</span> <span class="literal">error</span>;</div><div class="line">    <span class="attribute">limit_conn_status</span> <span class="number">503</span>;</div><div class="line">    <span class="attribute">limit_req_zone</span> <span class="variable">$binary_remote_addr</span> zone=one:<span class="number">30m</span> rate=20r/s;</div><div class="line">    <span class="attribute">limit_req_zone</span> <span class="variable">$binary_remote_addr</span> <span class="variable">$uri</span> zone=two:<span class="number">30m</span> rate=20r/s;</div><div class="line">    <span class="attribute">limit_req_zone</span> <span class="variable">$binary_remote_addr</span> <span class="variable">$request_uri</span> zone=three:<span class="number">30m</span> rate=20r/s;</div><div class="line"></div><div class="line">    <span class="section">server</span> &#123;</div><div class="line"></div><div class="line">        <span class="attribute">limit_conn</span>  one  <span class="number">50</span>;                                              </div><div class="line">        <span class="attribute">limit_conn</span> perserver <span class="number">1000</span>;</div><div class="line">        <span class="attribute">limit_req</span>   zone=one  burst=<span class="number">5</span>  nodelay;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="参数解释"><a class="markdownIt-Anchor" href="#参数解释"></a> 参数解释：</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">limit_req_zone $binary_remote_addr zone=one:30m rate=20r/s;</div><div class="line"></div><div class="line">- $binary_remote_addr 是限制同一客户端ip地址不同URL</div><div class="line">- zone：区域名one 存放session30M</div><div class="line">- rate: 每秒钟请求数</div><div class="line"></div><div class="line">limit_req_zone $binary_remote_addr $uri zone=two:30m rate=20r/s;</div><div class="line"></div><div class="line">- $binary_remote_addr $uri 是限制同一客户端ip地址 相同URL</div><div class="line">- zone：区域名two 存放session30M</div><div class="line">- rate: 每秒钟请求数</div><div class="line"></div><div class="line">limit_req_zone $binary_remote_addr $request_uri zone=three:30m rate=20r/s;</div><div class="line"></div><div class="line">- $binary_remote_addr $request_uri 是限制同一客户端ip地址 相同URL</div><div class="line">- zone：区域名two 存放session30M</div><div class="line">- rate: 每秒钟请求数</div><div class="line"></div><div class="line">limit_req   zone=one   burst=5  nodelay;</div><div class="line"></div><div class="line">- zone: 区域one 表示设置了名为“one”或“allips”的limit_req_zone存储区用来存储session，大小为20M</div><div class="line">- burst：设置一个大小为15的缓冲区，当有大量请求(爆发)过来时，访问超过了上面的限制可以先放到缓冲区内。</div><div class="line">- nodelay： 一般是和burst一起使用的，如果设置了nodelay，当访问超过了频次而且缓冲区也满的情况下会直接返回503，如果设置了，则所有大的请求会等待排队</div><div class="line"></div><div class="line">limit_conn  one  50 限制每ip每秒不超过50个请求，漏桶数burst为5.</div><div class="line"></div><div class="line">limit_conn perserver 1000表示该服务提供的总连接数不得超过1000,超过请求的会被拒绝</div></pre></td></tr></table></figure>
+<blockquote></blockquote>
 
       
     </div>
@@ -457,8 +463,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/articles/Let'sEncrypt免费HTTPS证书-泛域名申请.html" rel="prev" title="Let'sEncrypt免费申请泛域名HTTPS证书">
-                Let'sEncrypt免费申请泛域名HTTPS证书 <i class="fa fa-chevron-right"></i>
+              <a href="/articles/jenkins-install.html" rel="prev" title="jenkins 搭建过程">
+                jenkins 搭建过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -542,7 +548,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -555,7 +561,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -604,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-限制-IP-的连接和并发用到两个模块："><span class="nav-number">1.</span> <span class="nav-text">nginx 限制 IP 的连接和并发用到两个模块：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是漏桶算法？"><span class="nav-number">2.</span> <span class="nav-text">什么是漏桶算法？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码如下："><span class="nav-number">3.</span> <span class="nav-text">示例代码如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数解释："><span class="nav-number">4.</span> <span class="nav-text">参数解释：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-限制-ip-的连接和并发用到两个模块"><span class="nav-number">1.</span> <span class="nav-text"> nginx 限制 IP 的连接和并发用到两个模块：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是漏桶算法"><span class="nav-number">2.</span> <span class="nav-text"> 什么是漏桶算法？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码如下"><span class="nav-number">3.</span> <span class="nav-text"> 示例代码如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数解释"><span class="nav-number">4.</span> <span class="nav-text"> 参数解释：</span></a></li></ol></div>
             
 
           </div>
@@ -642,7 +648,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

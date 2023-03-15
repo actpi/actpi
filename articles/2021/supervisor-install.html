@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="服务介绍Supervisor 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写sh">
+<meta name="description" content="服务介绍 Supervisor 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写">
 <meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Linux 系统安装 Supervisor 来管理进程">
 <meta property="og:url" content="http://blog.actpi.com/articles/2021/supervisor-install.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="服务介绍Supervisor 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写sh">
+<meta property="og:description" content="服务介绍 Supervisor 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2023-03-14T03:06:56.081Z">
+<meta property="og:updated_time" content="2023-03-14T06:12:37.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Linux 系统安装 Supervisor 来管理进程">
-<meta name="twitter:description" content="服务介绍Supervisor 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写sh">
+<meta name="twitter:description" content="服务介绍 Supervisor 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写">
 
 
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  741
+                  742
                 </span>
               
 
@@ -389,18 +389,32 @@
       
 
       
-        <h2 id="服务介绍"><a href="#服务介绍" class="headerlink" title="服务介绍"></a>服务介绍</h2><p><a href="http://supervisord.org/" target="_blank" rel="external">Supervisor</a> 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写shell脚本来控制。</p>
-<h2 id="安装python-3-8"><a href="#安装python-3-8" class="headerlink" title="安装python(3.8)"></a>安装python(3.8)</h2><p>1、下载并解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tar.xz</div></pre></td></tr></table></figure></p>
-<p>安装编译器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc</div></pre></td></tr></table></figure></p>
-<p>安装make需要的依赖包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel</div></pre></td></tr></table></figure></p>
-<p>安装python3.7需要的依赖包，否则会报错：“ModuleNotFound：No module named ‘_ctypes’”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install libffi-devel</div></pre></td></tr></table></figure></p>
-<p>进入解压后的文件夹中，编译和安装（如果之前安装出错的朋友，在安装依赖后重新编译安装即可）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd Python-3.8.10</div><div class="line">./configure --prefix=/usr/local/python3</div><div class="line">make &amp;&amp; makeinstall</div></pre></td></tr></table></figure></p>
-<h2 id="安装Supervisord"><a href="#安装Supervisord" class="headerlink" title="安装Supervisord"></a>安装Supervisord</h2><p>1、使用pip安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip3 install supervisor</div></pre></td></tr></table></figure></p>
-<p>2.生成配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo_supervisord_conf &gt; /etc/supervisord.conf</div></pre></td></tr></table></figure></p>
-<p>启动关闭 启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisord -c /etc/supervisord.conf</div></pre></td></tr></table></figure></p>
-<p>关闭:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisorctl shutdown</div></pre></td></tr></table></figure></p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">[program:xx]</div><div class="line">command=/opt/apache-tomcat-8.0.35/bin/catalina.sh run  	; 程序启动命令</div><div class="line">directory=/opt/screenCron/logs/</div><div class="line">autostart=true       									; 在supervisord启动的时候也自动启动</div><div class="line">startsecs=10        									; 启动10秒后没有异常退出，就表示进程正常启动了，默认为1秒</div><div class="line">autorestart=true     									; 程序退出后自动重启,可选值：[unexpected,true,false]，默认为unexpected，表示进程意外杀死后才重启</div><div class="line">startretries=10       									; 启动失败自动重试次数，默认是3</div><div class="line">priority=1          									; 进程启动优先级，默认999，值小的优先启动</div><div class="line">redirect_stderr=false 									; 把stderr重定向到stdout，默认false</div><div class="line">stderr_logfile_maxbytes=50MB							; 默认50MB，stderr_logfile的最大值</div><div class="line">stderr_logfile=/opt/screenCron/logs/</div><div class="line">stdout_logfile_maxbytes=50MB  							; stdout 日志文件大小，默认50MB</div><div class="line">stdout_logfile=/opt/screenCron/logs/ ; stdout 日志文件，需要注意当指定目录不存在时无法正常启动，所以需要手动创建目录（supervisord 会自动创建日志文件）</div><div class="line">stopasgroup=false     									;默认为false,进程被杀死时，是否向这个进程组发送stop信号，包括子进程</div><div class="line">killasgroup=false     									;默认为false，向进程组发送kill信号，包括子进程</div><div class="line"></div><div class="line">[program:]</div><div class="line">command=</div><div class="line">directory=/opt/screenCron/logs/</div><div class="line">autostart=true</div><div class="line">startsecs=10</div><div class="line">autorestart=true</div><div class="line">startretries=10</div><div class="line">priority=1</div><div class="line">redirect_stderr=false</div><div class="line">stderr_logfile_maxbytes=50MB</div><div class="line">stderr_logfile=/opt/screenCron/logs/</div><div class="line">stdout_logfile_maxbytes=50MB</div><div class="line">stdout_logfile=/opt/screenCron/logs/</div></pre></td></tr></table></figure>
-<h3 id="相关管理命令"><a href="#相关管理命令" class="headerlink" title="相关管理命令"></a>相关管理命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">supervisorctl status 查看进程运行状态</div><div class="line"></div><div class="line">supervisorctl restart program_name  重启</div><div class="line"></div><div class="line">supervisorctl start program_name 进程名 启动进程</div><div class="line"></div><div class="line">supervisorctl stop program_name 进程名 关闭进程</div><div class="line"></div><div class="line">supervisorctl restart 进程名 重启进程</div><div class="line"></div><div class="line">supervisorctl update 重新载入配置文件</div><div class="line"></div><div class="line">supervisorctl shutdown 关闭</div><div class="line"></div><div class="line">supervisord supervisordctl clear 进程名 清空进程日志</div><div class="line"></div><div class="line">supervisordctl 进入到交互模式下。使用help查看所有命令。</div><div class="line"></div><div class="line">start stop restart + all 表示启动，关闭，重启所有进程。</div><div class="line"></div><div class="line">supervisorctl stop all  全部停止</div></pre></td></tr></table></figure>
+        <h2 id="服务介绍"><a class="markdownIt-Anchor" href="#服务介绍"></a> 服务介绍</h2>
+<p><a href="http://supervisord.org/" target="_blank" rel="external">Supervisor</a> 是用 Python 开发的一个 client/server 服务，是 Linux/Unix 系统下的一个进程管理工具，不支持 Windows 系统。它可以很方便的监听、启动、停止、重启一个或多个进程。用 Supervisor 管理的进程，当一个进程意外被杀死，supervisort 监听到进程死后，会自动将它重新拉起，很方便的做到进程自动恢复的功能，不再需要自己写shell脚本来控制。</p>
+<h2 id="安装python38"><a class="markdownIt-Anchor" href="#安装python38"></a> 安装python(3.8)</h2>
+<p>1、下载并解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://www.python.org/ftp/python/3.8.10/Python-3.8.10.tar.xz</div></pre></td></tr></table></figure>
+<p>安装编译器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc</div></pre></td></tr></table></figure>
+<p>安装make需要的依赖包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel</div></pre></td></tr></table></figure>
+<p>安装python3.8需要的依赖包，否则会报错：“ModuleNotFound：No module named ‘_ctypes’”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install libffi-devel</div></pre></td></tr></table></figure>
+<p>进入解压后的文件夹中，编译和安装（如果之前安装出错的朋友，在安装依赖后重新编译安装即可）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd Python-3.8.10</div><div class="line">./configure --prefix=/usr/local/python3</div><div class="line">make &amp;&amp; makeinstall</div></pre></td></tr></table></figure>
+<h2 id="安装supervisord"><a class="markdownIt-Anchor" href="#安装supervisord"></a> 安装Supervisord</h2>
+<p>1、使用pip安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip3 install supervisor</div></pre></td></tr></table></figure>
+<p>2.生成配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo_supervisord_conf &gt; /etc/supervisord.conf</div></pre></td></tr></table></figure>
+<p>启动关闭 启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisord -c /etc/supervisord.conf</div></pre></td></tr></table></figure>
+<p>关闭:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">supervisorctl shutdown</div></pre></td></tr></table></figure>
+<h3 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">[program:xx]</div><div class="line">command=/opt/apache-tomcat-8.0.35/bin/catalina.sh run  	; 程序启动命令</div><div class="line">directory=/opt/screenCron/logs/</div><div class="line">autostart=true       									; 在supervisord启动的时候也自动启动</div><div class="line">startsecs=10        									; 启动10秒后没有异常退出，就表示进程正常启动了，默认为1秒</div><div class="line">autorestart=true     									; 程序退出后自动重启,可选值：[unexpected,true,false]，默认为unexpected，表示进程意外杀死后才重启</div><div class="line">startretries=10       									; 启动失败自动重试次数，默认是3</div><div class="line">priority=1          									; 进程启动优先级，默认999，值小的优先启动</div><div class="line">redirect_stderr=false 									; 把stderr重定向到stdout，默认false</div><div class="line">stderr_logfile_maxbytes=50MB							; 默认50MB，stderr_logfile的最大值</div><div class="line">stderr_logfile=/opt/screenCron/logs/</div><div class="line">stdout_logfile_maxbytes=50MB  							; stdout 日志文件大小，默认50MB</div><div class="line">stdout_logfile=/opt/screenCron/logs/ ; stdout 日志文件，需要注意当指定目录不存在时无法正常启动，所以需要手动创建目录（supervisord 会自动创建日志文件）</div><div class="line">stopasgroup=false     									;默认为false,进程被杀死时，是否向这个进程组发送stop信号，包括子进程</div><div class="line">killasgroup=false     									;默认为false，向进程组发送kill信号，包括子进程</div><div class="line"></div><div class="line">[program:]</div><div class="line">command=</div><div class="line">directory=/opt/screenCron/logs/</div><div class="line">autostart=true</div><div class="line">startsecs=10</div><div class="line">autorestart=true</div><div class="line">startretries=10</div><div class="line">priority=1</div><div class="line">redirect_stderr=false</div><div class="line">stderr_logfile_maxbytes=50MB</div><div class="line">stderr_logfile=/opt/screenCron/logs/</div><div class="line">stdout_logfile_maxbytes=50MB</div><div class="line">stdout_logfile=/opt/screenCron/logs/</div></pre></td></tr></table></figure>
+<h3 id="相关管理命令"><a class="markdownIt-Anchor" href="#相关管理命令"></a> 相关管理命令</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">supervisorctl status 查看进程运行状态</div><div class="line"></div><div class="line">supervisorctl restart program_name  重启</div><div class="line"></div><div class="line">supervisorctl start program_name 进程名 启动进程</div><div class="line"></div><div class="line">supervisorctl stop program_name 进程名 关闭进程</div><div class="line"></div><div class="line">supervisorctl restart 进程名 重启进程</div><div class="line"></div><div class="line">supervisorctl update 重新载入配置文件</div><div class="line"></div><div class="line">supervisorctl shutdown 关闭</div><div class="line"></div><div class="line">supervisord supervisordctl clear 进程名 清空进程日志</div><div class="line"></div><div class="line">supervisordctl 进入到交互模式下。使用help查看所有命令。</div><div class="line"></div><div class="line">start stop restart + all 表示启动，关闭，重启所有进程。</div><div class="line"></div><div class="line">supervisorctl stop all  全部停止</div></pre></td></tr></table></figure>
 <p>相关文档</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">https://www.kancloud.cn/adapa/gopher/1271861</div><div class="line">https://www.jianshu.com/p/7e788634257b</div><div class="line">https://blog.csdn.net/qq_34896760/article/details/80513206</div><div class="line">https://www.cnblogs.com/xuezhigu/p/7660203.html</div></pre></td></tr></table></figure>
 
@@ -546,7 +560,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -559,7 +573,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -608,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务介绍"><span class="nav-number">1.</span> <span class="nav-text">服务介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python-3-8"><span class="nav-number">2.</span> <span class="nav-text">安装python(3.8)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Supervisord"><span class="nav-number">3.</span> <span class="nav-text">安装Supervisord</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">3.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关管理命令"><span class="nav-number">3.2.</span> <span class="nav-text">相关管理命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务介绍"><span class="nav-number">1.</span> <span class="nav-text"> 服务介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python38"><span class="nav-number">2.</span> <span class="nav-text"> 安装python(3.8)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装supervisord"><span class="nav-number">3.</span> <span class="nav-text"> 安装Supervisord</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">3.1.</span> <span class="nav-text"> 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关管理命令"><span class="nav-number">3.2.</span> <span class="nav-text"> 相关管理命令</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -646,7 +660,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

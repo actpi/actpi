@@ -387,9 +387,10 @@
       
         
           
-          nginx 限制 IP 的连接和并发用到两个模块：
+           nginx 限制 IP 的连接和并发用到两个模块：
+
 HttpLimitReqModul 用来限制连单位时间内连接数，使用limit_req_zone和limit_req 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回503错误。
-HttpLimitConnModul用来限制单个ip的并发
+HttpLimitConnModul用来限制单个ip的
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -548,14 +549,17 @@ HttpLimitConnModul用来限制单个ip的并发
       
         
           
-          MS SQL 数据库迁移文件这里说的不是将数据库迁移到另外一台服务器，只是在服务器不同磁盘目录内做迁移。移动数据库文件的情况大致有下面一些：
+           MS SQL 数据库迁移文件
+这里说的不是将数据库迁移到另外一台服务器，只是在服务器不同磁盘目录内做迁移。移动数据库文件的情况大致有下面一些：
+
 
 事先没有规划好，数据库文件或日志文件增长过快，导致某个盘或整个磁盘空间不足，需要移动数据文件或日志文件
 
 
 纯粹由于业务需求，数据增长过快。
 
-为了更好的I
+
+为了
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -714,15 +718,17 @@ HttpLimitConnModul用来限制单个ip的并发
       
         
           
-          需求
+           需求
+
 使用 es 采集 nginx 访问日志，系统日志，备份日志等
 滚动更新，保留指定时期文档，自动删除旧的索引
 不使用额外的脚本，尽量用 es 自带功能实现
 
-思路与实践
+ 思路与实践
+
 配置生命周期策略
 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ）
-filebeat
+file
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1007,7 +1013,7 @@ vim /etc/security/limits.d/
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  528
+                  529
                 </span>
               
 
@@ -1047,9 +1053,11 @@ vim /etc/security/limits.d/
         
           
           
-安装Docker-cecurl -fsSL https://get.docker.com -o get-docker.sh
+安装Docker-ce
+curl -fsSL https://get.docker.com -o get-docker.sh
 安装docker-compose
-12curl -L &quot;https://github.com/docker/compose/releases/download/1.
+
+12curl -L &quot;https://github.com/docker/compose/releases/download/
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1208,10 +1216,13 @@ vim /etc/security/limits.d/
       
         
           
-          问题描述GitLab 使用git pull 时出现：
+           问题描述
+GitLab 使用git pull 时出现：
 
-error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexpectedly
-问题原因Gitlab 服务器为使用 docker 启动，docker 日志把
+error： RPC failed;result=22 HTTP code=500
+fatal： The remote end hung up unexpectedly
+ 问题原因
+Gitlab 服务器为使用 docker 启动，docke
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1370,11 +1381,13 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
       
         
           
-          问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异
-原因探究
+           问题发现
+代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异
+ 原因探究
+
 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对
 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致
-拉取文件进行差异对比，发现文件内容
+拉取文件进行差异对比，发现
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1494,7 +1507,7 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  613
+                  614
                 </span>
               
 
@@ -1532,10 +1545,172 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
 
       
         
-          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在使用 <a href="https://github.com/Neilpang/acme.sh" target="_blank" rel="external">acme.sh</a>脚本签发的Let’s Encrypt 免费SSL证书，在android中无法通过SSL系统验证，出现以下异常<code>Trust anchor for certification path not found</code>
+          <h2 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h2>
+<p>在使用 <a href="https://github.com/Neilpang/acme.sh" target="_blank" rel="external">acme.sh</a>脚本签发的Let’s Encrypt 免费SSL证书，在android中无法通过SSL系统验证，出现以下异常<code>Trust anchor for certification path not found</code>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/articles/ssl-error.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/Let'sEncrypt免费HTTPS证书-泛域名申请.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="actpi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/articles/Let'sEncrypt免费HTTPS证书-泛域名申请.html" itemprop="url">Let'sEncrypt免费申请泛域名HTTPS证书</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T21:45:23+08:00">
+                2019-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,582
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+           Let’sEncrypt 介绍
+Let’s Encrypt: https://letsencrypt.org , 是一个免费的、自动化的、开放的证书颁发机构。它的全球SSL证书市场份额已超过50%，得到主流浏览器和厂商的认可与支持。
+Let’s Encrypt 证书提供免费的申请，但没有高额的安全
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/articles/Let'sEncrypt免费HTTPS证书-泛域名申请.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1689,167 +1864,12 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
 
       
         
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。<br>原文地址 <a href="https://wiki.centos.org/HowTos/Oracle12onlocalhost" target="_blank" rel="external">centos 7 安装oracel 12c</a>、本文对原贴翻译并加入安装过程踩到的坑。<br>
+          <h1 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h1>
+<p>本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。<br>
+原文地址 <a href="https://wiki.centos.org/HowTos/Oracle12onlocalhost" target="_blank" rel="external">centos 7 安装oracel 12c</a>、本文对原贴翻译并加入安装过程踩到的坑。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/articles/oracle-install.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/strptime.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="actpi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ActPi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/articles/strptime.html" itemprop="url">Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T20:59:00+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                  <span class="post-meta-divider">|</span>
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  762
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：<br>我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是<code>2018-03-05T09:20:005Z</code>这种字符串。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/articles/strptime.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1940,7 +1960,7 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1953,7 +1973,7 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2024,7 +2044,7 @@ error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexp
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

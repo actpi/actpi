@@ -110,19 +110,19 @@
 
 
 
-<meta name="description" content="Docker 简介Docker是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。">
+<meta name="description" content="Docker 简介 Docker是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。">
 <meta name="keywords" content="docker, nginx-proxy, 负载均衡">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 docker 容器里使用 nginx-proxy 实现自动反向代理及负载均衡">
 <meta property="og:url" content="http://blog.actpi.com/articles/docker-nginx-proxy.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="Docker 简介Docker是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。">
+<meta property="og:description" content="Docker 简介 Docker是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://docs.docker.com/docker-for-windows/images/whale-taskbar-circle.png">
 <meta property="og:updated_time" content="2017-11-12T13:12:52.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 docker 容器里使用 nginx-proxy 实现自动反向代理及负载均衡">
-<meta name="twitter:description" content="Docker 简介Docker是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。">
+<meta name="twitter:description" content="Docker 简介 Docker是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。">
 <meta name="twitter:image" content="https://docs.docker.com/docker-for-windows/images/whale-taskbar-circle.png">
 
 
@@ -354,7 +354,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,525
+                  1,527
                 </span>
               
 
@@ -391,107 +391,136 @@
       
 
       
-        <h1 id="Docker-简介"><a href="#Docker-简介" class="headerlink" title="Docker 简介"></a>Docker 简介</h1><p><a href="https://www.docker.com/" target="_blank" rel="external">Docker</a>是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。<a id="more"></a>Docker利用Linux核心中的资源分脱机制，例如cgroups，以及Linux核心名字空间（name space），来创建独立的软件容器（containers）。这可以在单一Linux实体下运作，避免引导一个虚拟机造成的额外负担.</p>
-<h2 id="docker-安装"><a href="#docker-安装" class="headerlink" title="docker 安装"></a>docker 安装</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>Docker Windows 客户端需要开启 Hyper-V，安装过程会自动提示打开与否。</p>
+        <h1 id="docker-简介"><a class="markdownIt-Anchor" href="#docker-简介"></a> Docker 简介</h1>
+<p><a href="https://www.docker.com/" target="_blank" rel="external">Docker</a>是一个开放源代码软件项目，让应用程序布署在软件容器下的工作可以自动化进行，借此在Linux操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。<a id="more"></a>Docker利用Linux核心中的资源分脱机制，例如cgroups，以及Linux核心名字空间（name space），来创建独立的软件容器（containers）。这可以在单一Linux实体下运作，避免引导一个虚拟机造成的额外负担.</p>
+<h2 id="docker-安装"><a class="markdownIt-Anchor" href="#docker-安装"></a> docker 安装</h2>
+<h3 id="windows"><a class="markdownIt-Anchor" href="#windows"></a> Windows</h3>
+<p>Docker Windows 客户端需要开启 Hyper-V，安装过程会自动提示打开与否。</p>
 <ul>
 <li>从官网下载安装包双击安装。<a href="https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe" target="_blank" rel="external">Docker for Windows Installer.exe</a></li>
-<li>双击图标运行docker，初次打开可能需要几分钟时间。当右下角出现 docker 标志说明已经开始运行了！<br><img src="https://docs.docker.com/docker-for-windows/images/whale-taskbar-circle.png" alt=""></li>
-<li>打开终端开始 docker 之旅<div class="note info Windows"><p>Windows 下推荐使用 Docker for Windows 客户端，不要使用 docker toolbox。当从官方仓库拖取镜像时速度比较感人，建议使用国内镜像加速。</p></div>
-<h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><ol>
-<li>安装依赖包<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y yum-utils \</div><div class="line">  device-mapper-persistent-data \</div><div class="line">  lvm2</div></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
+<li>双击图标运行docker，初次打开可能需要几分钟时间。当右下角出现 docker 标志说明已经开始运行了！<br>
+<img src="https://docs.docker.com/docker-for-windows/images/whale-taskbar-circle.png" alt=""></li>
+<li>打开终端开始 docker 之旅</li>
 </ul>
+<div class="note info Windows"><p>Windows 下推荐使用 Docker for Windows 客户端，不要使用 docker toolbox。当从官方仓库拖取镜像时速度比较感人，建议使用国内镜像加速。</p></div>
+<h3 id="centos"><a class="markdownIt-Anchor" href="#centos"></a> CentOS</h3>
 <ol>
-<li><p>用下面的命令设置 稳定版的 源地址</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum-config-manager \</div><div class="line">    --add-repo \</div><div class="line">    https://download.docker.com/linux/centos/docker-ce.repo</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装 docker-ce</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install docker-ce</div></pre></td></tr></table></figure>
-</li>
-<li><p>开始使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start docker</div><div class="line"></div><div class="line">sudo docker run hello-world</div></pre></td></tr></table></figure>
-</li>
+<li>安装依赖包</li>
 </ol>
-<h3 id="Debian"><a href="#Debian" class="headerlink" title="Debian"></a>Debian</h3><p>系统需求：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y yum-utils \</div><div class="line">  device-mapper-persistent-data \</div><div class="line">  lvm2</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>用下面的命令设置 稳定版的 源地址</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo yum-config-manager \</div><div class="line">    --add-repo \</div><div class="line">    https://download.docker.com/linux/centos/docker-ce.repo</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>安装 docker-ce</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install docker-ce</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>开始使用</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start docker</div><div class="line"></div><div class="line">sudo docker run hello-world</div></pre></td></tr></table></figure>
+<h3 id="debian"><a class="markdownIt-Anchor" href="#debian"></a> Debian</h3>
+<p>系统需求：</p>
 <ul>
 <li>64 bit</li>
 <li>Stretch (稳定版)</li>
-<li>Jessie 8.0 (LTS) </li>
+<li>Jessie 8.0 (LTS)</li>
 <li>Wheezy 7.7 (LTS)</li>
 <li>Linux 内核大于 3.10</li>
 </ul>
 <ol>
-<li><p>若安装有旧版本则先卸载</p>
+<li>若安装有旧版本则先卸载</li>
+</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove docker docker-engine docker.io</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装依赖</p>
+<ol start="2">
+<li>安装依赖</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div></pre></td></tr></table></figure>
 <ul>
-<li><p>Jessie 或 Stretch 版:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    gnupg2 \</div><div class="line">    software-properties-common</div></pre></td></tr></table></figure>
-</li>
-<li><p>Wheezy 版:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    python-software-properties</div></pre></td></tr></table></figure>
-</li>
+<li>Jessie 或 Stretch 版:</li>
 </ul>
-</li>
-<li><p>添加 Docker 官方 GPG key<br><code>curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo &quot;$ID&quot;)/gpg | sudo apt-key add -</code><br>4.设置 源地址</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    gnupg2 \</div><div class="line">    software-properties-common</div></pre></td></tr></table></figure>
+<ul>
+<li>Wheezy 版:</li>
+</ul>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    python-software-properties</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>添加 Docker 官方 GPG key<br>
+<code>curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo &quot;$ID&quot;)/gpg | sudo apt-key add -</code><br>
+4.设置 源地址</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository \</div><div class="line">   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \</div><div class="line"><span class="meta">   $</span>(lsb_release -cs) \</div><div class="line">   stable"</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装 Docker-ce</p>
+<ol start="5">
+<li>安装 Docker-ce</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install docker-ce</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>enjoy it:<br><code>sudo docker run hello-world</code><br><div class="note info Linux"><p>Debian 系统使用 apt-get 默认安装版本比较旧，使用 docker-compose 管理 Docker容器时会报错<code>客户端和服务器版本不一致</code>。建议按以上官方安装说明安装新版 Docker。</p></div></p>
-<h1 id="Nginx-介绍"><a href="#Nginx-介绍" class="headerlink" title="Nginx 介绍"></a>Nginx 介绍</h1><p><a href="https://nginx.org" target="_blank" rel="external">Nginx</a> 是一个 web 服务器。它类似于 Lighttpd，作为轻量级的 web server，可以替代重量级的 Apache/IIS。Nginx 专为性能优化而开发，是一个快速且能经受高负载考验的 web server。详情见 <a href="https://www.nginx.com/resources/wiki/" target="_blank" rel="external">wiki 页面</a></p>
-<h2 id="下载-Nginx-官方镜像"><a href="#下载-Nginx-官方镜像" class="headerlink" title="下载 Nginx 官方镜像"></a>下载 Nginx 官方镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull nginx</div></pre></td></tr></table></figure>
+<p>enjoy it:<br>
+<code>sudo docker run hello-world</code></p>
+<div class="note info Linux"><p>Debian 系统使用 apt-get 默认安装版本比较旧，使用 docker-compose 管理 Docker容器时会报错<code>客户端和服务器版本不一致</code>。建议按以上官方安装说明安装新版 Docker。</p></div>
+<h1 id="nginx-介绍"><a class="markdownIt-Anchor" href="#nginx-介绍"></a> Nginx 介绍</h1>
+<p><a href="https://nginx.org" target="_blank" rel="external">Nginx</a> 是一个 web 服务器。它类似于 Lighttpd，作为轻量级的 web server，可以替代重量级的 Apache/IIS。Nginx 专为性能优化而开发，是一个快速且能经受高负载考验的 web server。详情见 <a href="https://www.nginx.com/resources/wiki/" target="_blank" rel="external">wiki 页面</a></p>
+<h2 id="下载-nginx-官方镜像"><a class="markdownIt-Anchor" href="#下载-nginx-官方镜像"></a> 下载 Nginx 官方镜像</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull nginx</div></pre></td></tr></table></figure>
 <p>默认标签为最新版，若需要其它版本指定标签即可 请从<a href="https://hub.docker.com/_/nginx/" target="_blank" rel="external">docker hub</a>获取帮助</p>
-<h1 id="nginx-proxy-介绍"><a href="#nginx-proxy-介绍" class="headerlink" title="nginx-proxy 介绍"></a>nginx-proxy 介绍</h1><p><a href="https://hub.docker.com/r/jwilder/nginx-proxy/" target="_blank" rel="external">nginx-proxy</a> 启动一个容器来运行 nginx 和 <a href="https://github.com/jwilder/docker-gen" target="_blank" rel="external">docker-gen</a>。 在主机上的容器启动和停止时 docker-gen 会生成 nginx 反向代理配置并且重新加载 nginx。</p>
-<p> | Automated Nginx reverse proxy for docker containers</p>
-<h2 id="下载-镜像"><a href="#下载-镜像" class="headerlink" title="下载 镜像"></a>下载 镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull jwilder/nginx-proxy</div></pre></td></tr></table></figure>
-<h3 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h3><ol>
-<li><p>启动 nginx-proxy 容器：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy</div></pre></td></tr></table></figure>
-</li>
-<li><p>再启动一个需要被代理的容器，使用环境变量 <code>VIRTUAL_HOST=domain.com</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -e VIRTUAL_HOST=domain.com nginx</div></pre></td></tr></table></figure>
-</li>
+<h1 id="nginx-proxy-介绍"><a class="markdownIt-Anchor" href="#nginx-proxy-介绍"></a> nginx-proxy 介绍</h1>
+<p><a href="https://hub.docker.com/r/jwilder/nginx-proxy/" target="_blank" rel="external">nginx-proxy</a> 启动一个容器来运行 nginx 和 <a href="https://github.com/jwilder/docker-gen" target="_blank" rel="external">docker-gen</a>。 在主机上的容器启动和停止时 docker-gen 会生成 nginx 反向代理配置并且重新加载 nginx。</p>
+<p>| Automated Nginx reverse proxy for docker containers</p>
+<h2 id="下载-镜像"><a class="markdownIt-Anchor" href="#下载-镜像"></a> 下载 镜像</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull jwilder/nginx-proxy</div></pre></td></tr></table></figure>
+<h3 id="如何使用"><a class="markdownIt-Anchor" href="#如何使用"></a> 如何使用</h3>
+<ol>
+<li>启动 nginx-proxy 容器：</li>
 </ol>
-<p>被代理的容器必须 expose 被代理的端口，可以通过在 Dockerfile 里面使用 EXPOSE 指令或者在 docker run 时使用 –expose 参数。</p>
-<p>在 DNS 上设置转发 foo.bar.com 到 nginx-proxy 的主机上，之后请求就会被自动路由到设置了相同 VIRTUAL_HOST 环境变量的容器上。</p>
-<h1 id="使用-Letsencrypt-证书加密"><a href="#使用-Letsencrypt-证书加密" class="headerlink" title="使用 Letsencrypt 证书加密"></a>使用 Letsencrypt 证书加密</h1><p><a href="https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/" target="_blank" rel="external">letsencrypt-nginx-proxy-companion</a> 是一个轻量级的代理容器，配合 <a href="https://hub.docker.com/r/jwilder/nginx-proxy/" target="_blank" rel="external">nginx-proxy</a>实现自动创建和自动更新 Let’s Encrypt 证书。</p>
-<h2 id="下载-镜像-1"><a href="#下载-镜像-1" class="headerlink" title="下载 镜像"></a>下载 镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull jrcs/letsencrypt-nginx-proxy-companion</div></pre></td></tr></table></figure>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>要将其与原始 nginx 代理容器一起使用，您必须从 nginx-proxy 容器声明3个可写卷：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>再启动一个需要被代理的容器，使用环境变量 <code>VIRTUAL_HOST=domain.com</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -e VIRTUAL_HOST=domain.com nginx</div></pre></td></tr></table></figure>
+<p>被代理的容器必须 expose 被代理的端口，可以通过在 Dockerfile 里面使用 EXPOSE 指令或者在 docker run 时使用 --expose 参数。</p>
+<p>在 DNS 上设置转发 <a href="http://foo.bar.com" target="_blank" rel="external">foo.bar.com</a> 到 nginx-proxy 的主机上，之后请求就会被自动路由到设置了相同 VIRTUAL_HOST 环境变量的容器上。</p>
+<h1 id="使用-letsencrypt-证书加密"><a class="markdownIt-Anchor" href="#使用-letsencrypt-证书加密"></a> 使用 Letsencrypt 证书加密</h1>
+<p><a href="https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/" target="_blank" rel="external">letsencrypt-nginx-proxy-companion</a> 是一个轻量级的代理容器，配合 <a href="https://hub.docker.com/r/jwilder/nginx-proxy/" target="_blank" rel="external">nginx-proxy</a>实现自动创建和自动更新 Let’s Encrypt 证书。</p>
+<h2 id="下载-镜像-2"><a class="markdownIt-Anchor" href="#下载-镜像-2"></a> 下载 镜像</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull jrcs/letsencrypt-nginx-proxy-companion</div></pre></td></tr></table></figure>
+<h2 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h2>
+<p>要将其与原始 nginx 代理容器一起使用，您必须从 nginx-proxy 容器声明3个可写卷：</p>
 <ul>
 <li>/etc/nginx/certs  创建和更新 Let’s Encrypt 证书</li>
 <li>/etc/nginx/vhost.d 更改虚拟主机配置 (Let’s Encrypt)</li>
 <li>/usr/share/nginx/html 写入验证文件 (Let’s Encrypt)</li>
 </ul>
 <ol>
-<li>启动 nginx-proxy<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">docker run -d -p 80:80 -p 443:443 \</div><div class="line">  --name nginx-proxy \</div><div class="line">  -v /path/to/certs:/etc/nginx/certs:ro \</div><div class="line">  -v /etc/nginx/vhost.d \</div><div class="line">  -v /usr/share/nginx/html \</div><div class="line">  -v /var/run/docker.sock:/tmp/docker.sock:ro \</div><div class="line">  --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy \</div><div class="line">  jwilder/nginx-proxy</div></pre></td></tr></table></figure>
-</li>
+<li>启动 nginx-proxy</li>
 </ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">docker run -d -p 80:80 -p 443:443 \</div><div class="line">  --name nginx-proxy \</div><div class="line">  -v /path/to/certs:/etc/nginx/certs:ro \</div><div class="line">  -v /etc/nginx/vhost.d \</div><div class="line">  -v /usr/share/nginx/html \</div><div class="line">  -v /var/run/docker.sock:/tmp/docker.sock:ro \</div><div class="line">  --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy \</div><div class="line">  jwilder/nginx-proxy</div></pre></td></tr></table></figure>
 <p><code>--label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy</code> 是必需的，否则 Let’s Encrypt 不知道使用哪个容器。</p>
 <ol>
-<li>启动 LetsEncrypt<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker run -d \</div><div class="line">  -v /path/to/certs:/etc/nginx/certs:rw \</div><div class="line">  -v /var/run/docker.sock:/var/run/docker.sock:ro \</div><div class="line">  --volumes-from nginx-proxy \</div><div class="line">  jrcs/letsencrypt-nginx-proxy-companion</div></pre></td></tr></table></figure>
-</li>
+<li>启动 LetsEncrypt</li>
 </ol>
-<p>再启动需要被代理和加密的容器，加上环境变量 <code>VIRTUAL_HOST=domain.com</code> 。<br><code>docker run -e &quot;VIRTUAL_HOST=foo.bar.com&quot; ...</code><br>要使其能自动创建和更新证书需设置环境变量 <code>LETSENCRYPT_HOST</code> <code>LETSENCRYPT_EMAIL</code> 即可。</p>
-<h2 id="Docker-compose"><a href="#Docker-compose" class="headerlink" title="Docker-compose"></a>Docker-compose</h2><p><a href="https://docs.docker.com/compose" target="_blank" rel="external">Compose</a> 是定义和运行多容器Docker应用程序的工具。 使用Compose，您可以使用YAML文件来配置应用程序的服务。 然后，使用单个命令创建并启动配置中的所有服务。 要详细了解Compose的所有功能，请参阅<a href="https://docs.docker.com/compose/overview/#features" target="_blank" rel="external">功能列表</a>。</p>
-<h3 id="Linux-安装"><a href="#Linux-安装" class="headerlink" title="Linux 安装"></a>Linux 安装</h3><ol>
-<li><p>使用以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker run -d \</div><div class="line">  -v /path/to/certs:/etc/nginx/certs:rw \</div><div class="line">  -v /var/run/docker.sock:/var/run/docker.sock:ro \</div><div class="line">  --volumes-from nginx-proxy \</div><div class="line">  jrcs/letsencrypt-nginx-proxy-companion</div></pre></td></tr></table></figure>
+<p>再启动需要被代理和加密的容器，加上环境变量 <code>VIRTUAL_HOST=domain.com</code> 。<br>
+<code>docker run -e &quot;VIRTUAL_HOST=foo.bar.com&quot; ...</code><br>
+要使其能自动创建和更新证书需设置环境变量 <code>LETSENCRYPT_HOST</code> <code>LETSENCRYPT_EMAIL</code> 即可。</p>
+<h2 id="docker-compose"><a class="markdownIt-Anchor" href="#docker-compose"></a> Docker-compose</h2>
+<p><a href="https://docs.docker.com/compose" target="_blank" rel="external">Compose</a> 是定义和运行多容器Docker应用程序的工具。 使用Compose，您可以使用YAML文件来配置应用程序的服务。 然后，使用单个命令创建并启动配置中的所有服务。 要详细了解Compose的所有功能，请参阅<a href="https://docs.docker.com/compose/overview/#features" target="_blank" rel="external">功能列表</a>。</p>
+<h3 id="linux-安装"><a class="markdownIt-Anchor" href="#linux-安装"></a> Linux 安装</h3>
+<ol>
+<li>使用以下命令</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</div></pre></td></tr></table></figure>
-</li>
-<li><p>赋可执行权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod +x /usr/local/bin/docker-compose</div></pre></td></tr></table></figure>
-</li>
+<ol start="2">
+<li>赋可执行权限</li>
 </ol>
-<h3 id="Windows-安装"><a href="#Windows-安装" class="headerlink" title="Windows 安装"></a>Windows 安装</h3><p>以管理员身份运行 PowerShell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Invoke-WebRequest &quot;https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-Windows-x86_64.exe&quot; -UseBasicParsing -OutFile $Env:ProgramFiles\docker\docker-compose.exe</div></pre></td></tr></table></figure></p>
-<h3 id="使用-Compose"><a href="#使用-Compose" class="headerlink" title="使用 Compose"></a>使用 Compose</h3><p>首先 创建一个 docker-compose.yml 的文件，在当前目录运行 <code>docker-compose up</code> 。</p>
-<h1 id="完整-docker-compose-文件"><a href="#完整-docker-compose-文件" class="headerlink" title="完整 docker-compose 文件"></a>完整 docker-compose 文件</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'3'</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  nginx-proxy:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">jwilder/nginx-proxy</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">nginx-proxy</span></div><div class="line"><span class="attr">    labels:</span> </div><div class="line">        <span class="string">com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy:</span> <span class="string">"true"</span></div><div class="line"><span class="attr">    ports:</span> </div><div class="line"><span class="bullet">      -</span> <span class="number">80</span><span class="string">:80</span></div><div class="line"><span class="bullet">      -</span> <span class="number">443</span><span class="string">:443</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/certs:/etc/nginx/certs:ro</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/conf.d:/etc/nginx/conf.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/vhost.d:/etc/nginx/vhost.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/html/:/usr/share/nginx/html</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/tmp/docker.sock:ro</span></div><div class="line"><span class="attr">  letsencrypt:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">jrcs/letsencrypt-nginx-proxy-companion</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">letsencrypt</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/conf.d:/etc/nginx/conf.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/vhost.d:/etc/nginx/vhost.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/html/:/usr/share/nginx/html</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/certs:/etc/nginx/certs:rw</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock:ro</span></div><div class="line"></div><div class="line"><span class="attr">  someweb:</span>  </div><div class="line"><span class="attr">    image:</span> <span class="string">nginx</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">someweb</span></div><div class="line"><span class="attr">    environment:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">VIRTUAL_HOST=somedomain.com</span></div><div class="line">	  <span class="bullet">-</span> <span class="string">LETSENCRYPT_HOST=somedomain.com</span></div><div class="line">	  <span class="bullet">-</span> <span class="string">LETSENCRYPT_EMAIL=example@domain.com</span></div><div class="line"><span class="attr">networks:</span></div><div class="line"><span class="attr">  default:</span></div><div class="line"><span class="attr">    external:</span></div><div class="line">	  <span class="attr">name:</span> <span class="string">web-proxy</span></div></pre></td></tr></table></figure>
-<p> Good Luck!</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod +x /usr/local/bin/docker-compose</div></pre></td></tr></table></figure>
+<h3 id="windows-安装"><a class="markdownIt-Anchor" href="#windows-安装"></a> Windows 安装</h3>
+<p>以管理员身份运行 PowerShell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Invoke-WebRequest &quot;https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-Windows-x86_64.exe&quot; -UseBasicParsing -OutFile $Env:ProgramFiles\docker\docker-compose.exe</div></pre></td></tr></table></figure>
+<h3 id="使用-compose"><a class="markdownIt-Anchor" href="#使用-compose"></a> 使用 Compose</h3>
+<p>首先 创建一个 docker-compose.yml 的文件，在当前目录运行 <code>docker-compose up</code> 。</p>
+<h1 id="完整-docker-compose-文件"><a class="markdownIt-Anchor" href="#完整-docker-compose-文件"></a> 完整 docker-compose 文件</h1>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'3'</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  nginx-proxy:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">jwilder/nginx-proxy</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">nginx-proxy</span></div><div class="line"><span class="attr">    labels:</span> </div><div class="line">        <span class="string">com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy:</span> <span class="string">"true"</span></div><div class="line"><span class="attr">    ports:</span> </div><div class="line"><span class="bullet">      -</span> <span class="number">80</span><span class="string">:80</span></div><div class="line"><span class="bullet">      -</span> <span class="number">443</span><span class="string">:443</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/certs:/etc/nginx/certs:ro</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/conf.d:/etc/nginx/conf.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/vhost.d:/etc/nginx/vhost.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/html/:/usr/share/nginx/html</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/tmp/docker.sock:ro</span></div><div class="line"><span class="attr">  letsencrypt:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">jrcs/letsencrypt-nginx-proxy-companion</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">letsencrypt</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/conf.d:/etc/nginx/conf.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/vhost.d:/etc/nginx/vhost.d</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/html/:/usr/share/nginx/html</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/docker/nginx/certs:/etc/nginx/certs:rw</span></div><div class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock:ro</span></div><div class="line"></div><div class="line"><span class="attr">  someweb:</span>  </div><div class="line"><span class="attr">    image:</span> <span class="string">nginx</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">someweb</span></div><div class="line"><span class="attr">    environment:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">VIRTUAL_HOST=somedomain.com</span></div><div class="line">	  <span class="bullet">-</span> <span class="string">LETSENCRYPT_HOST=somedomain.com</span></div><div class="line">	  <span class="bullet">-</span> <span class="string">LETSENCRYPT_EMAIL=example@domain.com</span></div><div class="line"><span class="attr">networks:</span></div><div class="line"><span class="attr">  default:</span></div><div class="line"><span class="attr">    external:</span></div><div class="line">	  <span class="attr">name:</span> <span class="string">web-proxy</span></div></pre></td></tr></table></figure>
+<p>Good Luck!</p>
 
       
     </div>
@@ -637,7 +666,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -650,7 +679,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -699,7 +728,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-简介"><span class="nav-number">1.</span> <span class="nav-text">Docker 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-安装"><span class="nav-number">1.1.</span> <span class="nav-text">docker 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">1.1.1.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS"><span class="nav-number">1.1.2.</span> <span class="nav-text">CentOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian"><span class="nav-number">1.1.3.</span> <span class="nav-text">Debian</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx-介绍"><span class="nav-number">2.</span> <span class="nav-text">Nginx 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-Nginx-官方镜像"><span class="nav-number">2.1.</span> <span class="nav-text">下载 Nginx 官方镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-proxy-介绍"><span class="nav-number">3.</span> <span class="nav-text">nginx-proxy 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-镜像"><span class="nav-number">3.1.</span> <span class="nav-text">下载 镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用"><span class="nav-number">3.1.1.</span> <span class="nav-text">如何使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-Letsencrypt-证书加密"><span class="nav-number">4.</span> <span class="nav-text">使用 Letsencrypt 证书加密</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-镜像-1"><span class="nav-number">4.1.</span> <span class="nav-text">下载 镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用法"><span class="nav-number">4.2.</span> <span class="nav-text">用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-compose"><span class="nav-number">4.3.</span> <span class="nav-text">Docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-安装"><span class="nav-number">4.3.1.</span> <span class="nav-text">Linux 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-安装"><span class="nav-number">4.3.2.</span> <span class="nav-text">Windows 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Compose"><span class="nav-number">4.3.3.</span> <span class="nav-text">使用 Compose</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完整-docker-compose-文件"><span class="nav-number">5.</span> <span class="nav-text">完整 docker-compose 文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-简介"><span class="nav-number">1.</span> <span class="nav-text"> Docker 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-安装"><span class="nav-number">1.1.</span> <span class="nav-text"> docker 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#windows"><span class="nav-number">1.1.1.</span> <span class="nav-text"> Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#centos"><span class="nav-number">1.1.2.</span> <span class="nav-text"> CentOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debian"><span class="nav-number">1.1.3.</span> <span class="nav-text"> Debian</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-介绍"><span class="nav-number">2.</span> <span class="nav-text"> Nginx 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-nginx-官方镜像"><span class="nav-number">2.1.</span> <span class="nav-text"> 下载 Nginx 官方镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-proxy-介绍"><span class="nav-number">3.</span> <span class="nav-text"> nginx-proxy 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-镜像"><span class="nav-number">3.1.</span> <span class="nav-text"> 下载 镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用"><span class="nav-number">3.1.1.</span> <span class="nav-text"> 如何使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-letsencrypt-证书加密"><span class="nav-number">4.</span> <span class="nav-text"> 使用 Letsencrypt 证书加密</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-镜像-2"><span class="nav-number">4.1.</span> <span class="nav-text"> 下载 镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用法"><span class="nav-number">4.2.</span> <span class="nav-text"> 用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose"><span class="nav-number">4.3.</span> <span class="nav-text"> Docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-安装"><span class="nav-number">4.3.1.</span> <span class="nav-text"> Linux 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows-安装"><span class="nav-number">4.3.2.</span> <span class="nav-text"> Windows 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-compose"><span class="nav-number">4.3.3.</span> <span class="nav-text"> 使用 Compose</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完整-docker-compose-文件"><span class="nav-number">5.</span> <span class="nav-text"> 完整 docker-compose 文件</span></a></li></ol></div>
             
 
           </div>
@@ -737,7 +766,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

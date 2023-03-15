@@ -110,19 +110,19 @@
 
 
 
-<meta name="description" content="问题描述GitLab 使用git pull 时出现：  error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexpectedly 问题原因Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。 解决方案 快速解决版本进入 docker 日志目录手动删除日志 重">
+<meta name="description" content="问题描述 GitLab 使用git pull 时出现：  error： RPC failed;result=22 HTTP code=500 fatal： The remote end hung up unexpectedly  问题原因 Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。  解决方案  快速解决版本 进入 docker 日志目录">
 <meta name="keywords" content="gitlab, 500">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gitlab拉取代码报错RPCfail code 500">
 <meta property="og:url" content="http://blog.actpi.com/articles/gitlab拉取代码报错RPCfailcode500.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="问题描述GitLab 使用git pull 时出现：  error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexpectedly 问题原因Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。 解决方案 快速解决版本进入 docker 日志目录手动删除日志 重">
+<meta property="og:description" content="问题描述 GitLab 使用git pull 时出现：  error： RPC failed;result=22 HTTP code=500 fatal： The remote end hung up unexpectedly  问题原因 Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。  解决方案  快速解决版本 进入 docker 日志目录">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.actpi.com/images/gitlab-500.png">
 <meta property="og:updated_time" content="2023-03-14T01:40:01.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitlab拉取代码报错RPCfail code 500">
-<meta name="twitter:description" content="问题描述GitLab 使用git pull 时出现：  error： RPC failed;result=22 HTTP code=500fatal： The remote end hung up unexpectedly 问题原因Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。 解决方案 快速解决版本进入 docker 日志目录手动删除日志 重">
+<meta name="twitter:description" content="问题描述 GitLab 使用git pull 时出现：  error： RPC failed;result=22 HTTP code=500 fatal： The remote end hung up unexpectedly  问题原因 Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。  解决方案  快速解决版本 进入 docker 日志目录">
 <meta name="twitter:image" content="http://blog.actpi.com/images/gitlab-500.png">
 
 
@@ -391,16 +391,22 @@
       
 
       
-        <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>GitLab 使用git pull 时出现：</p>
+        <h1 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h1>
+<p>GitLab 使用git pull 时出现：</p>
 <p><img src="../images/gitlab-500.png" alt=""></p>
-<p><code>error： RPC failed;result=22 HTTP code=500</code><br><code>fatal： The remote end hung up unexpectedly</code></p>
-<h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1><p>Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。</p>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><ol>
-<li><p>快速解决版本<br>进入 docker 日志目录手动删除日志 重启 docker 服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /var/lib/docker/containers/container_id/</div><div class="line"><span class="meta">#</span>以json.log结尾的文件即为业务日志文件</div><div class="line">rm -f *json.log</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
-</li>
-<li><p>永久解决办法<br>设置 docker 日志文件大小和数量</p>
-</li>
+<p><code>error： RPC failed;result=22 HTTP code=500</code><br>
+<code>fatal： The remote end hung up unexpectedly</code></p>
+<h1 id="问题原因"><a class="markdownIt-Anchor" href="#问题原因"></a> 问题原因</h1>
+<p>Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。</p>
+<h1 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h1>
+<ol>
+<li>快速解决版本<br>
+进入 docker 日志目录手动删除日志 重启 docker 服务</li>
+</ol>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /var/lib/docker/containers/container_id/</div><div class="line"><span class="meta">#</span>以json.log结尾的文件即为业务日志文件</div><div class="line">rm -f *json.log</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>永久解决办法<br>
+设置 docker 日志文件大小和数量</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim /etc/docker/daemon.json</div><div class="line">&#123;</div><div class="line"> "registry-mirrors": ["http://f613ce8f.m.daocloud.io"],</div><div class="line"> "log-driver":"json-file",</div><div class="line"> "log-opts": &#123;"max-size":"5G", "max-file":"3"&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
@@ -546,7 +552,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -559,7 +565,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -608,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题原因"><span class="nav-number">2.</span> <span class="nav-text">问题原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text"> 问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题原因"><span class="nav-number">2.</span> <span class="nav-text"> 问题原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text"> 解决方案</span></a></li></ol></div>
             
 
           </div>
@@ -646,7 +652,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

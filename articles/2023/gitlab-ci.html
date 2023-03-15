@@ -110,19 +110,19 @@
 
 
 
-<meta name="description" content="什么是 GitLab CIGitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
+<meta name="description" content="什么是 GitLab CI GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
 <meta name="keywords" content="DevOps, gitlab, CI&#x2F;CD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GitLab CI 自动流程简述">
 <meta property="og:url" content="http://blog.actpi.com/articles/2023/gitlab-ci.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="什么是 GitLab CIGitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
+<meta property="og:description" content="什么是 GitLab CI GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.actpi.com/images/gitlab-ci/1.png">
 <meta property="og:updated_time" content="2023-03-13T06:18:31.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GitLab CI 自动流程简述">
-<meta name="twitter:description" content="什么是 GitLab CIGitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
+<meta name="twitter:description" content="什么是 GitLab CI GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
 <meta name="twitter:image" content="http://blog.actpi.com/images/gitlab-ci/1.png">
 
 
@@ -391,42 +391,58 @@
       
 
       
-        <h2 id="什么是-GitLab-CI"><a href="#什么是-GitLab-CI" class="headerlink" title="什么是 GitLab CI"></a>什么是 GitLab CI</h2><p>GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 <code>.gitlab-ci.yml</code> 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。<a id="more"></a></p>
-<h2 id="GitLab-Runner"><a href="#GitLab-Runner" class="headerlink" title="GitLab Runner"></a>GitLab Runner</h2><p>GitLab-Runner就是一个用来执行 <code>.gitlab-ci.yml</code> 脚本的工具。Runner 就像认真工作的工人，GitLab-CI 就是管理工人的中心，所有工人都要在 GitLab-CI 里面注册。当相应的项目发生变化时，GitLab-CI 就会通知相应的工人执行对应的脚本。gitLab-Runner 可以分类两种类型：Shared Runner（共享型）和 Specific Runner（指定型）。</p>
+        <h2 id="什么是-gitlab-ci"><a class="markdownIt-Anchor" href="#什么是-gitlab-ci"></a> 什么是 GitLab CI</h2>
+<p>GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 <code>.gitlab-ci.yml</code> 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。<a id="more"></a></p>
+<h2 id="gitlab-runner"><a class="markdownIt-Anchor" href="#gitlab-runner"></a> GitLab Runner</h2>
+<p>GitLab-Runner就是一个用来执行 <code>.gitlab-ci.yml</code> 脚本的工具。Runner 就像认真工作的工人，GitLab-CI 就是管理工人的中心，所有工人都要在 GitLab-CI 里面注册。当相应的项目发生变化时，GitLab-CI 就会通知相应的工人执行对应的脚本。gitLab-Runner 可以分类两种类型：Shared Runner（共享型）和 Specific Runner（指定型）。</p>
 <ul>
 <li>Shared Runner：所有工程都能够用的，只有系统管理员能够创建。</li>
 <li>Specific Runner：只有特定的项目可以使用。</li>
 </ul>
 <ol>
-<li>安装<br>官方文档: <a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="external">Install GitLab Runner</a></li>
-<li>注册<ul>
+<li>安装<br>
+官方文档: <a href="https://docs.gitlab.com/runner/install/" target="_blank" rel="external">Install GitLab Runner</a></li>
+<li>注册
+<ul>
 <li>输入 GitLab URL 地址</li>
 <li>输入注册 Token</li>
 <li>指定<code>runner executor</code> 一般为<code>shell</code></li>
 </ul>
 </li>
 </ol>
-<p>!!! Warning</p>
-<pre><code>1. 若是 `powershell` 需将配置文件里`shell`改为: `shell = &quot;powershell&quot;`
-2. Runner 默认日志输出太小，可通过更改`output_limit = 40960`进行调整
-3. Runner 默认为串行方式，可通过`concurrent = 2`指定能并行运行的数量
-</code></pre><h2 id="GitLab-CI-流程"><a href="#GitLab-CI-流程" class="headerlink" title="GitLab CI 流程"></a>GitLab CI 流程</h2><p>每个推送到 Gitlab 的提交都会产生一个与该提交关联的管道(pipeline)，管道(pipeline)是一个分成不同阶段(stage)的作业(job)的集合。多个 Stage 是按照顺序执行的，如果其中任何一个 Stage 失败，则后续的 Stage 不会被执行，整个 CI 过程被认为失败。<br><img src="../../images/gitlab-ci/1.png" alt="ci"></p>
-<h2 id="gitlab-ci-yml-文件"><a href="#gitlab-ci-yml-文件" class="headerlink" title=".gitlab-ci.yml 文件"></a>.gitlab-ci.yml 文件</h2><p>GitLab CI 使用 YAML 文件<code>.gitlab-ci.yml</code>来管理项目配置。该文件必须存放于项目仓库的根目录，并且包含了你的项目如何被编译的描述语句,YAML文件使用一系列约束叙述定义了Job启动时所要做的事情。</p>
-<h3 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h3><p>Job 是<code>.gitlab-ci.yml</code>文件中最基本的元素，由一系列参数定义了任务启动时所要做的事情，用户可以创建任意个任务；每个任务必须有一个独一无二的名字，但有一些保留 keywords 不能用于 Job 名称.<br>Job 被定义为顶级元素，并且至少包括一条script语句，如果一个 Job 没有显式地关联某个 Stage，则会被默认关联到 test Stage。</p>
+<p>!!! Warning<br>
+1. 若是 <code>powershell</code> 需将配置文件里<code>shell</code>改为: <code>shell = &quot;powershell&quot;</code><br>
+2. Runner 默认日志输出太小，可通过更改<code>output_limit = 40960</code>进行调整<br>
+3. Runner 默认为串行方式，可通过<code>concurrent = 2</code>指定能并行运行的数量</p>
+<h2 id="gitlab-ci-流程"><a class="markdownIt-Anchor" href="#gitlab-ci-流程"></a> GitLab CI 流程</h2>
+<p>每个推送到 Gitlab 的提交都会产生一个与该提交关联的管道(pipeline)，管道(pipeline)是一个分成不同阶段(stage)的作业(job)的集合。多个 Stage 是按照顺序执行的，如果其中任何一个 Stage 失败，则后续的 Stage 不会被执行，整个 CI 过程被认为失败。<br>
+<img src="../../images/gitlab-ci/1.png" alt="ci"></p>
+<h2 id="gitlab-ciyml-文件"><a class="markdownIt-Anchor" href="#gitlab-ciyml-文件"></a> .gitlab-ci.yml 文件</h2>
+<p>GitLab CI 使用 YAML 文件<code>.gitlab-ci.yml</code>来管理项目配置。该文件必须存放于项目仓库的根目录，并且包含了你的项目如何被编译的描述语句,YAML文件使用一系列约束叙述定义了Job启动时所要做的事情。</p>
+<h3 id="job"><a class="markdownIt-Anchor" href="#job"></a> Job</h3>
+<p>Job 是<code>.gitlab-ci.yml</code>文件中最基本的元素，由一系列参数定义了任务启动时所要做的事情，用户可以创建任意个任务；每个任务必须有一个独一无二的名字，但有一些保留 keywords 不能用于 Job 名称.<br>
+Job 被定义为顶级元素，并且至少包括一条script语句，如果一个 Job 没有显式地关联某个 Stage，则会被默认关联到 test Stage。</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="attr">stages:</span></div><div class="line"><span class="bullet">  -</span> <span class="string">build</span></div><div class="line"><span class="bullet">  -</span> <span class="string">test</span></div><div class="line"><span class="bullet">  -</span> <span class="string">deploy</span></div><div class="line"></div><div class="line"><span class="string">job</span> <span class="number">1</span><span class="string">:</span></div><div class="line"><span class="attr">  stage:</span> <span class="string">build</span></div><div class="line"><span class="attr">  script:</span> <span class="string">make</span> <span class="string">build</span> <span class="string">dependencies</span></div><div class="line"></div><div class="line"><span class="string">job</span> <span class="number">2</span><span class="string">:</span></div><div class="line"><span class="attr">  stage:</span> <span class="string">build</span></div><div class="line"><span class="attr">  script:</span> <span class="string">make</span> <span class="string">build</span> <span class="string">artifacts</span></div><div class="line"></div><div class="line"><span class="string">job</span> <span class="number">3</span><span class="string">:</span></div><div class="line"><span class="attr">  stage:</span> <span class="string">test</span></div><div class="line"><span class="attr">  script:</span> <span class="string">make</span> <span class="string">test</span></div><div class="line"></div><div class="line"><span class="string">job</span> <span class="number">4</span><span class="string">:</span></div><div class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></div><div class="line"><span class="attr">  script:</span> <span class="string">make</span> <span class="string">deploy</span></div></pre></td></tr></table></figure>
-<h3 id="before-script和after-script"><a href="#before-script和after-script" class="headerlink" title="before_script和after_script"></a>before_script和after_script</h3><p>before_script 是用于定义一些在所有任务执行前所需执行的命令, 包括部署工作，可以接受一个数组或者多行字符串。after_script 用于定义所有 job 执行过后需要执行的命令，可以接受一个数组或者多行字符串。例如可以在 before_script 做好ssh连接的准备。</p>
+<h3 id="before_script和after_script"><a class="markdownIt-Anchor" href="#before_script和after_script"></a> before_script和after_script</h3>
+<p>before_script 是用于定义一些在所有任务执行前所需执行的命令, 包括部署工作，可以接受一个数组或者多行字符串。after_script 用于定义所有 job 执行过后需要执行的命令，可以接受一个数组或者多行字符串。例如可以在 before_script 做好ssh连接的准备。</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#定义全局 before_script:</span></div><div class="line"><span class="attr">default:</span></div><div class="line"><span class="attr">  before_script:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">global</span> <span class="string">before</span> <span class="string">script</span></div><div class="line"><span class="comment">#覆盖全局before_script</span></div><div class="line"><span class="attr">job:</span></div><div class="line"><span class="attr">  before_script:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">execute</span> <span class="string">this</span> <span class="string">instead</span> <span class="string">of</span> <span class="string">global</span> <span class="string">before</span> <span class="string">script</span></div><div class="line"><span class="attr">  script:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">my</span> <span class="string">command</span></div><div class="line"><span class="attr">  after_script:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">execute</span> <span class="string">this</span> <span class="string">after</span> <span class="string">my</span> <span class="string">script</span></div></pre></td></tr></table></figure>
-<h3 id="only-和-except"><a href="#only-和-except" class="headerlink" title="only 和 except"></a>only 和 except</h3><ul>
+<h3 id="only-和-except"><a class="markdownIt-Anchor" href="#only-和-except"></a> only 和 except</h3>
+<ul>
 <li>only 和 except 两个参数说明了job什么时候将会被创建</li>
 <li>only 定义了 job 需要执行的所在分支或者标签</li>
 <li>except 定义了 job 不会执行的所在分支或者标签</li>
 </ul>
-<h3 id="Run-Pipeline"><a href="#Run-Pipeline" class="headerlink" title="Run Pipeline"></a>Run Pipeline</h3><ol>
+<h3 id="run-pipeline"><a class="markdownIt-Anchor" href="#run-pipeline"></a> Run Pipeline</h3>
+<ol>
 <li>提交代码时自动触发</li>
-<li>gitlab 上手动执行<br>在项目所在仓库里进入 CI/CD, 点击: <code>Run Pipeline</code></li>
-<li>Runner 本地运行<br><code>gitlab-runner exec shell &#39;job1&#39;</code><br><code>gitlab-runner exec shell &#39;job2&#39;</code></li>
+<li>gitlab 上手动执行<br>
+在项目所在仓库里进入 CI/CD, 点击: <code>Run Pipeline</code></li>
+<li>Runner 本地运行<br>
+<code>gitlab-runner exec shell 'job1'</code><br>
+<code>gitlab-runner exec shell 'job2'</code></li>
 </ol>
-<h3 id="如何跳过gitlab-ci流程"><a href="#如何跳过gitlab-ci流程" class="headerlink" title="如何跳过gitlab-ci流程"></a>如何跳过gitlab-ci流程</h3><p>在 commit 信息中包含<code>[ci skip]</code>或 <code>[skip ci]</code>,提交到仓库以后就会跳过本次 CI</p>
+<h3 id="如何跳过gitlab-ci流程"><a class="markdownIt-Anchor" href="#如何跳过gitlab-ci流程"></a> 如何跳过gitlab-ci流程</h3>
+<p>在 commit 信息中包含<code>[ci skip]</code>或 <code>[skip ci]</code>,提交到仓库以后就会跳过本次 CI</p>
 
       
     </div>
@@ -477,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/articles/2021/shellnotes.html" rel="next" title="Shell 脚本零碎笔记">
-                <i class="fa fa-chevron-left"></i> Shell 脚本零碎笔记
+              <a href="/articles/2022/Centos-vnc.html" rel="next" title="Centos7 安装 VNC远程桌面服务">
+                <i class="fa fa-chevron-left"></i> Centos7 安装 VNC远程桌面服务
               </a>
             
           </div>
@@ -572,7 +588,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -585,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -634,7 +650,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-GitLab-CI"><span class="nav-number">1.</span> <span class="nav-text">什么是 GitLab CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitLab-Runner"><span class="nav-number">2.</span> <span class="nav-text">GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitLab-CI-流程"><span class="nav-number">3.</span> <span class="nav-text">GitLab CI 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ci-yml-文件"><span class="nav-number">4.</span> <span class="nav-text">.gitlab-ci.yml 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Job"><span class="nav-number">4.1.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#before-script和after-script"><span class="nav-number">4.2.</span> <span class="nav-text">before_script和after_script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-和-except"><span class="nav-number">4.3.</span> <span class="nav-text">only 和 except</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-Pipeline"><span class="nav-number">4.4.</span> <span class="nav-text">Run Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何跳过gitlab-ci流程"><span class="nav-number">4.5.</span> <span class="nav-text">如何跳过gitlab-ci流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-gitlab-ci"><span class="nav-number">1.</span> <span class="nav-text"> 什么是 GitLab CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-runner"><span class="nav-number">2.</span> <span class="nav-text"> GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ci-流程"><span class="nav-number">3.</span> <span class="nav-text"> GitLab CI 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ciyml-文件"><span class="nav-number">4.</span> <span class="nav-text"> .gitlab-ci.yml 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#job"><span class="nav-number">4.1.</span> <span class="nav-text"> Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#before_script和after_script"><span class="nav-number">4.2.</span> <span class="nav-text"> before_script和after_script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-和-except"><span class="nav-number">4.3.</span> <span class="nav-text"> only 和 except</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-pipeline"><span class="nav-number">4.4.</span> <span class="nav-text"> Run Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何跳过gitlab-ci流程"><span class="nav-number">4.5.</span> <span class="nav-text"> 如何跳过gitlab-ci流程</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -672,7 +688,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="安装Docker-cecurl -fsSL https://get.docker.com -o get-docker.sh 安装docker-compose 12curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&amp;quot;">
+<meta name="description" content="安装Docker-ce curl -fsSL https://get.docker.com -o get-docker.sh 安装docker-compose  12curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&amp;quot">
 <meta name="keywords" content="docker, gitlab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 版 Gitlab 搭建">
 <meta property="og:url" content="http://blog.actpi.com/articles/gitlab文档.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="安装Docker-cecurl -fsSL https://get.docker.com -o get-docker.sh 安装docker-compose 12curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&amp;quot;">
+<meta property="og:description" content="安装Docker-ce curl -fsSL https://get.docker.com -o get-docker.sh 安装docker-compose  12curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&amp;quot">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2023-03-14T01:51:00.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 版 Gitlab 搭建">
-<meta name="twitter:description" content="安装Docker-cecurl -fsSL https://get.docker.com -o get-docker.sh 安装docker-compose 12curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&amp;quot;">
+<meta name="twitter:description" content="安装Docker-ce curl -fsSL https://get.docker.com -o get-docker.sh 安装docker-compose  12curl -L &amp;quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&amp;quot">
 
 
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  528
+                  529
                 </span>
               
 
@@ -390,34 +390,43 @@
 
       
         <ol>
-<li>安装Docker-ce<br><code>curl -fsSL https://get.docker.com -o get-docker.sh</code></li>
-<li><p>安装docker-compose</p>
+<li>安装Docker-ce<br>
+<code>curl -fsSL https://get.docker.com -o get-docker.sh</code></li>
+<li>安装docker-compose</li>
+</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl -L &quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</div><div class="line">chmod +x /usr/local/bin/docker-compose</div></pre></td></tr></table></figure>
-</li>
-<li><p>使用阿里云镜像为docker加速<br>首先需要一个阿里云的帐号,然后进入容器镜像服务控制台，下面有一个加速器。我们点击它之后，阿里云会为我们创建一个专属加速器地址。</p>
+<ol start="3">
+<li>使用阿里云镜像为docker加速<br>
+首先需要一个阿里云的帐号,然后进入容器镜像服务控制台，下面有一个加速器。我们点击它之后，阿里云会为我们创建一个专属加速器地址。</li>
+</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tee /etc/docker/daemon.json &lt;&lt;-&apos;EOF&apos;</div><div class="line">&#123;</div><div class="line">  &quot;registry-mirrors&quot;: [&quot;https://5g1ay0jx.mirror.aliyuncs.com&quot;]</div><div class="line">&#125;</div><div class="line">EOF</div></pre></td></tr></table></figure>
-</li>
-</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl daemon-reload</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
-<ol>
-<li>拉取gitlab docker镜像<br><code>docker pull gitlab/gitlab-ce:latest</code></li>
-<li>编辑docker-compose文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">web:</div><div class="line">  container_name: gitlab</div><div class="line">  image: &apos;gitlab/gitlab-ce:latest&apos;</div><div class="line">  restart: always</div><div class="line">  hostname: &apos;gitlab.example.com&apos;</div><div class="line">  environment:</div><div class="line">    TZ: &apos;Asia/Shanghai&apos;</div><div class="line">    GITLAB_OMNIBUS_CONFIG:</div><div class="line">      # 默认为http，如下设置为启用HTTPS访问</div><div class="line">      external_url &apos;https://gitlab.example.com&apos;</div><div class="line">      gitlab_rails[&apos;gitlab_shell_ssh_port&apos;] = 5222</div><div class="line">      # 修改docker内部时区</div><div class="line">      gitlab_rails[&apos;time_zone&apos;] = &apos;Asia/Shanghai&apos;</div><div class="line">      # Add any other gitlab.rb configuration here, each on its own line</div><div class="line">  ports:</div><div class="line">    - &apos;80:80&apos;</div><div class="line">    - &apos;443:443&apos;</div><div class="line">    - &apos;5222:22&apos;</div><div class="line">  volumes:</div><div class="line">    - &apos;/data/gitlab/etc:/etc/gitlab&apos;</div><div class="line">    - &apos;/data/gitlab/logs:/var/log/gitlab&apos;</div><div class="line">    - &apos;/data/gitlab/data:/var/opt/gitlab&apos;</div></pre></td></tr></table></figure>
-</li>
+<ol start="4">
+<li>拉取gitlab docker镜像<br>
+<code>docker pull gitlab/gitlab-ce:latest</code></li>
+<li>编辑docker-compose文件</li>
 </ol>
-<p>默认的 ssl 证书为 OpenSSL 自签名证书，如需使用正规 CA 颁发的 SSL 证书，需要在 <code>/etc/gitlab</code> 目录创建 ssl 路径，并将对应 ssl 证书放到里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir -p /etc/gitlab/ssl</div><div class="line">chmod 700 /etc/gitlab/ssl</div><div class="line">cp gitlab.example.com.key gitlab.example.com.crt /etc/gitlab/ssl/</div></pre></td></tr></table></figure></p>
-<ol>
-<li>启动gitlab<br><code>docker-compose up -d</code></li>
-<li>浏览器访问 <a href="https://gitlab.example.com" target="_blank" rel="external">https://gitlab.example.com</a><br>第一次打开需要先修改 root 管理员密码，才可以登录</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">web:</div><div class="line">  container_name: gitlab</div><div class="line">  image: &apos;gitlab/gitlab-ce:latest&apos;</div><div class="line">  restart: always</div><div class="line">  hostname: &apos;gitlab.example.com&apos;</div><div class="line">  environment:</div><div class="line">    TZ: &apos;Asia/Shanghai&apos;</div><div class="line">    GITLAB_OMNIBUS_CONFIG:</div><div class="line">      # 默认为http，如下设置为启用HTTPS访问</div><div class="line">      external_url &apos;https://gitlab.example.com&apos;</div><div class="line">      gitlab_rails[&apos;gitlab_shell_ssh_port&apos;] = 5222</div><div class="line">      # 修改docker内部时区</div><div class="line">      gitlab_rails[&apos;time_zone&apos;] = &apos;Asia/Shanghai&apos;</div><div class="line">      # Add any other gitlab.rb configuration here, each on its own line</div><div class="line">  ports:</div><div class="line">    - &apos;80:80&apos;</div><div class="line">    - &apos;443:443&apos;</div><div class="line">    - &apos;5222:22&apos;</div><div class="line">  volumes:</div><div class="line">    - &apos;/data/gitlab/etc:/etc/gitlab&apos;</div><div class="line">    - &apos;/data/gitlab/logs:/var/log/gitlab&apos;</div><div class="line">    - &apos;/data/gitlab/data:/var/opt/gitlab&apos;</div></pre></td></tr></table></figure>
+<p>默认的 ssl 证书为 OpenSSL 自签名证书，如需使用正规 CA 颁发的 SSL 证书，需要在 <code>/etc/gitlab</code> 目录创建 ssl 路径，并将对应 ssl 证书放到里面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir -p /etc/gitlab/ssl</div><div class="line">chmod 700 /etc/gitlab/ssl</div><div class="line">cp gitlab.example.com.key gitlab.example.com.crt /etc/gitlab/ssl/</div></pre></td></tr></table></figure>
+<ol start="6">
+<li>启动gitlab<br>
+<code>docker-compose up -d</code></li>
+<li>浏览器访问 <a href="https://gitlab.example.com" target="_blank" rel="external">https://gitlab.example.com</a><br>
+第一次打开需要先修改 root 管理员密码，才可以登录</li>
 </ol>
-<h2 id="PS-其他配置"><a href="#PS-其他配置" class="headerlink" title="PS.其他配置"></a>PS.其他配置</h2><ol>
-<li><p>默认头像不显示<br>配置 gravatar 国内镜像站</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">gitlab_rails['gravatar_plain_url']</span> <span class="string">=</span> <span class="string">'http://sdn.geekzu.org/avatar/<span class="template-variable">%&#123;hash&#125;</span>?s=<span class="template-variable">%&#123;size&#125;</span>&amp;d=identicon'</span></div><div class="line"><span class="string">gitlab_rails['gravatar_ssl_url']</span> <span class="string">=</span> <span class="string">'https://sdn.geekzu.org/avatar/<span class="template-variable">%&#123;hash&#125;</span>?s=<span class="template-variable">%&#123;size&#125;</span>&amp;d=identicon'</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>开启SMTP</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">gitlab_rails['gitlab_email_enabled']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="string">gitlab_rails['gitlab_email_from']</span> <span class="string">=</span> <span class="string">'gitlab@example.com'</span></div><div class="line"><span class="string">gitlab_rails['gitlab_email_display_name']</span> <span class="string">=</span> <span class="string">'GitLab'</span></div><div class="line"><span class="string">gitlab_rails['smtp_enable']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="string">gitlab_rails['smtp_address']</span> <span class="string">=</span> <span class="string">"smtp.example.com"</span></div><div class="line"><span class="string">gitlab_rails['smtp_port']</span> <span class="string">=</span> <span class="number">994</span></div><div class="line"><span class="string">gitlab_rails['smtp_user_name']</span> <span class="string">=</span> <span class="string">"gitlab@example.com"</span></div><div class="line"><span class="string">gitlab_rails['smtp_password']</span> <span class="string">=</span> <span class="string">"xxxxxxxxx"</span></div><div class="line"><span class="string">gitlab_rails['smtp_domain']</span> <span class="string">=</span> <span class="string">"smtp.example.com"</span></div><div class="line"><span class="string">gitlab_rails['smtp_authentication']</span> <span class="string">=</span> <span class="string">"login"</span></div><div class="line"><span class="string">gitlab_rails['smtp_enable_starttls_auto']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="string">gitlab_rails['smtp_tls']</span> <span class="string">=</span> <span class="literal">true</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>开启 LDAP</p>
-</li>
+<h2 id="ps其他配置"><a class="markdownIt-Anchor" href="#ps其他配置"></a> PS.其他配置</h2>
+<ol>
+<li>默认头像不显示<br>
+配置 gravatar 国内镜像站</li>
+</ol>
+  <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">gitlab_rails['gravatar_plain_url']</span> <span class="string">=</span> <span class="string">'http://sdn.geekzu.org/avatar/<span class="template-variable">%&#123;hash&#125;</span>?s=<span class="template-variable">%&#123;size&#125;</span>&amp;d=identicon'</span></div><div class="line"><span class="string">gitlab_rails['gravatar_ssl_url']</span> <span class="string">=</span> <span class="string">'https://sdn.geekzu.org/avatar/<span class="template-variable">%&#123;hash&#125;</span>?s=<span class="template-variable">%&#123;size&#125;</span>&amp;d=identicon'</span></div></pre></td></tr></table></figure>
+<ol>
+<li>开启SMTP</li>
+</ol>
+  <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">gitlab_rails['gitlab_email_enabled']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="string">gitlab_rails['gitlab_email_from']</span> <span class="string">=</span> <span class="string">'gitlab@example.com'</span></div><div class="line"><span class="string">gitlab_rails['gitlab_email_display_name']</span> <span class="string">=</span> <span class="string">'GitLab'</span></div><div class="line"><span class="string">gitlab_rails['smtp_enable']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="string">gitlab_rails['smtp_address']</span> <span class="string">=</span> <span class="string">"smtp.example.com"</span></div><div class="line"><span class="string">gitlab_rails['smtp_port']</span> <span class="string">=</span> <span class="number">994</span></div><div class="line"><span class="string">gitlab_rails['smtp_user_name']</span> <span class="string">=</span> <span class="string">"gitlab@example.com"</span></div><div class="line"><span class="string">gitlab_rails['smtp_password']</span> <span class="string">=</span> <span class="string">"xxxxxxxxx"</span></div><div class="line"><span class="string">gitlab_rails['smtp_domain']</span> <span class="string">=</span> <span class="string">"smtp.example.com"</span></div><div class="line"><span class="string">gitlab_rails['smtp_authentication']</span> <span class="string">=</span> <span class="string">"login"</span></div><div class="line"><span class="string">gitlab_rails['smtp_enable_starttls_auto']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="string">gitlab_rails['smtp_tls']</span> <span class="string">=</span> <span class="literal">true</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>开启 LDAP</li>
 </ol>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="string">gitlab_rails['ldap_enabled']</span> <span class="string">=</span> <span class="literal">true</span></div><div class="line"><span class="comment"># gitlab_rails['prevent_ldap_sign_in'] = false</span></div><div class="line"></div><div class="line"><span class="comment">###! **remember to close this block with 'EOS' below**</span></div><div class="line"><span class="string">gitlab_rails['ldap_servers']</span> <span class="string">=</span> <span class="string">YAML.load</span> <span class="string">&lt;&lt;-'EOS'</span></div><div class="line"><span class="attr">  main:</span> <span class="comment"># 'main' is the GitLab 'provider ID' of this LDAP server</span></div><div class="line"><span class="attr">    label:</span> <span class="string">'LDAP'</span></div><div class="line"><span class="attr">    host:</span> <span class="string">'192.168.x.x'</span></div><div class="line"><span class="attr">    port:</span> <span class="number">389</span></div><div class="line"><span class="attr">    uid:</span> <span class="string">'cn'</span></div><div class="line"><span class="attr">    bind_dn:</span> <span class="string">'cn=admin,dc=example,dc=com'</span></div><div class="line"><span class="attr">    password:</span> <span class="string">'password'</span></div><div class="line"><span class="attr">    encryption:</span> <span class="string">'plain'</span> <span class="comment"># "start_tls" or "simple_tls" or "plain"</span></div><div class="line"><span class="attr">    verify_certificates:</span> <span class="literal">false</span></div><div class="line"><span class="attr">    active_directory:</span> <span class="literal">false</span></div><div class="line"><span class="attr">    block_auto_created_users:</span> <span class="literal">false</span></div><div class="line"><span class="attr">    allow_username_or_email_login:</span> <span class="literal">true</span></div><div class="line"><span class="attr">    base:</span> <span class="string">'dc=example,dc=com'</span></div><div class="line"><span class="attr">    user_filter:</span> <span class="string">''</span></div><div class="line"><span class="string">EOS</span></div></pre></td></tr></table></figure>
 
@@ -565,7 +574,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -578,7 +587,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -627,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PS-其他配置"><span class="nav-number">1.</span> <span class="nav-text">PS.其他配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ps其他配置"><span class="nav-number">1.</span> <span class="nav-text"> PS.其他配置</span></a></li></ol></div>
             
 
           </div>
@@ -665,7 +674,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

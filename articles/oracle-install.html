@@ -110,13 +110,13 @@
 
 
 
-<meta name="description" content="前言本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。原文地址 centos 7 安装oracel 12c、本文对原贴翻译并加入安装过程踩到的坑。">
+<meta name="description" content="前言 本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。 原文地址 centos 7 安装oracel 12c、本文对原贴翻译并加入安装过程踩到的坑。">
 <meta name="keywords" content="oracle, localhost">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos 7 安装oracel 12c">
 <meta property="og:url" content="http://blog.actpi.com/articles/oracle-install.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="前言本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。原文地址 centos 7 安装oracel 12c、本文对原贴翻译并加入安装过程踩到的坑。">
+<meta property="og:description" content="前言 本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。 原文地址 centos 7 安装oracel 12c、本文对原贴翻译并加入安装过程踩到的坑。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.actpi.com/images/oracle-install/xshell.png">
 <meta property="og:image" content="http://blog.actpi.com/images/oracle-install/step1.png">
@@ -125,7 +125,7 @@
 <meta property="og:updated_time" content="2018-05-15T12:49:12.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos 7 安装oracel 12c">
-<meta name="twitter:description" content="前言本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。原文地址 centos 7 安装oracel 12c、本文对原贴翻译并加入安装过程踩到的坑。">
+<meta name="twitter:description" content="前言 本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。 原文地址 centos 7 安装oracel 12c、本文对原贴翻译并加入安装过程踩到的坑。">
 <meta name="twitter:image" content="http://blog.actpi.com/images/oracle-install/xshell.png">
 
 
@@ -394,25 +394,75 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。<br>原文地址 <a href="https://wiki.centos.org/HowTos/Oracle12onlocalhost" target="_blank" rel="external">centos 7 安装oracel 12c</a>、本文对原贴翻译并加入安装过程踩到的坑。<br><a id="more"></a><br>系统参考配置：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# hostnamectl</div><div class="line">   Static hostname: localhost</div><div class="line">Transient hostname: localhost.localdomain</div><div class="line">         Icon name: computer-desktop</div><div class="line">           Chassis: desktop</div><div class="line">        Machine ID: 3becbec7e6164b31a87540573b4fc957</div><div class="line">           Boot ID: 4fcc8bc181c742a6a96416a0dfd6ac3f</div><div class="line">  Operating System: CentOS Linux 7 (Core)</div><div class="line">       CPE OS Name: cpe:/o:centos:centos:7</div><div class="line">            Kernel: Linux 3.10.0-862.2.3.el7.x86_64</div><div class="line">      Architecture: x86-64</div></pre></td></tr></table></figure></p>
-<h1 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h1><p>成功安装操作系统后，请验证主机名并将其注册到您的DNS中。或者将您的主机名/ IP添加到<code>/etc/hosts</code>。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cat /etc/hostname</div><div class="line">localhost</div></pre></td></tr></table></figure></p>
-<p>保持SELinux处于强制模式并启用防火墙:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# sestatus</div><div class="line">SELinux status:                 enabled</div><div class="line">SELinuxfs mount:                /sys/fs/selinux</div><div class="line">SELinux root directory:         /etc/selinux</div><div class="line">Loaded policy name:             targeted</div><div class="line">Current mode:                   enforcing</div><div class="line">Mode from config file:          enforcing</div><div class="line">Policy MLS status:              enabled</div><div class="line">Policy deny_unknown status:     allowed</div><div class="line">Max kernel policy version:      28</div></pre></td></tr></table></figure></p>
+        <h1 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h1>
+<p>本文介绍如何使用快速安装功能在CentOS 7.1（64位）上部署Oracle Database 12c（12.1.0.2.0）。<br>
+原文地址 <a href="https://wiki.centos.org/HowTos/Oracle12onlocalhost" target="_blank" rel="external">centos 7 安装oracel 12c</a>、本文对原贴翻译并加入安装过程踩到的坑。</p>
+<a id="more"></a>
+<p>系统参考配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# hostnamectl</div><div class="line">   Static hostname: localhost</div><div class="line">Transient hostname: localhost.localdomain</div><div class="line">         Icon name: computer-desktop</div><div class="line">           Chassis: desktop</div><div class="line">        Machine ID: 3becbec7e6164b31a87540573b4fc957</div><div class="line">           Boot ID: 4fcc8bc181c742a6a96416a0dfd6ac3f</div><div class="line">  Operating System: CentOS Linux 7 (Core)</div><div class="line">       CPE OS Name: cpe:/o:centos:centos:7</div><div class="line">            Kernel: Linux 3.10.0-862.2.3.el7.x86_64</div><div class="line">      Architecture: x86-64</div></pre></td></tr></table></figure>
+<h1 id="安装前提"><a class="markdownIt-Anchor" href="#安装前提"></a> 安装前提</h1>
+<p>成功安装操作系统后，请验证主机名并将其注册到您的DNS中。或者将您的主机名/ IP添加到<code>/etc/hosts</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cat /etc/hostname</div><div class="line">localhost</div></pre></td></tr></table></figure>
+<p>保持SELinux处于强制模式并启用防火墙:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# sestatus</div><div class="line">SELinux status:                 enabled</div><div class="line">SELinuxfs mount:                /sys/fs/selinux</div><div class="line">SELinux root directory:         /etc/selinux</div><div class="line">Loaded policy name:             targeted</div><div class="line">Current mode:                   enforcing</div><div class="line">Mode from config file:          enforcing</div><div class="line">Policy MLS status:              enabled</div><div class="line">Policy deny_unknown status:     allowed</div><div class="line">Max kernel policy version:      28</div></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --state</div><div class="line">running</div></pre></td></tr></table></figure>
-<p>用最新的软件包更新CentOS系统:<br><code>[root@localhost ~]# yum update -y</code><br><div class="note "><p>这里替换为国内163的镜像地址、否则下载速度太慢:<br>下载对应版本repo文件, 放入<code>/etc/yum.repos.d/</code><br><a href="http://mirrors.163.com/.help/localhost-Base-163.repo" target="_blank" rel="external">localhost-Base-163.repo</a><br>备份<code>/etc/yum.repos.d/CentOS-Base.repo</code><br><code>[root@localhost ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</code><br>运行以下命令生成缓存：<br><code>root@localhost ~]# yum clean all</code><br><code>root@localhost ~]# yum makecache</code></p></div><br>下载适用于Linux x86-64软件的Oracle Database 12c：<br><a href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html</a></p>
-<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><p>为Oracle数据库创建所需的OS用户和组:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# groupadd oinstall</div><div class="line">[root@localhost ~]# groupadd dba</div><div class="line">[root@localhost ~]# useradd -g oinstall -G dba oracle</div><div class="line">[root@localhost ~]# passwd oracle</div></pre></td></tr></table></figure></p>
-<p>将以下内核参数添加到<code>/etc/sysctl.conf</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">fs.aio-max-nr = 1048576</div><div class="line">fs.file-max = 6815744</div><div class="line">kernel.shmall = 2097152</div><div class="line">kernel.shmmax = 1987162112</div><div class="line">kernel.shmmni = 4096</div><div class="line">kernel.sem = 250 32000 100 128</div><div class="line">net.ipv4.ip_local_port_range = 9000 65500</div><div class="line">net.core.rmem_default = 262144</div><div class="line">net.core.rmem_max = 4194304</div><div class="line">net.core.wmem_default = 262144</div><div class="line">net.core.wmem_max = 1048586</div></pre></td></tr></table></figure></p>
-<p>检查并应用新值。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# sysctl -p</div><div class="line">[root@localhost ~]# sysctl -a</div></pre></td></tr></table></figure></p>
-<p>在<code>/etc/security/limits.conf</code>中指定oracle用户的限制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">oracle soft nproc 2047</div><div class="line">oracle hard nproc 16384</div><div class="line">oracle soft nofile 1024</div><div class="line">oracle hard nofile 65536</div></pre></td></tr></table></figure></p>
-<p>将压缩的Oracle数据库软件压缩文档(<code>linuxamd64_12102_database_1of2.zip</code>，<code>linuxamd64_12102_database_2of2.zip</code>)解压缩到<code>/stage</code>文件夹:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# yum install -y zip unzip</div><div class="line">[root@localhost ~]# unzip linuxamd64_12102_database_1of2.zip -d /stage/</div><div class="line">[root@localhost ~]# unzip linuxamd64_12102_database_2of2.zip -d /stage/</div></pre></td></tr></table></figure></p>
-<p>修改<code>/stage</code>上的权限<br><code>[root@localhost ~]# chown -R oracle:oinstall /stage/</code><br>为Oracle软件创建<code>/u01</code>目录，为数据库文件创建<code>/u02</code>目录:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# mkdir /u01</div><div class="line">[root@localhost ~]# mkdir /u02</div><div class="line">[root@localhost ~]# chown -R oracle:oinstall /u01</div><div class="line">[root@localhost ~]# chown -R oracle:oinstall /u02</div><div class="line">[root@localhost ~]# chmod -R 775 /u01</div><div class="line">[root@localhost ~]# chmod -R 775 /u02</div><div class="line">[root@localhost ~]# chmod g+s /u01</div><div class="line">[root@localhost ~]# chmod g+s /u02</div></pre></td></tr></table></figure></p>
-<p>安装所需软件包：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# yum install -y binutils.x86_64 compat-libcap1.x86_64 gcc.x86_64 gcc-c++.x86_64 glibc.i686 glibc.x86_64 \</div><div class="line">glibc-devel.i686 glibc-devel.x86_64 ksh compat-libstdc++-33 libaio.i686 libaio.x86_64 libaio-devel.i686 libaio-devel.x86_64 \</div><div class="line">libgcc.i686 libgcc.x86_64 libstdc++.i686 libstdc++.x86_64 libstdc++-devel.i686 libstdc++-devel.x86_64 libXi.i686 libXi.x86_64 \</div><div class="line">libXtst.i686 libXtst.x86_64 make.x86_64 sysstat.x86_64</div></pre></td></tr></table></figure></p>
-<p>安装“X Window System”软件包:<br><code>[root@localhost ~]# yum groupinstall -y &quot;X Window System&quot;</code><br>由于Oracle安装需要GUI，所以有两种简单的方法来提供它:<br>方案一、<br>通过SSH从图形Linux机器远程登录。<code>ssh -X oracle@OracleserverIP</code><br>方案二、<br>使用带有SSH客户端（PuTTY）和X-Windows终端仿真器（Xming）的Microsoft Windows桌面。 以下文章介绍了如何在Windows系统上安装Xming。<br><a href="https://wiki.centos.org/HowTos/Xming" target="_blank" rel="external">Xming X-Windows terminal emulator for Microsoft Windows computers</a></p>
+<p>用最新的软件包更新CentOS系统:<br>
+<code>[root@localhost ~]# yum update -y</code></p>
+<div class="note "><p>这里替换为国内163的镜像地址、否则下载速度太慢:<br>
+下载对应版本repo文件, 放入<code>/etc/yum.repos.d/</code><br>
+<a href="http://mirrors.163.com/.help/localhost-Base-163.repo" target="_blank" rel="external">localhost-Base-163.repo</a><br>
+备份<code>/etc/yum.repos.d/CentOS-Base.repo</code><br>
+<code>[root@localhost ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</code><br>
+运行以下命令生成缓存：<br>
+<code>root@localhost ~]# yum clean all</code><br>
+<code>root@localhost ~]# yum makecache</code></p></div>
+<p>下载适用于Linux x86-64软件的Oracle Database 12c：<br>
+<a href="http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html</a></p>
+<h1 id="安装步骤"><a class="markdownIt-Anchor" href="#安装步骤"></a> 安装步骤</h1>
+<p>为Oracle数据库创建所需的OS用户和组:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# groupadd oinstall</div><div class="line">[root@localhost ~]# groupadd dba</div><div class="line">[root@localhost ~]# useradd -g oinstall -G dba oracle</div><div class="line">[root@localhost ~]# passwd oracle</div></pre></td></tr></table></figure>
+<p>将以下内核参数添加到<code>/etc/sysctl.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">fs.aio-max-nr = 1048576</div><div class="line">fs.file-max = 6815744</div><div class="line">kernel.shmall = 2097152</div><div class="line">kernel.shmmax = 1987162112</div><div class="line">kernel.shmmni = 4096</div><div class="line">kernel.sem = 250 32000 100 128</div><div class="line">net.ipv4.ip_local_port_range = 9000 65500</div><div class="line">net.core.rmem_default = 262144</div><div class="line">net.core.rmem_max = 4194304</div><div class="line">net.core.wmem_default = 262144</div><div class="line">net.core.wmem_max = 1048586</div></pre></td></tr></table></figure>
+<p>检查并应用新值。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# sysctl -p</div><div class="line">[root@localhost ~]# sysctl -a</div></pre></td></tr></table></figure>
+<p>在<code>/etc/security/limits.conf</code>中指定oracle用户的限制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">oracle soft nproc 2047</div><div class="line">oracle hard nproc 16384</div><div class="line">oracle soft nofile 1024</div><div class="line">oracle hard nofile 65536</div></pre></td></tr></table></figure>
+<p>将压缩的Oracle数据库软件压缩文档(<code>linuxamd64_12102_database_1of2.zip</code>，<code>linuxamd64_12102_database_2of2.zip</code>)解压缩到<code>/stage</code>文件夹:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# yum install -y zip unzip</div><div class="line">[root@localhost ~]# unzip linuxamd64_12102_database_1of2.zip -d /stage/</div><div class="line">[root@localhost ~]# unzip linuxamd64_12102_database_2of2.zip -d /stage/</div></pre></td></tr></table></figure>
+<p>修改<code>/stage</code>上的权限<br>
+<code>[root@localhost ~]# chown -R oracle:oinstall /stage/</code><br>
+为Oracle软件创建<code>/u01</code>目录，为数据库文件创建<code>/u02</code>目录:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# mkdir /u01</div><div class="line">[root@localhost ~]# mkdir /u02</div><div class="line">[root@localhost ~]# chown -R oracle:oinstall /u01</div><div class="line">[root@localhost ~]# chown -R oracle:oinstall /u02</div><div class="line">[root@localhost ~]# chmod -R 775 /u01</div><div class="line">[root@localhost ~]# chmod -R 775 /u02</div><div class="line">[root@localhost ~]# chmod g+s /u01</div><div class="line">[root@localhost ~]# chmod g+s /u02</div></pre></td></tr></table></figure>
+<p>安装所需软件包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# yum install -y binutils.x86_64 compat-libcap1.x86_64 gcc.x86_64 gcc-c++.x86_64 glibc.i686 glibc.x86_64 \</div><div class="line">glibc-devel.i686 glibc-devel.x86_64 ksh compat-libstdc++-33 libaio.i686 libaio.x86_64 libaio-devel.i686 libaio-devel.x86_64 \</div><div class="line">libgcc.i686 libgcc.x86_64 libstdc++.i686 libstdc++.x86_64 libstdc++-devel.i686 libstdc++-devel.x86_64 libXi.i686 libXi.x86_64 \</div><div class="line">libXtst.i686 libXtst.x86_64 make.x86_64 sysstat.x86_64</div></pre></td></tr></table></figure>
+<p>安装“X Window System”软件包:<br>
+<code>[root@localhost ~]# yum groupinstall -y &quot;X Window System&quot;</code><br>
+由于Oracle安装需要GUI，所以有两种简单的方法来提供它:<br>
+方案一、<br>
+通过SSH从图形Linux机器远程登录。<code>ssh -X oracle@OracleserverIP</code><br>
+方案二、<br>
+使用带有SSH客户端（PuTTY）和X-Windows终端仿真器（Xming）的Microsoft Windows桌面。 以下文章介绍了如何在Windows系统上安装Xming。<br>
+<a href="https://wiki.centos.org/HowTos/Xming" target="_blank" rel="external">Xming X-Windows terminal emulator for Microsoft Windows computers</a></p>
 <div class="note "><p>由于我的电脑是安装的 xshell，所有列出下面的使用 xmanager 的附件方案</p></div>
-<p>xshell 方案、<br>安装 xmanager：<br><a href="https://www.netsarang.com/download/main.html" target="_blank" rel="external">downloads xmanager installer.exe</a><br>一直点击下一步默认安装即可。<br>然后在 xshell 连接属性界面设置 由xmanager转发X Window界面。<br><img src="/images/oracle-install/xshell.png" alt="xshell"><br>使用上述解决方案以“oracle”用户身份登录并运行Oracle安装程序即可弹出 Oracle 安装程序的图形界面：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[oracle@localhost ~]$ /stage/database/runInstaller</div><div class="line">Starting Oracle Universal Installer...</div></pre></td></tr></table></figure></p>
-<h1 id="Oracle安装程序界面"><a href="#Oracle安装程序界面" class="headerlink" title="Oracle安装程序界面"></a>Oracle安装程序界面</h1><h2 id="第1步-安全更新"><a href="#第1步-安全更新" class="headerlink" title="第1步 - 安全更新"></a>第1步 - 安全更新</h2><p>如果您不希望从Oracle支持中收到电子邮件，请取消选中该复选框，然后单击下一步。 另一个窗口打开，点击 YES。<br><img src="/images/oracle-install/step1.png" alt="step1"><br><img src="/images/oracle-install/step1-1.png" alt="step1-1"></p>
-<h2 id="第2步-安装选项"><a href="#第2步-安装选项" class="headerlink" title="第2步 - 安装选项"></a>第2步 - 安装选项</h2><p>选择 “Create and configure a database” 然后单击下一步。</p>
-<h2 id="第3步-系统类"><a href="#第3步-系统类" class="headerlink" title="第3步 - 系统类"></a>第3步 - 系统类</h2><p>选择”Desktop Class”进行Oracle数据库的简单默认安装。</p>
-<h2 id="第4步-典型安装"><a href="#第4步-典型安装" class="headerlink" title="第4步 - 典型安装"></a>第4步 - 典型安装</h2><p>在安装配置屏幕上，指定主要功能。</p>
+<p>xshell 方案、<br>
+安装 xmanager：<br>
+<a href="https://www.netsarang.com/download/main.html" target="_blank" rel="external">downloads xmanager installer.exe</a><br>
+一直点击下一步默认安装即可。<br>
+然后在 xshell 连接属性界面设置 由xmanager转发X Window界面。<br>
+<img src="/images/oracle-install/xshell.png" alt="xshell"><br>
+使用上述解决方案以“oracle”用户身份登录并运行Oracle安装程序即可弹出 Oracle 安装程序的图形界面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[oracle@localhost ~]$ /stage/database/runInstaller</div><div class="line">Starting Oracle Universal Installer...</div></pre></td></tr></table></figure>
+<h1 id="oracle安装程序界面"><a class="markdownIt-Anchor" href="#oracle安装程序界面"></a> Oracle安装程序界面</h1>
+<h2 id="第1步-安全更新"><a class="markdownIt-Anchor" href="#第1步-安全更新"></a> 第1步 - 安全更新</h2>
+<p>如果您不希望从Oracle支持中收到电子邮件，请取消选中该复选框，然后单击下一步。 另一个窗口打开，点击 YES。<br>
+<img src="/images/oracle-install/step1.png" alt="step1"><br>
+<img src="/images/oracle-install/step1-1.png" alt="step1-1"></p>
+<h2 id="第2步-安装选项"><a class="markdownIt-Anchor" href="#第2步-安装选项"></a> 第2步 - 安装选项</h2>
+<p>选择 “Create and configure a database” 然后单击下一步。</p>
+<h2 id="第3步-系统类"><a class="markdownIt-Anchor" href="#第3步-系统类"></a> 第3步 - 系统类</h2>
+<p>选择&quot;Desktop Class&quot;进行Oracle数据库的简单默认安装。</p>
+<h2 id="第4步-典型安装"><a class="markdownIt-Anchor" href="#第4步-典型安装"></a> 第4步 - 典型安装</h2>
+<p>在安装配置屏幕上，指定主要功能。</p>
 <table>
 <thead>
 <tr>
@@ -431,26 +481,46 @@
 </tr>
 <tr>
 <td style="text-align:center">Global database name</td>
-<td style="text-align:left">orcl.example.com</td>
+<td style="text-align:left"><a href="http://orcl.example.com" target="_blank" rel="external">orcl.example.com</a></td>
 </tr>
 </tbody>
 </table>
-<p>还要指定合适的“数据库版本”以及”字符集”。为数据库管理设置”强密码”，并最终取消选择”创建为容器数据库”选项。</p>
-<h2 id="第5步-创建库存"><a href="#第5步-创建库存" class="headerlink" title="第5步 - 创建库存"></a>第5步 - 创建库存</h2><p>按照默认的<code>/ u01/app/oraInventory</code>并单击下一步。</p>
-<h2 id="第6步-安装前提检查"><a href="#第6步-安装前提检查" class="headerlink" title="第6步 - 安装前提检查"></a>第6步 - 安装前提检查</h2><p>安装程序自动验证所有必需的操作系统软件包和操作系统内核设置。</p>
-<h2 id="第7步-总结"><a href="#第7步-总结" class="headerlink" title="第7步 - 总结"></a>第7步 - 总结</h2><p>最终机会编辑任何安装功能。点击安装。</p>
-<h2 id="第8步-执行配置脚本"><a href="#第8步-执行配置脚本" class="headerlink" title="第8步 - 执行配置脚本"></a>第8步 - 执行配置脚本</h2><p><img src="/images/oracle-install/step8.png" alt="step8"><br>当出现请求窗口时，以<code>root</code>身份登录并执行两个脚本：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /u01/app/oraInventory/orainstRoot.sh</div><div class="line">Changing permissions of /u01/app/oraInventory.</div><div class="line">Adding read,write permissions for group.</div><div class="line">Removing read,write,execute permissions for world.</div><div class="line">Changing groupname of /u01/app/oraInventory to oinstall.</div><div class="line">The execution of the script is complete.</div></pre></td></tr></table></figure></p>
+<p>还要指定合适的“数据库版本”以及&quot;字符集&quot;。为数据库管理设置&quot;强密码&quot;，并最终取消选择&quot;创建为容器数据库&quot;选项。</p>
+<h2 id="第5步-创建库存"><a class="markdownIt-Anchor" href="#第5步-创建库存"></a> 第5步 - 创建库存</h2>
+<p>按照默认的<code>/ u01/app/oraInventory</code>并单击下一步。</p>
+<h2 id="第6步-安装前提检查"><a class="markdownIt-Anchor" href="#第6步-安装前提检查"></a> 第6步 - 安装前提检查</h2>
+<p>安装程序自动验证所有必需的操作系统软件包和操作系统内核设置。</p>
+<h2 id="第7步-总结"><a class="markdownIt-Anchor" href="#第7步-总结"></a> 第7步 - 总结</h2>
+<p>最终机会编辑任何安装功能。点击安装。</p>
+<h2 id="第8步-执行配置脚本"><a class="markdownIt-Anchor" href="#第8步-执行配置脚本"></a> 第8步 - 执行配置脚本</h2>
+<p><img src="/images/oracle-install/step8.png" alt="step8"><br>
+当出现请求窗口时，以<code>root</code>身份登录并执行两个脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /u01/app/oraInventory/orainstRoot.sh</div><div class="line">Changing permissions of /u01/app/oraInventory.</div><div class="line">Adding read,write permissions for group.</div><div class="line">Removing read,write,execute permissions for world.</div><div class="line">Changing groupname of /u01/app/oraInventory to oinstall.</div><div class="line">The execution of the script is complete.</div></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /u01/app/oracle/product/12.1.0/dbhome_1/root.sh</div><div class="line">Performing root user operation.</div><div class="line">The following environment variables are set as:</div><div class="line">    ORACLE_OWNER= oracle</div><div class="line">    ORACLE_HOME=  /u01/app/oracle/product/12.1.0/dbhome_1</div><div class="line">Enter the full pathname of the local bin directory: [/usr/local/bin]: &lt;PRESS ENTER&gt;</div><div class="line">   Copying dbhome to /usr/local/bin ...</div><div class="line">   Copying oraenv to /usr/local/bin ...</div><div class="line">   Copying coraenv to /usr/local/bin ...</div><div class="line">Creating /etc/oratab file...</div><div class="line">Entries will be added to the /etc/oratab file as needed by</div><div class="line">Database Configuration Assistant when a database is created</div><div class="line">Finished running generic part of root script.</div><div class="line">Now product-specific root actions will be performed.</div><div class="line">You can follow the installation in a separated window.</div></pre></td></tr></table></figure>
 <p>这两个脚本必须以root身份运行。</p>
-<h2 id="第9步-安装进度"><a href="#第9步-安装进度" class="headerlink" title="第9步 - 安装进度"></a>第9步 - 安装进度</h2><p>此时会打开另一个窗口来显示安装进度。不要关闭这个窗口。</p>
-<h2 id="第10步-安装成功"><a href="#第10步-安装成功" class="headerlink" title="第10步 - 安装成功"></a>第10步 - 安装成功</h2><p>最后一个屏幕通知安装已完成并显示Oracle企业管理器URL。<br><a href="https://localhost:5500/em" target="_blank" rel="external">https://localhost:5500/em</a><br>点击 “OK” 关闭安装窗口。</p>
-<h1 id="安装后任务"><a href="#安装后任务" class="headerlink" title="安装后任务"></a>安装后任务</h1><h2 id="防火墙设置"><a href="#防火墙设置" class="headerlink" title="防火墙设置"></a>防火墙设置</h2><p>以root身份登录并验证活动区域：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --get-active-zones</div><div class="line">public</div><div class="line">  interfaces: enp2s0</div></pre></td></tr></table></figure></p>
-<p>开放需要的端口：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --zone=public --add-port=1521/tcp --add-port=5500/tcp --add-port=5520/tcp --add-port=3938/tcp --permanent</div><div class="line">success</div></pre></td></tr></table></figure></p>
-<p>重启防火墙、查看端口列表：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --reload</div><div class="line">success</div><div class="line">[root@localhost ~]# firewall-cmd --list-ports</div><div class="line">1521/tcp 3938/tcp 5500/tcp 5520/tcp</div></pre></td></tr></table></figure></p>
-<h2 id="设置-Oracle-环境变量"><a href="#设置-Oracle-环境变量" class="headerlink" title="设置 Oracle 环境变量"></a>设置 Oracle 环境变量</h2><p>以oracle用户登陆并把下面的变量添加到<code>/home/oracle/.bash_profile</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">TMPDIR=$TMP; export TMPDIR</div><div class="line">ORACLE_BASE=/u01/app/oracle; export ORACLE_BASE</div><div class="line">ORACLE_HOME=$ORACLE_BASE/product/12.1.0/dbhome_1; export ORACLE_HOME</div><div class="line">ORACLE_SID=orcl; export ORACLE_SID</div><div class="line">PATH=$ORACLE_HOME/bin:$PATH; export PATH</div><div class="line">LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; export LD_LIBRARY_PATH</div><div class="line">CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; export CLASSPATH</div></pre></td></tr></table></figure></p>
-<p>重载<code>bash_profile</code>文件使新的设置生效：<br><code>[oracle@localhost ~]$ . .bash_profile</code></p>
-<h3 id="登陆数据库"><a href="#登陆数据库" class="headerlink" title="登陆数据库"></a>登陆数据库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[oracle@localhost ~]$ sqlplus system@orcl</div><div class="line">... output omitted ...</div><div class="line">Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production</div><div class="line">With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options</div><div class="line">[enter password]:</div><div class="line"><span class="meta">SQL&gt;</span><span class="bash"></span></div></pre></td></tr></table></figure>
-<p>用远程管理器管理数据库：<br>访问<a href="https://localhost:5500/em" target="_blank" rel="external">https://localhost:5500/em</a>即可。</p>
+<h2 id="第9步-安装进度"><a class="markdownIt-Anchor" href="#第9步-安装进度"></a> 第9步 - 安装进度</h2>
+<p>此时会打开另一个窗口来显示安装进度。不要关闭这个窗口。</p>
+<h2 id="第10步-安装成功"><a class="markdownIt-Anchor" href="#第10步-安装成功"></a> 第10步 - 安装成功</h2>
+<p>最后一个屏幕通知安装已完成并显示Oracle企业管理器URL。<br>
+<a href="https://localhost:5500/em" target="_blank" rel="external">https://localhost:5500/em</a><br>
+点击 “OK” 关闭安装窗口。</p>
+<h1 id="安装后任务"><a class="markdownIt-Anchor" href="#安装后任务"></a> 安装后任务</h1>
+<h2 id="防火墙设置"><a class="markdownIt-Anchor" href="#防火墙设置"></a> 防火墙设置</h2>
+<p>以root身份登录并验证活动区域：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --get-active-zones</div><div class="line">public</div><div class="line">  interfaces: enp2s0</div></pre></td></tr></table></figure>
+<p>开放需要的端口：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --zone=public --add-port=1521/tcp --add-port=5500/tcp --add-port=5520/tcp --add-port=3938/tcp --permanent</div><div class="line">success</div></pre></td></tr></table></figure>
+<p>重启防火墙、查看端口列表：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# firewall-cmd --reload</div><div class="line">success</div><div class="line">[root@localhost ~]# firewall-cmd --list-ports</div><div class="line">1521/tcp 3938/tcp 5500/tcp 5520/tcp</div></pre></td></tr></table></figure>
+<h2 id="设置-oracle-环境变量"><a class="markdownIt-Anchor" href="#设置-oracle-环境变量"></a> 设置 Oracle 环境变量</h2>
+<p>以oracle用户登陆并把下面的变量添加到<code>/home/oracle/.bash_profile</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">TMPDIR=$TMP; export TMPDIR</div><div class="line">ORACLE_BASE=/u01/app/oracle; export ORACLE_BASE</div><div class="line">ORACLE_HOME=$ORACLE_BASE/product/12.1.0/dbhome_1; export ORACLE_HOME</div><div class="line">ORACLE_SID=orcl; export ORACLE_SID</div><div class="line">PATH=$ORACLE_HOME/bin:$PATH; export PATH</div><div class="line">LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib:/usr/lib64; export LD_LIBRARY_PATH</div><div class="line">CLASSPATH=$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib; export CLASSPATH</div></pre></td></tr></table></figure>
+<p>重载<code>bash_profile</code>文件使新的设置生效：<br>
+<code>[oracle@localhost ~]$ . .bash_profile</code></p>
+<h3 id="登陆数据库"><a class="markdownIt-Anchor" href="#登陆数据库"></a> 登陆数据库</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[oracle@localhost ~]$ sqlplus system@orcl</div><div class="line">... output omitted ...</div><div class="line">Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production</div><div class="line">With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options</div><div class="line">[enter password]:</div><div class="line"><span class="meta">SQL&gt;</span><span class="bash"></span></div></pre></td></tr></table></figure>
+<p>用远程管理器管理数据库：<br>
+访问<a href="https://localhost:5500/em" target="_blank" rel="external">https://localhost:5500/em</a>即可。</p>
 
       
     </div>
@@ -511,8 +581,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/articles/ssl-error.html" rel="prev" title="SSL证书校验错误 Trust anchor for certification path not found">
-                SSL证书校验错误 Trust anchor for certification path not found <i class="fa fa-chevron-right"></i>
+              <a href="/articles/Let'sEncrypt免费HTTPS证书-泛域名申请.html" rel="prev" title="Let'sEncrypt免费申请泛域名HTTPS证书">
+                Let'sEncrypt免费申请泛域名HTTPS证书 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -596,7 +666,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -609,7 +679,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -658,7 +728,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装前提"><span class="nav-number">2.</span> <span class="nav-text">安装前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle安装程序界面"><span class="nav-number">4.</span> <span class="nav-text">Oracle安装程序界面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第1步-安全更新"><span class="nav-number">4.1.</span> <span class="nav-text">第1步 - 安全更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第2步-安装选项"><span class="nav-number">4.2.</span> <span class="nav-text">第2步 - 安装选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第3步-系统类"><span class="nav-number">4.3.</span> <span class="nav-text">第3步 - 系统类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第4步-典型安装"><span class="nav-number">4.4.</span> <span class="nav-text">第4步 - 典型安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第5步-创建库存"><span class="nav-number">4.5.</span> <span class="nav-text">第5步 - 创建库存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第6步-安装前提检查"><span class="nav-number">4.6.</span> <span class="nav-text">第6步 - 安装前提检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第7步-总结"><span class="nav-number">4.7.</span> <span class="nav-text">第7步 - 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第8步-执行配置脚本"><span class="nav-number">4.8.</span> <span class="nav-text">第8步 - 执行配置脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第9步-安装进度"><span class="nav-number">4.9.</span> <span class="nav-text">第9步 - 安装进度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第10步-安装成功"><span class="nav-number">4.10.</span> <span class="nav-text">第10步 - 安装成功</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装后任务"><span class="nav-number">5.</span> <span class="nav-text">安装后任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#防火墙设置"><span class="nav-number">5.1.</span> <span class="nav-text">防火墙设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置-Oracle-环境变量"><span class="nav-number">5.2.</span> <span class="nav-text">设置 Oracle 环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#登陆数据库"><span class="nav-number">5.2.1.</span> <span class="nav-text">登陆数据库</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装前提"><span class="nav-number">2.</span> <span class="nav-text"> 安装前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">3.</span> <span class="nav-text"> 安装步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oracle安装程序界面"><span class="nav-number">4.</span> <span class="nav-text"> Oracle安装程序界面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第1步-安全更新"><span class="nav-number">4.1.</span> <span class="nav-text"> 第1步 - 安全更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第2步-安装选项"><span class="nav-number">4.2.</span> <span class="nav-text"> 第2步 - 安装选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第3步-系统类"><span class="nav-number">4.3.</span> <span class="nav-text"> 第3步 - 系统类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第4步-典型安装"><span class="nav-number">4.4.</span> <span class="nav-text"> 第4步 - 典型安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第5步-创建库存"><span class="nav-number">4.5.</span> <span class="nav-text"> 第5步 - 创建库存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第6步-安装前提检查"><span class="nav-number">4.6.</span> <span class="nav-text"> 第6步 - 安装前提检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第7步-总结"><span class="nav-number">4.7.</span> <span class="nav-text"> 第7步 - 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第8步-执行配置脚本"><span class="nav-number">4.8.</span> <span class="nav-text"> 第8步 - 执行配置脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第9步-安装进度"><span class="nav-number">4.9.</span> <span class="nav-text"> 第9步 - 安装进度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第10步-安装成功"><span class="nav-number">4.10.</span> <span class="nav-text"> 第10步 - 安装成功</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装后任务"><span class="nav-number">5.</span> <span class="nav-text"> 安装后任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#防火墙设置"><span class="nav-number">5.1.</span> <span class="nav-text"> 防火墙设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置-oracle-环境变量"><span class="nav-number">5.2.</span> <span class="nav-text"> 设置 Oracle 环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#登陆数据库"><span class="nav-number">5.2.1.</span> <span class="nav-text"> 登陆数据库</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -696,7 +766,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

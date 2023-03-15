@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="需求 使用 es 采集 nginx 访问日志，系统日志，备份日志等 滚动更新，保留指定时期文档，自动删除旧的索引 不使用额外的脚本，尽量用 es 自带功能实现  思路与实践 配置生命周期策略 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ） filebeat 采集多个日志源，分别输出为不同索引 index 对生成的 index 索引添加别名，使其能被策略调">
+<meta name="description" content="需求  使用 es 采集 nginx 访问日志，系统日志，备份日志等 滚动更新，保留指定时期文档，自动删除旧的索引 不使用额外的脚本，尽量用 es 自带功能实现   思路与实践  配置生命周期策略 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ） filebeat 采集多个日志源，分别输出为不同索引 index 对生成的 index 索引添加别名，使其能">
 <meta name="keywords" content="ES, 索引生命周期">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES 索引生命周期管理">
 <meta property="og:url" content="http://blog.actpi.com/articles/使用ES索引模板实现索引生命周期管理.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="需求 使用 es 采集 nginx 访问日志，系统日志，备份日志等 滚动更新，保留指定时期文档，自动删除旧的索引 不使用额外的脚本，尽量用 es 自带功能实现  思路与实践 配置生命周期策略 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ） filebeat 采集多个日志源，分别输出为不同索引 index 对生成的 index 索引添加别名，使其能被策略调">
+<meta property="og:description" content="需求  使用 es 采集 nginx 访问日志，系统日志，备份日志等 滚动更新，保留指定时期文档，自动删除旧的索引 不使用额外的脚本，尽量用 es 自带功能实现   思路与实践  配置生命周期策略 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ） filebeat 采集多个日志源，分别输出为不同索引 index 对生成的 index 索引添加别名，使其能">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-07-09T12:48:39.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES 索引生命周期管理">
-<meta name="twitter:description" content="需求 使用 es 采集 nginx 访问日志，系统日志，备份日志等 滚动更新，保留指定时期文档，自动删除旧的索引 不使用额外的脚本，尽量用 es 自带功能实现  思路与实践 配置生命周期策略 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ） filebeat 采集多个日志源，分别输出为不同索引 index 对生成的 index 索引添加别名，使其能被策略调">
+<meta name="twitter:description" content="需求  使用 es 采集 nginx 访问日志，系统日志，备份日志等 滚动更新，保留指定时期文档，自动删除旧的索引 不使用额外的脚本，尽量用 es 自带功能实现   思路与实践  配置生命周期策略 ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ） filebeat 采集多个日志源，分别输出为不同索引 index 对生成的 index 索引添加别名，使其能">
 
 
 
@@ -389,22 +389,29 @@
       
 
       
-        <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ol>
+        <h1 id="需求"><a class="markdownIt-Anchor" href="#需求"></a> 需求</h1>
+<ol>
 <li>使用 es 采集 nginx 访问日志，系统日志，备份日志等</li>
 <li>滚动更新，保留指定时期文档，自动删除旧的索引</li>
 <li>不使用额外的脚本，尽量用 es 自带功能实现</li>
 </ol>
-<h1 id="思路与实践"><a href="#思路与实践" class="headerlink" title="思路与实践"></a>思路与实践</h1><ol>
+<h1 id="思路与实践"><a class="markdownIt-Anchor" href="#思路与实践"></a> 思路与实践</h1>
+<ol>
 <li>配置生命周期策略</li>
 <li>ES 配置索引模板，加载生命周期策略到索引（模板不要配置 rollover_alias ）</li>
 <li>filebeat 采集多个日志源，分别输出为不同索引 index</li>
 <li>对生成的 index 索引添加别名，使其能被策略调用</li>
 </ol>
-<h2 id="对已存在的-index-索引添加别名"><a href="#对已存在的-index-索引添加别名" class="headerlink" title="对已存在的 index 索引添加别名"></a>对已存在的 index 索引添加别名</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    &quot;actions&quot; : [</div><div class="line">        &#123; &quot;add&quot; : &#123; &quot;index&quot; : &quot;test1&quot;, &quot;alias&quot; : &quot;alias1&quot; &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="filebeat-模块配置排除"><a href="#filebeat-模块配置排除" class="headerlink" title="filebeat 模块配置排除"></a>filebeat 模块配置排除</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- module: nginx</div><div class="line">  # Access logs</div><div class="line">  access:</div><div class="line">    input:</div><div class="line">      exclude_lines: [&apos;POST&apos;]</div><div class="line">    enabled: true</div></pre></td></tr></table></figure>
-<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><ol>
+<h2 id="对已存在的-index-索引添加别名"><a class="markdownIt-Anchor" href="#对已存在的-index-索引添加别名"></a> 对已存在的 index 索引添加别名</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">POST /_aliases</div><div class="line">&#123;</div><div class="line">    &quot;actions&quot; : [</div><div class="line">        &#123; &quot;add&quot; : &#123; &quot;index&quot; : &quot;test1&quot;, &quot;alias&quot; : &quot;alias1&quot; &#125; &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="filebeat-模块配置排除"><a class="markdownIt-Anchor" href="#filebeat-模块配置排除"></a> filebeat 模块配置排除</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- module: nginx</div><div class="line">  # Access logs</div><div class="line">  access:</div><div class="line">    input:</div><div class="line">      exclude_lines: [&apos;POST&apos;]</div><div class="line">    enabled: true</div></pre></td></tr></table></figure>
+<h1 id="结果"><a class="markdownIt-Anchor" href="#结果"></a> 结果</h1>
+<ol>
 <li>能正常按需生成不同索引，</li>
-<li>生命周期策略待观察<br>— 能生成新的 index -000002<br>— 不能往新的索引里写数据，仍然是写到 index -000001</li>
+<li>生命周期策略待观察<br>
+— 能生成新的 index -000002<br>
+— 不能往新的索引里写数据，仍然是写到 index -000001</li>
 </ol>
 
       
@@ -551,7 +558,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -564,7 +571,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -613,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路与实践"><span class="nav-number">2.</span> <span class="nav-text">思路与实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对已存在的-index-索引添加别名"><span class="nav-number">2.1.</span> <span class="nav-text">对已存在的 index 索引添加别名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filebeat-模块配置排除"><span class="nav-number">2.2.</span> <span class="nav-text">filebeat 模块配置排除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结果"><span class="nav-number">3.</span> <span class="nav-text">结果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text"> 需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路与实践"><span class="nav-number">2.</span> <span class="nav-text"> 思路与实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对已存在的-index-索引添加别名"><span class="nav-number">2.1.</span> <span class="nav-text"> 对已存在的 index 索引添加别名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filebeat-模块配置排除"><span class="nav-number">2.2.</span> <span class="nav-text"> filebeat 模块配置排除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结果"><span class="nav-number">3.</span> <span class="nav-text"> 结果</span></a></li></ol></div>
             
 
           </div>
@@ -651,7 +658,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

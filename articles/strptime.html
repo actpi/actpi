@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta name="description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下： 我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
 <meta name="keywords" content="python, UTC时间,字符串转换为datetime">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型">
 <meta property="og:url" content="http://blog.actpi.com/articles/strptime.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta property="og:description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下： 我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-05-15T14:46:00.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型">
-<meta name="twitter:description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta name="twitter:description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下： 我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
 
 
 
@@ -389,9 +389,14 @@
       
 
       
-        <p>今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：<br>我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是<code>2018-03-05T09:20:005Z</code>这种字符串。<a id="more"></a><br>它的类型为<code>str</code>,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>last_modfied</div><div class="line"><span class="string">'2018-03-05T09:20:005Z'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(last_modfied)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></div></pre></td></tr></table></figure></p>
-<p>首先得对其进行格式转换，转换为<code>datetime</code>类型才好进行日期的比较。这里使用 Python 内置<code>datetime</code>模块来完成：<br><a href="https://docs.python.org/3.5/library/datetime.html#" target="_blank" rel="external">datetime官方文档</a> <code>datetime.strptime()</code>方法根据代表日期和时间的字符串以相应的格式字符串创建日期时间对象。</p>
-<h1 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h1><p><code>datetime.strptime(date_string, format)</code>,以下是C标准（1989版本）要求的所有格式代码的列表，并且这些代码可以在所有平台上使用标准的C实现:</p>
+        <p>今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：<br>
+我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是<code>2018-03-05T09:20:005Z</code>这种字符串。<a id="more"></a><br>
+它的类型为<code>str</code>,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>last_modfied</div><div class="line"><span class="string">'2018-03-05T09:20:005Z'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(last_modfied)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></div></pre></td></tr></table></figure>
+<p>首先得对其进行格式转换，转换为<code>datetime</code>类型才好进行日期的比较。这里使用 Python 内置<code>datetime</code>模块来完成：<br>
+<a href="https://docs.python.org/3.5/library/datetime.html#" target="_blank" rel="external">datetime官方文档</a> <code>datetime.strptime()</code>方法根据代表日期和时间的字符串以相应的格式字符串创建日期时间对象。</p>
+<h1 id="使用方法"><a class="markdownIt-Anchor" href="#使用方法"></a> 使用方法：</h1>
+<p><code>datetime.strptime(date_string, format)</code>,以下是C标准（1989版本）要求的所有格式代码的列表，并且这些代码可以在所有平台上使用标准的C实现:</p>
 <table>
 <thead>
 <tr>
@@ -518,13 +523,15 @@
 </tr>
 <tr>
 <td>%%</td>
-<td>‘％’字符。</td>
+<td>'％'字符。</td>
 <td>%</td>
 </tr>
 </tbody>
 </table>
-<p>转换代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line">date_str = <span class="string">"2018-03-05T09:20:005Z"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>date_str</div><div class="line"><span class="string">'2018-03-05T09:20:005Z'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(date_str)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></div><div class="line">&gt;&gt;&gt; date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S%fZ')</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(date)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">datetime</span>.<span class="title">datetime</span>'&gt;</span></div><div class="line"><span class="class">&gt;&gt;&gt; <span class="title">date</span></span></div><div class="line"><span class="class"><span class="title">datetime</span>.<span class="title">datetime</span><span class="params">(<span class="number">2018</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="number">500000</span>)</span></span></div></pre></td></tr></table></figure></p>
-<p>转成功换后即可对object日期与现在日期进行比较了。下例为 python 通过 boto s3 删除指定 30 天之前的 object 代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</div><div class="line"></div><div class="line">today = datetime.now()</div><div class="line">outgo_day = timedelta(days=<span class="number">30</span>)</div><div class="line"></div><div class="line">AWS_ACCESS_KEY_ID = Your AWS Access Key ID</div><div class="line">AWS_SECRET_ACCESS_KEY = Your AWS Secret Access Key</div><div class="line"></div><div class="line"></div><div class="line">conn = S3Connection(<span class="string">'&lt;aws access key&gt;'</span>, <span class="string">'&lt;aws secret key&gt;'</span>)</div><div class="line">bucket = conn.get_bucket(<span class="string">'bucket-to-delete'</span>)</div><div class="line"><span class="keyword">for</span> key <span class="keyword">in</span> bucket.list():</div><div class="line">    key.date = datetime.strptime(key.last_modfied, <span class="string">'%Y-%m-%dT%H:%M:%S%fZ'</span>)</div><div class="line">    <span class="keyword">if</span> key.date &lt; today - outgo_day:</div><div class="line">        key.delete()</div></pre></td></tr></table></figure></p>
+<p>转换代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line">date_str = <span class="string">"2018-03-05T09:20:005Z"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>date_str</div><div class="line"><span class="string">'2018-03-05T09:20:005Z'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(date_str)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></div><div class="line">&gt;&gt;&gt; date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S%fZ')</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(date)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">datetime</span>.<span class="title">datetime</span>'&gt;</span></div><div class="line"><span class="class">&gt;&gt;&gt; <span class="title">date</span></span></div><div class="line"><span class="class"><span class="title">datetime</span>.<span class="title">datetime</span><span class="params">(<span class="number">2018</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="number">500000</span>)</span></span></div></pre></td></tr></table></figure>
+<p>转成功换后即可对object日期与现在日期进行比较了。下例为 python 通过 boto s3 删除指定 30 天之前的 object 代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</div><div class="line"></div><div class="line">today = datetime.now()</div><div class="line">outgo_day = timedelta(days=<span class="number">30</span>)</div><div class="line"></div><div class="line">AWS_ACCESS_KEY_ID = Your AWS Access Key ID</div><div class="line">AWS_SECRET_ACCESS_KEY = Your AWS Secret Access Key</div><div class="line"></div><div class="line"></div><div class="line">conn = S3Connection(<span class="string">'&lt;aws access key&gt;'</span>, <span class="string">'&lt;aws secret key&gt;'</span>)</div><div class="line">bucket = conn.get_bucket(<span class="string">'bucket-to-delete'</span>)</div><div class="line"><span class="keyword">for</span> key <span class="keyword">in</span> bucket.list():</div><div class="line">    key.date = datetime.strptime(key.last_modfied, <span class="string">'%Y-%m-%dT%H:%M:%S%fZ'</span>)</div><div class="line">    <span class="keyword">if</span> key.date &lt; today - outgo_day:</div><div class="line">        key.delete()</div></pre></td></tr></table></figure>
 <blockquote>
 <p>以上！</p>
 </blockquote>
@@ -673,7 +680,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -686,7 +693,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -735,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法："><span class="nav-number">1.</span> <span class="nav-text">使用方法：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text"> 使用方法：</span></a></li></ol></div>
             
 
           </div>
@@ -773,7 +780,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

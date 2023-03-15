@@ -110,13 +110,13 @@
 
 
 
-<meta name="description" content="文件上传利用 Jenkins File Parameter实现上传文件  File location  filename  - 存放于当前任务目录下名为 filename,同时 利用变量 ${filename} 保存原始文件名,可在后续的构建脚本里调用，如： 将上传的文件重命名为原始文件名：mv filename ${inpfile} -f  通过参数化分支来选择不同分支名进行构建在 Jenkin">
+<meta name="description" content="文件上传 利用 Jenkins File Parameter实现上传文件  File location  filename  - 存放于当前任务目录下名为 filename,同时 利用变量 ${filename} 保存原始文件名,可在后续的构建脚本里调用，如： 将上传的文件重命名为原始文件名：mv filename ${inpfile} -f   通过参数化分支来选择不同分支名进行构建  在 J">
 <meta name="keywords" content="jenkins,CI&#x2F;CD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins 文件上传与多分支参数化构建">
 <meta property="og:url" content="http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="文件上传利用 Jenkins File Parameter实现上传文件  File location  filename  - 存放于当前任务目录下名为 filename,同时 利用变量 ${filename} 保存原始文件名,可在后续的构建脚本里调用，如： 将上传的文件重命名为原始文件名：mv filename ${inpfile} -f  通过参数化分支来选择不同分支名进行构建在 Jenkin">
+<meta property="og:description" content="文件上传 利用 Jenkins File Parameter实现上传文件  File location  filename  - 存放于当前任务目录下名为 filename,同时 利用变量 ${filename} 保存原始文件名,可在后续的构建脚本里调用，如： 将上传的文件重命名为原始文件名：mv filename ${inpfile} -f   通过参数化分支来选择不同分支名进行构建  在 J">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.actpi.com/images/jenkins/add.png">
 <meta property="og:image" content="http://blog.actpi.com/images/jenkins/private.png">
@@ -124,7 +124,7 @@
 <meta property="og:updated_time" content="2023-03-14T03:03:49.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jenkins 文件上传与多分支参数化构建">
-<meta name="twitter:description" content="文件上传利用 Jenkins File Parameter实现上传文件  File location  filename  - 存放于当前任务目录下名为 filename,同时 利用变量 ${filename} 保存原始文件名,可在后续的构建脚本里调用，如： 将上传的文件重命名为原始文件名：mv filename ${inpfile} -f  通过参数化分支来选择不同分支名进行构建在 Jenkin">
+<meta name="twitter:description" content="文件上传 利用 Jenkins File Parameter实现上传文件  File location  filename  - 存放于当前任务目录下名为 filename,同时 利用变量 ${filename} 保存原始文件名,可在后续的构建脚本里调用，如： 将上传的文件重命名为原始文件名：mv filename ${inpfile} -f   通过参数化分支来选择不同分支名进行构建  在 J">
 <meta name="twitter:image" content="http://blog.actpi.com/images/jenkins/add.png">
 
 
@@ -393,17 +393,25 @@
       
 
       
-        <h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>利用 Jenkins <code>File Parameter</code>实现上传文件</p>
+        <h2 id="文件上传"><a class="markdownIt-Anchor" href="#文件上传"></a> 文件上传</h2>
+<p>利用 Jenkins <code>File Parameter</code>实现上传文件</p>
 <ul>
 <li><code>File location</code>  <code>filename</code>  - 存放于当前任务目录下名为 <code>filename</code>,同时 利用变量 <code>${filename}</code> 保存原始文件名,可在后续的构建脚本里调用，如：</li>
 <li>将上传的文件重命名为原始文件名：<code>mv filename ${inpfile} -f</code></li>
 </ul>
-<h2 id="通过参数化分支来选择不同分支名进行构建"><a href="#通过参数化分支来选择不同分支名进行构建" class="headerlink" title="通过参数化分支来选择不同分支名进行构建"></a>通过参数化分支来选择不同分支名进行构建</h2><h3 id="在-Jenkins-所在服务器生成-ssh-key"><a href="#在-Jenkins-所在服务器生成-ssh-key" class="headerlink" title="在 Jenkins 所在服务器生成 ssh key"></a>在 Jenkins 所在服务器生成 ssh key</h3><p>!!!info<br>    需在jenkins用户下操作，否则jenkins 页面会报错，提示无权限</p>
+<h2 id="通过参数化分支来选择不同分支名进行构建"><a class="markdownIt-Anchor" href="#通过参数化分支来选择不同分支名进行构建"></a> 通过参数化分支来选择不同分支名进行构建</h2>
+<h3 id="在-jenkins-所在服务器生成-ssh-key"><a class="markdownIt-Anchor" href="#在-jenkins-所在服务器生成-ssh-key"></a> 在 Jenkins 所在服务器生成 ssh key</h3>
+<p>!!!info<br>
+需在jenkins用户下操作，否则jenkins 页面会报错，提示无权限</p>
 <p><code>ssh-keygen -t rsa -C &quot;jenkins@server-229&quot;</code></p>
-<h3 id="将公钥-id-rsa-pub-拷贝到-GitLab-SSH-Keys里"><a href="#将公钥-id-rsa-pub-拷贝到-GitLab-SSH-Keys里" class="headerlink" title="将公钥 id_rsa.pub 拷贝到 GitLab SSH Keys里"></a>将公钥 <code>id_rsa.pub</code> 拷贝到 GitLab SSH Keys里</h3><p><code>cat ~/.ssh/id_rsa.pub</code></p>
+<h3 id="将公钥-id_rsapub-拷贝到-gitlab-ssh-keys里"><a class="markdownIt-Anchor" href="#将公钥-id_rsapub-拷贝到-gitlab-ssh-keys里"></a> 将公钥 <code>id_rsa.pub</code> 拷贝到 GitLab SSH Keys里</h3>
+<p><code>cat ~/.ssh/id_rsa.pub</code></p>
 <p><img src="../../images/jenkins/add.png" alt="add sshkey"></p>
-<h3 id="将私钥-id-rsa-拷贝到-jenkins-凭证里"><a href="#将私钥-id-rsa-拷贝到-jenkins-凭证里" class="headerlink" title="将私钥 id_rsa 拷贝到 jenkins 凭证里"></a>将私钥 <code>id_rsa</code> 拷贝到 jenkins 凭证里</h3><p><img src="../../images/jenkins/private.png" alt="add private"></p>
-<h3 id="jenkins-插件管理里安装-git-parameter"><a href="#jenkins-插件管理里安装-git-parameter" class="headerlink" title="jenkins 插件管理里安装 git parameter"></a>jenkins 插件管理里安装 git parameter</h3><p>任务里配置参数<br><img src="../../images/jenkins/branch.png" alt="branch"></p>
+<h3 id="将私钥-id_rsa-拷贝到-jenkins-凭证里"><a class="markdownIt-Anchor" href="#将私钥-id_rsa-拷贝到-jenkins-凭证里"></a> 将私钥 <code>id_rsa</code> 拷贝到 jenkins 凭证里</h3>
+<p><img src="../../images/jenkins/private.png" alt="add private"></p>
+<h3 id="jenkins-插件管理里安装-git-parameter"><a class="markdownIt-Anchor" href="#jenkins-插件管理里安装-git-parameter"></a> jenkins 插件管理里安装 git parameter</h3>
+<p>任务里配置参数<br>
+<img src="../../images/jenkins/branch.png" alt="branch"></p>
 <p>在 <em>Branches to build</em> 里配置前面填写的参数名 <code>${branch}</code></p>
 <p>进入项目，点击 <code>Build with Parameters</code> 选项，可以看到自动从远程仓库获取了项目的分支名.</p>
 
@@ -549,7 +557,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -562,7 +570,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -611,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">1.</span> <span class="nav-text">文件上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过参数化分支来选择不同分支名进行构建"><span class="nav-number">2.</span> <span class="nav-text">通过参数化分支来选择不同分支名进行构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Jenkins-所在服务器生成-ssh-key"><span class="nav-number">2.1.</span> <span class="nav-text">在 Jenkins 所在服务器生成 ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将公钥-id-rsa-pub-拷贝到-GitLab-SSH-Keys里"><span class="nav-number">2.2.</span> <span class="nav-text">将公钥 id_rsa.pub 拷贝到 GitLab SSH Keys里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将私钥-id-rsa-拷贝到-jenkins-凭证里"><span class="nav-number">2.3.</span> <span class="nav-text">将私钥 id_rsa 拷贝到 jenkins 凭证里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jenkins-插件管理里安装-git-parameter"><span class="nav-number">2.4.</span> <span class="nav-text">jenkins 插件管理里安装 git parameter</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">1.</span> <span class="nav-text"> 文件上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过参数化分支来选择不同分支名进行构建"><span class="nav-number">2.</span> <span class="nav-text"> 通过参数化分支来选择不同分支名进行构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-jenkins-所在服务器生成-ssh-key"><span class="nav-number">2.1.</span> <span class="nav-text"> 在 Jenkins 所在服务器生成 ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将公钥-id_rsapub-拷贝到-gitlab-ssh-keys里"><span class="nav-number">2.2.</span> <span class="nav-text"> 将公钥 id_rsa.pub 拷贝到 GitLab SSH Keys里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将私钥-id_rsa-拷贝到-jenkins-凭证里"><span class="nav-number">2.3.</span> <span class="nav-text"> 将私钥 id_rsa 拷贝到 jenkins 凭证里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jenkins-插件管理里安装-git-parameter"><span class="nav-number">2.4.</span> <span class="nav-text"> jenkins 插件管理里安装 git parameter</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -649,7 +657,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

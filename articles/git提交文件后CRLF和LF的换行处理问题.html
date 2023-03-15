@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异 原因探究 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一致 wi">
+<meta name="description" content="问题发现 代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异  原因探究  怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一">
 <meta name="keywords" content="git, 换行符">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git提交文件后CRLF和LF的换行处理问题">
 <meta property="og:url" content="http://blog.actpi.com/articles/git提交文件后CRLF和LF的换行处理问题.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异 原因探究 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一致 wi">
+<meta property="og:description" content="问题发现 代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异  原因探究  怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-07-09T12:22:15.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git提交文件后CRLF和LF的换行处理问题">
-<meta name="twitter:description" content="问题发现代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异 原因探究 怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一致 wi">
+<meta name="twitter:description" content="问题发现 代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异  原因探究  怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一">
 
 
 
@@ -389,16 +389,25 @@
       
 
       
-        <h2 id="问题发现"><a href="#问题发现" class="headerlink" title="问题发现"></a>问题发现</h2><p>代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异</p>
-<h2 id="原因探究"><a href="#原因探究" class="headerlink" title="原因探究"></a>原因探究</h2><ol>
+        <h2 id="问题发现"><a class="markdownIt-Anchor" href="#问题发现"></a> 问题发现</h2>
+<p>代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异</p>
+<h2 id="原因探究"><a class="markdownIt-Anchor" href="#原因探究"></a> 原因探究</h2>
+<ol>
 <li>怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对</li>
 <li>修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致</li>
 <li>拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题</li>
 <li>将两个环境的文件同时在 notepadd++ 打开，发现格不一致 windows(CRLF) 与 unix(LF)</li>
-<li>经检查原始文件格式为 windows(CRLF)，提交到 git 后变为 unix(LF)<h2 id="问题根源"><a href="#问题根源" class="headerlink" title="问题根源"></a>问题根源</h2>CRLF 和 LF 是文本换行的不同方式：<br>CRLF 是 carriagereturnline feed 的缩写，中文意思是回车换行，”\r\n”, windows 系统的换行方式<br>LF 是 line feed 的缩写，中文意思是换行，”\n”, 是 Linux 系统的换行方式</li>
+<li>经检查原始文件格式为 windows(CRLF)，提交到 git 后变为 unix(LF)</li>
 </ol>
-<p>git会通过CRLF和LF的配置来对源文件文本进行格式处理<br>在使用 git 提交代码的时候，git 会自动将代码文件当中 CRLF 转换为 LF，再进行同步即有差异</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>修改 git 全局配置文件，core.autocrlf <code>true</code> 改为 <code>false</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git config --global core.autocrlf true</div><div class="line"></div><div class="line">core.autocrlf 是 git 中负责处理 line endings 的变量</div><div class="line"></div><div class="line">设置为 true，添加文件到 git 仓库时，将把 crlf 变成 lf</div><div class="line">设置为 false 时，line-endings 将不做转换操作。文本文件保持原来的换行方式</div></pre></td></tr></table></figure></p>
+<h2 id="问题根源"><a class="markdownIt-Anchor" href="#问题根源"></a> 问题根源</h2>
+<p>CRLF 和 LF 是文本换行的不同方式：<br>
+CRLF 是 carriagereturnline feed 的缩写，中文意思是回车换行，&quot;\r\n&quot;, windows 系统的换行方式<br>
+LF 是 line feed 的缩写，中文意思是换行，&quot;\n&quot;, 是 Linux 系统的换行方式</p>
+<p>git会通过CRLF和LF的配置来对源文件文本进行格式处理<br>
+在使用 git 提交代码的时候，git 会自动将代码文件当中 CRLF 转换为 LF，再进行同步即有差异</p>
+<h2 id="解决办法"><a class="markdownIt-Anchor" href="#解决办法"></a> 解决办法</h2>
+<p>修改 git 全局配置文件，core.autocrlf <code>true</code> 改为 <code>false</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">git config --global core.autocrlf true</div><div class="line"></div><div class="line">core.autocrlf 是 git 中负责处理 line endings 的变量</div><div class="line"></div><div class="line">设置为 true，添加文件到 git 仓库时，将把 crlf 变成 lf</div><div class="line">设置为 false 时，line-endings 将不做转换操作。文本文件保持原来的换行方式</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -542,7 +551,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -555,7 +564,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -604,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题发现"><span class="nav-number">1.</span> <span class="nav-text">问题发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因探究"><span class="nav-number">2.</span> <span class="nav-text">原因探究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题根源"><span class="nav-number">3.</span> <span class="nav-text">问题根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">4.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题发现"><span class="nav-number">1.</span> <span class="nav-text"> 问题发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因探究"><span class="nav-number">2.</span> <span class="nav-text"> 原因探究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题根源"><span class="nav-number">3.</span> <span class="nav-text"> 问题根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">4.</span> <span class="nav-text"> 解决办法</span></a></li></ol></div>
             
 
           </div>
@@ -642,7 +651,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

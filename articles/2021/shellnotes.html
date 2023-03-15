@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="set的基本用法，写出更安全的 Bash 脚本 set -u:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行 set -x:   用来在运行结果之前，先输出执行的那一行命 set -e:   它使得脚本只要发生错误，就终止执行某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 set +e，该命令执行结束后，再重新打开set -e">
+<meta name="description" content="set的基本用法，写出更安全的 Bash 脚本  set -u:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行 set -x:   用来在运行结果之前，先输出执行的那一行命 set -e:   它使得脚本只要发生错误，就终止执行 某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 set +e，该命令执行结束后，再重新打开set">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell 脚本零碎笔记">
 <meta property="og:url" content="http://blog.actpi.com/articles/2021/shellnotes.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="set的基本用法，写出更安全的 Bash 脚本 set -u:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行 set -x:   用来在运行结果之前，先输出执行的那一行命 set -e:   它使得脚本只要发生错误，就终止执行某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 set +e，该命令执行结束后，再重新打开set -e">
+<meta property="og:description" content="set的基本用法，写出更安全的 Bash 脚本  set -u:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行 set -x:   用来在运行结果之前，先输出执行的那一行命 set -e:   它使得脚本只要发生错误，就终止执行 某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 set +e，该命令执行结束后，再重新打开set">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2023-03-14T02:49:00.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell 脚本零碎笔记">
-<meta name="twitter:description" content="set的基本用法，写出更安全的 Bash 脚本 set -u:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行 set -x:   用来在运行结果之前，先输出执行的那一行命 set -e:   它使得脚本只要发生错误，就终止执行某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 set +e，该命令执行结束后，再重新打开set -e">
+<meta name="twitter:description" content="set的基本用法，写出更安全的 Bash 脚本  set -u:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行 set -x:   用来在运行结果之前，先输出执行的那一行命 set -e:   它使得脚本只要发生错误，就终止执行 某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 set +e，该命令执行结束后，再重新打开set">
 
 
 
@@ -389,26 +389,34 @@
       
 
       
-        <h2 id="set的基本用法，写出更安全的-Bash-脚本"><a href="#set的基本用法，写出更安全的-Bash-脚本" class="headerlink" title="set的基本用法，写出更安全的 Bash 脚本"></a>set的基本用法，写出更安全的 Bash 脚本</h2><ul>
+        <h2 id="set的基本用法写出更安全的-bash-脚本"><a class="markdownIt-Anchor" href="#set的基本用法写出更安全的-bash-脚本"></a> set的基本用法，写出更安全的 Bash 脚本</h2>
+<ul>
 <li><code>set -u</code>:  脚本在头部加上它，遇到不存在的变量就会报错，并停止执行</li>
 <li><code>set -x</code>:   用来在运行结果之前，先输出执行的那一行命</li>
-<li><code>set -e</code>:   它使得脚本只要发生错误，就终止执行<br>某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 <code>set +e</code>，该命令执行结束后，再重新打开<code>set -e</code><a id="more"></a><br>还有一种方法是使用<code>command || true</code>，使得该命令即使执行失败，脚本也不会终止执行<br><code>set -e</code>有一个例外情况，就是不适用于管道命令,此时需要用到下面用法</li>
+<li><code>set -e</code>:   它使得脚本只要发生错误，就终止执行<br>
+某些命令的非零返回值可能不表示失败，或者开发者希望在命令失败的情况下，脚本继续执行下去。这时可以暂时关闭 <code>set +e</code>，该命令执行结束后，再重新打开<code>set -e</code><a id="more"></a><br>
+还有一种方法是使用<code>command || true</code>，使得该命令即使执行失败，脚本也不会终止执行<br>
+<code>set -e</code>有一个例外情况，就是不适用于管道命令,此时需要用到下面用法</li>
 <li><code>set -o pipefail</code>  只要一个子命令失败，整个管道命令就失败，脚本就会终止执行</li>
 <li><code>set -n</code>: 等同于<code>set -o noexec</code>，不运行命令，只检查语法是否正确。</li>
 <li><code>set -f</code>: 等同于<code>set -o noglob</code>，表示不对通配符进行文件名扩展。</li>
 <li><code>set -v</code>: 等同于<code>set -o verbose</code>，表示打印 Shell 接收到的每一行输入</li>
 </ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>重点介绍的<code>set</code>命令的四个参数，一般都放在一起使用</p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>重点介绍的<code>set</code>命令的四个参数，一般都放在一起使用</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 写法一</span></div><div class="line">set -euxo pipefail</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> 写法二</span></div><div class="line">set -eux</div><div class="line">set -o pipefail</div></pre></td></tr></table></figure>
 <p>这两种写法建议放在所有 Bash 脚本的头部</p>
 <p>另一种办法是在执行 Bash 脚本的时候，从命令行传入这些参数</p>
-<h2 id="Bash-脚本除错"><a href="#Bash-脚本除错" class="headerlink" title="Bash 脚本除错"></a>Bash 脚本除错</h2><p>在使用脚本删除某个目录文件时：<br>尽量使用下面的写法</p>
+<h2 id="bash-脚本除错"><a class="markdownIt-Anchor" href="#bash-脚本除错"></a> Bash 脚本除错</h2>
+<p>在使用脚本删除某个目录文件时：<br>
+尽量使用下面的写法</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[ -d $dir_name ]] &amp;&amp; cd $dir_name &amp;&amp; rm *</div></pre></td></tr></table></figure>
 <p>上面代码中，先判断目录<code>$dir_name</code>是否存在，然后才执行其他操作</p>
 <p>如果不放心删除什么文件，可以先打印出来看一下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[ -d $dir_name ]] &amp;&amp; cd $dir_name &amp;&amp; echo rm *</div></pre></td></tr></table></figure>
 <p>上面命令中，<code>echo rm *</code>不会删除文件，只会打印出来要删除的文件</p>
-<h2 id="mktemp-命令，trap-命令"><a href="#mktemp-命令，trap-命令" class="headerlink" title="mktemp 命令，trap 命令"></a>mktemp 命令，trap 命令</h2><p>生成临时文件应该遵循下面的规则:</p>
+<h2 id="mktemp-命令trap-命令"><a class="markdownIt-Anchor" href="#mktemp-命令trap-命令"></a> mktemp 命令，trap 命令</h2>
+<p>生成临时文件应该遵循下面的规则:</p>
 <ul>
 <li>创建前检查文件是否已经存在</li>
 <li>确保临时文件已成功创建</li>
@@ -416,7 +424,8 @@
 <li>临时文件要使用不可预测的文件名</li>
 <li>脚本退出时，要删除临时文件（使用 trap 命令）</li>
 </ul>
-<h3 id="mktemp-命令"><a href="#mktemp-命令" class="headerlink" title="mktemp 命令"></a>mktemp 命令</h3><p>Bash 脚本使用mktemp命令的用法如下</p>
+<h3 id="mktemp-命令"><a class="markdownIt-Anchor" href="#mktemp-命令"></a> mktemp 命令</h3>
+<p>Bash 脚本使用mktemp命令的用法如下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line"></div><div class="line">TMPFILE=$(mktemp)</div><div class="line">echo "Our temp file is $TMPFILE"</div></pre></td></tr></table></figure>
 <p>为了确保临时文件创建成功，<code>mktemp</code>命令后面最好使用 <code>OR</code> 运算符（<code>||</code>），保证创建失败时退出脚本</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line"></div><div class="line">TMPFILE=$(mktemp) || exit 1</div><div class="line">echo "Our temp file is $TMPFILE"</div></pre></td></tr></table></figure>
@@ -425,11 +434,11 @@
 <ul>
 <li><code>-d</code>: 可以创建一个临时目录</li>
 <li><code>-p</code>: 可以指定临时文件所在的目录</li>
-<li><p><code>-t</code>: 可以指定临时文件的文件名模板，模板的末尾必须至少包含三个连续的<code>X</code>字符，表示随机字符，建议至少使用六个<code>X</code>,默认的文件名模板是tmp.后接十个随机字符</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;$ mktemp -t mytemp.XXXXXXX</div></pre></td></tr></table></figure>
-</li>
+<li><code>-t</code>: 可以指定临时文件的文件名模板，模板的末尾必须至少包含三个连续的<code>X</code>字符，表示随机字符，建议至少使用六个<code>X</code>,默认的文件名模板是tmp.后接十个随机字符</li>
 </ul>
-<h3 id="trap-命令"><a href="#trap-命令" class="headerlink" title="trap 命令"></a>trap 命令</h3><p><code>trap</code>命令用来在 Bash 脚本中响应系统信号,命令格式如下</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;$ mktemp -t mytemp.XXXXXXX</div></pre></td></tr></table></figure>
+<h3 id="trap-命令"><a class="markdownIt-Anchor" href="#trap-命令"></a> trap 命令</h3>
+<p><code>trap</code>命令用来在 Bash 脚本中响应系统信号,命令格式如下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;$ <span class="built_in">trap</span> [动作] [信号1] [信号2] ...</div></pre></td></tr></table></figure>
 <p>“动作”是一个 Bash 命令，“信号”常用的有以下几个</p>
 <ul>
@@ -438,11 +447,12 @@
 <li>QUIT：编号3，用户按下 Ctrl + 斜杠，意图退出脚本。</li>
 <li>KILL：编号9，该信号用于杀死进程。</li>
 <li>TERM：编号15，这是kill命令发出的默认信号。</li>
-<li><p>EXIT：编号0，这不是系统信号，而是 Bash 脚本特有的信号，不管什么情况，只要退出脚本就会产生。<br><code>trap</code>命令响应<code>EXIT</code>信号的写法如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;$ <span class="built_in">trap</span> <span class="string">'rm -f "$TMPFILE"'</span> EXIT</div></pre></td></tr></table></figure>
-</li>
+<li>EXIT：编号0，这不是系统信号，而是 Bash 脚本特有的信号，不管什么情况，只要退出脚本就会产生。<br>
+<code>trap</code>命令响应<code>EXIT</code>信号的写法如下:</li>
 </ul>
-<p>上面命令中，脚本遇到<code>EXIT</code>信号时，就会执行<code>rm -f &quot;$TMPFILE&quot;</code><br>trap 命令的常见使用场景，就是在 Bash 脚本中指定退出时执行的清理命令</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;$ <span class="built_in">trap</span> <span class="string">'rm -f "$TMPFILE"'</span> EXIT</div></pre></td></tr></table></figure>
+<p>上面命令中，脚本遇到<code>EXIT</code>信号时，就会执行<code>rm -f &quot;$TMPFILE&quot;</code><br>
+trap 命令的常见使用场景，就是在 Bash 脚本中指定退出时执行的清理命令</p>
 <blockquote>
 <p>注意，trap命令必须放在脚本的开头。否则，它上方的任何命令导致脚本退出，都不会被它捕获</p>
 </blockquote>
@@ -452,11 +462,11 @@
 <ul>
 <li><code>-n</code>：不运行脚本，只检查是否有语法错误</li>
 <li><code>-v</code>：输出每一行语句运行结果前，会先输出该行语句</li>
-<li><p><code>-x</code>：每一个命令处理完以后，先输出该命令，再进行下一个命令的处理</p>
+<li><code>-x</code>：每一个命令处理完以后，先输出该命令，再进行下一个命令的处理</li>
+</ul>
 <p>使用下面的代码，可以设定其后文本的颜色:</p>
-</li>
-<li><p><code>\033[0;30m</code>：黑色</p>
-</li>
+<ul>
+<li><code>\033[0;30m</code>：黑色</li>
 <li><code>\033[1;30m</code>：深灰色</li>
 <li><code>\033[0;31m</code>：红色</li>
 <li><code>\033[1;31m</code>：浅红色</li>
@@ -471,11 +481,11 @@
 <li><code>\033[0;36m</code>：青色</li>
 <li><code>\033[1;36m</code>：浅青色</li>
 <li><code>\033[0;37m</code>：浅灰色</li>
-<li><p><code>\033[1;37m</code>：白色</p>
+<li><code>\033[1;37m</code>：白色</li>
+</ul>
 <p>除了设置前景颜色，Bash 还允许设置背景颜色:</p>
-</li>
-<li><p><code>\033[0;40m</code>: 蓝色</p>
-</li>
+<ul>
+<li><code>\033[0;40m</code>: 蓝色</li>
 <li><code>\033[1;44m</code>: 黑色</li>
 <li><code>\033[0;41m</code>: 红色</li>
 <li><code>\033[1;45m</code>: 粉色</li>
@@ -542,8 +552,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/articles/2023/gitlab-ci.html" rel="prev" title="GitLab CI 自动流程简述">
-                GitLab CI 自动流程简述 <i class="fa fa-chevron-right"></i>
+              <a href="/articles/2022/Centos-vnc.html" rel="prev" title="Centos7 安装 VNC远程桌面服务">
+                Centos7 安装 VNC远程桌面服务 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -627,7 +637,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -640,7 +650,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -689,7 +699,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#set的基本用法，写出更安全的-Bash-脚本"><span class="nav-number">1.</span> <span class="nav-text">set的基本用法，写出更安全的 Bash 脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash-脚本除错"><span class="nav-number">2.</span> <span class="nav-text">Bash 脚本除错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mktemp-命令，trap-命令"><span class="nav-number">3.</span> <span class="nav-text">mktemp 命令，trap 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mktemp-命令"><span class="nav-number">3.1.</span> <span class="nav-text">mktemp 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trap-命令"><span class="nav-number">3.2.</span> <span class="nav-text">trap 命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#set的基本用法写出更安全的-bash-脚本"><span class="nav-number">1.</span> <span class="nav-text"> set的基本用法，写出更安全的 Bash 脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.1.</span> <span class="nav-text"> 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash-脚本除错"><span class="nav-number">2.</span> <span class="nav-text"> Bash 脚本除错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mktemp-命令trap-命令"><span class="nav-number">3.</span> <span class="nav-text"> mktemp 命令，trap 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mktemp-命令"><span class="nav-number">3.1.</span> <span class="nav-text"> mktemp 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trap-命令"><span class="nav-number">3.2.</span> <span class="nav-text"> trap 命令</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -727,7 +737,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

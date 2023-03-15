@@ -4,8 +4,61 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/2022/Centos-vnc.html</loc>
+    <lastmod>2023-03-15T08:51:21.718Z</lastmod>
+    <data>
+        <display>
+        <title>Centos7 安装 VNC远程桌面服务</title>
+        <pubTime>2022-09-11T16:00:00.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html</loc>
+    <lastmod>2023-03-14T06:54:02.732Z</lastmod>
+    <data>
+        <display>
+        <title>Let'sEncrypt免费申请泛域名HTTPS证书</title>
+        <pubTime>2019-03-20T13:45:23.000Z</pubTime>
+        
+        <tag>ssl</tag>
+         
+        <tag>Let&#39;s Encrypt</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE.html</loc>
+    <lastmod>2023-03-14T06:36:01.915Z</lastmod>
+    <data>
+        <display>
+        <title>Docker 安装与基础配置</title>
+        <pubTime>2021-02-15T16:00:00.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/2021/supervisor-install.html</loc>
-    <lastmod>2023-03-14T03:06:56.081Z</lastmod>
+    <lastmod>2023-03-14T06:12:37.753Z</lastmod>
     <data>
         <display>
         <title>在 Linux 系统安装 Supervisor 来管理进程</title>
@@ -21,12 +74,12 @@
 
     
   <url>
-    <loc>http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html</loc>
-    <lastmod>2023-03-14T03:03:49.218Z</lastmod>
+    <loc>http://blog.actpi.com/articles/jenkins-install.html</loc>
+    <lastmod>2023-03-14T06:07:45.256Z</lastmod>
     <data>
         <display>
-        <title>jenkins 文件上传与多分支参数化构建</title>
-        <pubTime>2021-01-18T16:00:00.000Z</pubTime>
+        <title>jenkins 搭建过程</title>
+        <pubTime>2020-09-21T16:00:00.000Z</pubTime>
         
         <tag>CI</tag>
          
@@ -38,12 +91,12 @@
 
     
   <url>
-    <loc>http://blog.actpi.com/articles/jenkins-install.html</loc>
-    <lastmod>2023-03-14T02:49:46.145Z</lastmod>
+    <loc>http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html</loc>
+    <lastmod>2023-03-14T03:03:49.218Z</lastmod>
     <data>
         <display>
-        <title>jenkins 搭建过程</title>
-        <pubTime>2020-09-21T16:00:00.000Z</pubTime>
+        <title>jenkins 文件上传与多分支参数化构建</title>
+        <pubTime>2021-01-18T16:00:00.000Z</pubTime>
         
         <tag>CI</tag>
          
@@ -106,23 +159,6 @@
 
     
   <url>
-    <loc>http://blog.actpi.com/articles/2021/Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE.html</loc>
-    <lastmod>2023-03-14T02:08:59.759Z</lastmod>
-    <data>
-        <display>
-        <title>Docker 安装与基础配置</title>
-        <pubTime>2021-02-15T16:00:00.000Z</pubTime>
-        
-        <tag>docker</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.actpi.com/articles/gitlab%E6%96%87%E6%A1%A3.html</loc>
     <lastmod>2023-03-14T01:51:00.995Z</lastmod>
     <data>
@@ -150,25 +186,6 @@
         <pubTime>2020-05-06T14:01:31.000Z</pubTime>
         
         <tag>nginx</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.actpi.com/articles/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html</loc>
-    <lastmod>2023-03-14T01:42:23.840Z</lastmod>
-    <data>
-        <display>
-        <title>Let'sEncrypt免费申请泛域名HTTPS证书</title>
-        <pubTime>2020-07-09T13:45:23.000Z</pubTime>
-        
-        <tag>ssl</tag>
-         
-        <tag>https</tag>
          
          
            

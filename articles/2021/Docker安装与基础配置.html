@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="yum 安装在 Root用户下操作  安装 yum-utils 包然后配置 docker 源仓库yum install -y yum-utilsyum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  安装最新版的 docker 以及 相关插件yum install docker-c">
+<meta name="description" content="yum 安装 在 Root用户下操作   安装 yum-utils 包然后配置 docker 源仓库 yum install -y yum-utils yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo   安装最新版的 docker 以及 相关插件 yum install d">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 安装与基础配置">
 <meta property="og:url" content="http://blog.actpi.com/articles/2021/Docker安装与基础配置.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="yum 安装在 Root用户下操作  安装 yum-utils 包然后配置 docker 源仓库yum install -y yum-utilsyum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  安装最新版的 docker 以及 相关插件yum install docker-c">
+<meta property="og:description" content="yum 安装 在 Root用户下操作   安装 yum-utils 包然后配置 docker 源仓库 yum install -y yum-utils yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo   安装最新版的 docker 以及 相关插件 yum install d">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2023-03-14T02:08:59.759Z">
+<meta property="og:updated_time" content="2023-03-14T06:36:01.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 安装与基础配置">
-<meta name="twitter:description" content="yum 安装在 Root用户下操作  安装 yum-utils 包然后配置 docker 源仓库yum install -y yum-utilsyum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  安装最新版的 docker 以及 相关插件yum install docker-c">
+<meta name="twitter:description" content="yum 安装 在 Root用户下操作   安装 yum-utils 包然后配置 docker 源仓库 yum install -y yum-utils yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo   安装最新版的 docker 以及 相关插件 yum install d">
 
 
 
@@ -389,49 +389,83 @@
       
 
       
-        <h2 id="yum-安装"><a href="#yum-安装" class="headerlink" title="yum 安装"></a>yum 安装</h2><p>在 Root用户下操作</p>
+        <h2 id="yum-安装"><a class="markdownIt-Anchor" href="#yum-安装"></a> yum 安装</h2>
+<p>在 Root用户下操作</p>
 <ol>
-<li><p>安装 yum-utils 包然后配置 docker 源仓库<br><code>yum install -y yum-utils</code><br><code>yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code></p>
+<li>
+<p>安装 yum-utils 包然后配置 docker 源仓库<br>
+<code>yum install -y yum-utils</code><br>
+<code>yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code></p>
 </li>
-<li><p>安装最新版的 docker 以及 相关插件<br><code>yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin</code></p>
-<a id="more"></a></li>
-<li><p>启动 docker,确认正常后添加开机启动</p>
+<li>
+<p>安装最新版的 docker 以及 相关插件<br>
+<code>yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin</code></p>
+</li>
+</ol>
+<a id="more"></a>
+<ol start="3">
+<li>
+<p>启动 docker,确认正常后添加开机启动</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl start docker</div><div class="line">docker run hello-world</div><div class="line">systemctl enable docker</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="脚本安装"><a href="#脚本安装" class="headerlink" title="脚本安装"></a>脚本安装</h2><ol>
-<li>下载安装脚本<br><code>curl -fsSL https://get.docker.com -o get-docker.sh</code></li>
-<li>运行脚本安装<br><code>sh get-dokcer.sh</code></li>
-<li><p>启动 docker,确认正常后添加开机启动</p>
+<h2 id="脚本安装"><a class="markdownIt-Anchor" href="#脚本安装"></a> 脚本安装</h2>
+<ol>
+<li>
+<p>下载安装脚本<br>
+<code>curl -fsSL https://get.docker.com -o get-docker.sh</code></p>
+</li>
+<li>
+<p>运行脚本安装<br>
+<code>sh get-dokcer.sh</code></p>
+</li>
+<li>
+<p>启动 docker,确认正常后添加开机启动</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl start docker</div><div class="line">docker run hello-world</div><div class="line">systemctl enable docker</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="非-root-用户管理docker"><a href="#非-root-用户管理docker" class="headerlink" title="非 root 用户管理docker"></a>非 root 用户管理docker</h2><ol>
-<li>将普通用户加入 docker 组<br> <code>usermod -aG docker $USER</code></li>
+<h2 id="非-root-用户管理docker"><a class="markdownIt-Anchor" href="#非-root-用户管理docker"></a> 非 root 用户管理docker</h2>
+<ol>
+<li>将普通用户加入 docker 组<br>
+<code>usermod -aG docker $USER</code></li>
 </ol>
-<h2 id="docker-镜像加速"><a href="#docker-镜像加速" class="headerlink" title="docker 镜像加速"></a>docker 镜像加速</h2><blockquote>
+<h2 id="docker-镜像加速"><a class="markdownIt-Anchor" href="#docker-镜像加速"></a> docker 镜像加速</h2>
+<blockquote>
 <p><code>curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io</code></p>
 </blockquote>
-<h2 id="修改-docker-的数据目录"><a href="#修改-docker-的数据目录" class="headerlink" title="修改 docker 的数据目录"></a>修改 docker 的数据目录</h2><ol>
-<li><p>停止docker后台进程<br><code>systemctl stop docker</code></p>
+<h2 id="修改-docker-的数据目录"><a class="markdownIt-Anchor" href="#修改-docker-的数据目录"></a> 修改 docker 的数据目录</h2>
+<ol>
+<li>
+<p>停止docker后台进程<br>
+<code>systemctl stop docker</code></p>
 </li>
-<li><p>修改 /etc/docker/daemon.json , 加上 data-root 的配置</p>
+<li>
+<p>修改 /etc/docker/daemon.json , 加上 data-root 的配置</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">&#123;</span></div><div class="line"><span class="attr">   "data-root":</span> <span class="string">"/data/docker"</span><span class="string">,</span></div><div class="line"><span class="string">&#125;</span></div></pre></td></tr></table></figure>
 </li>
-<li><p>将现有数据拷贝到新的目录<br><code>cp -rp /var/lib/docker/* /data/docker</code></p>
+<li>
+<p>将现有数据拷贝到新的目录<br>
+<code>cp -rp /var/lib/docker/* /data/docker</code></p>
 </li>
-<li><p>启动 docker<br><code>systemctl start docker</code></p>
+<li>
+<p>启动 docker<br>
+<code>systemctl start docker</code></p>
 </li>
 </ol>
-<h2 id="docker-日志管理"><a href="#docker-日志管理" class="headerlink" title="docker 日志管理"></a>docker 日志管理</h2><ol>
-<li><p>修改<code>docker daemon.json</code>文件，配置日志文件参数：</p>
+<h2 id="docker-日志管理"><a class="markdownIt-Anchor" href="#docker-日志管理"></a> docker 日志管理</h2>
+<ol>
+<li>
+<p>修改<code>docker daemon.json</code>文件，配置日志文件参数：</p>
  <figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="string">&#123;</span></div><div class="line"><span class="attr">    "log-driver":</span> <span class="string">"json-file"</span><span class="string">,</span></div><div class="line"><span class="attr">    "log-opts":</span> <span class="string">&#123;</span></div><div class="line"><span class="attr">        "max-size":</span> <span class="string">"500m"</span><span class="string">,</span></div><div class="line"><span class="attr">        "max-file":</span> <span class="string">"3"</span></div><div class="line">    <span class="string">&#125;</span></div><div class="line"><span class="string">&#125;</span></div></pre></td></tr></table></figure>
 </li>
-<li><p>重新加载配置文件和重启</p>
-<p><code>systemctl daemon-reload</code><br><code>systemctl restart docker</code></p>
+<li>
+<p>重新加载配置文件和重启</p>
+<p><code>systemctl daemon-reload</code><br>
+<code>systemctl restart docker</code></p>
 </li>
 </ol>
-<p>!!! warning<br>    新创建的容器会生效，已有容器不生效。</p>
+<p>!!! warning<br>
+新创建的容器会生效，已有容器不生效。</p>
 
       
     </div>
@@ -575,7 +609,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -588,7 +622,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -637,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-安装"><span class="nav-number">1.</span> <span class="nav-text">yum 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本安装"><span class="nav-number">2.</span> <span class="nav-text">脚本安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非-root-用户管理docker"><span class="nav-number">3.</span> <span class="nav-text">非 root 用户管理docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-镜像加速"><span class="nav-number">4.</span> <span class="nav-text">docker 镜像加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-docker-的数据目录"><span class="nav-number">5.</span> <span class="nav-text">修改 docker 的数据目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-日志管理"><span class="nav-number">6.</span> <span class="nav-text">docker 日志管理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-安装"><span class="nav-number">1.</span> <span class="nav-text"> yum 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本安装"><span class="nav-number">2.</span> <span class="nav-text"> 脚本安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非-root-用户管理docker"><span class="nav-number">3.</span> <span class="nav-text"> 非 root 用户管理docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-镜像加速"><span class="nav-number">4.</span> <span class="nav-text"> docker 镜像加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-docker-的数据目录"><span class="nav-number">5.</span> <span class="nav-text"> 修改 docker 的数据目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-日志管理"><span class="nav-number">6.</span> <span class="nav-text"> docker 日志管理</span></a></li></ol></div>
             
 
           </div>
@@ -675,7 +709,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

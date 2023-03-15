@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="故障排除：用户 ‘x’ 登录失败因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：“用户 &amp;#39;&amp;lt;user_name&amp;gt;&amp;#39; 登录失败”。（Microsoft SQL Server，错误: 18456）”。">
+<meta name="description" content="故障排除：用户 ‘x’ 登录失败 因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：“用户 &apos;&amp;lt;user_name&amp;gt;&apos; 登录失败”。（Microsoft SQL Server，错误: 18456）”。">
 <meta name="keywords" content="SqlServer, 登录失败, ERROR:18456">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SqlServer故障排除：用户 &#39;x&#39; 登录失败  ERROR:18456">
 <meta property="og:url" content="http://blog.actpi.com/articles/sql-error-18456.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="故障排除：用户 ‘x’ 登录失败因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：“用户 &amp;#39;&amp;lt;user_name&amp;gt;&amp;#39; 登录失败”。（Microsoft SQL Server，错误: 18456）”。">
+<meta property="og:description" content="故障排除：用户 ‘x’ 登录失败 因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：“用户 &apos;&amp;lt;user_name&amp;gt;&apos; 登录失败”。（Microsoft SQL Server，错误: 18456）”。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-10-18T13:07:35.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SqlServer故障排除：用户 &#39;x&#39; 登录失败  ERROR:18456">
-<meta name="twitter:description" content="故障排除：用户 ‘x’ 登录失败因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：“用户 &amp;#39;&amp;lt;user_name&amp;gt;&amp;#39; 登录失败”。（Microsoft SQL Server，错误: 18456）”。">
+<meta name="twitter:description" content="故障排除：用户 ‘x’ 登录失败 因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：“用户 &apos;&amp;lt;user_name&amp;gt;&apos; 登录失败”。（Microsoft SQL Server，错误: 18456）”。">
 
 
 
@@ -389,8 +389,12 @@
       
 
       
-        <h1 id="故障排除：用户-‘x’-登录失败"><a href="#故障排除：用户-‘x’-登录失败" class="headerlink" title="故障排除：用户 ‘x’ 登录失败"></a>故障排除：用户 ‘x’ 登录失败</h1><p>因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：<code>“用户 &#39;&lt;user_name&gt;&#39; 登录失败”</code>。（Microsoft SQL Server，错误: 18456）”。<br><a id="more"></a></p>
-<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><p>返回到客户端的其他信息有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">“用户 &apos;&lt;user_name&gt;&apos; 登录失败。（.Net SqlClient 数据访问接口）”</div><div class="line">------------------------------</div><div class="line">“服务器名称: &lt;computer_name&gt;”</div><div class="line">“错误号: 18456”</div><div class="line">“严重性: 14”</div><div class="line">“状态: 1”</div><div class="line">“行号: 65536”</div><div class="line">也可能返回以下消息：</div><div class="line">“消息 18456，级别 14，状态 1，服务器 &lt;computer_name&gt;，第 1 行”</div><div class="line">“用户 &apos;&lt;user_name&gt;&apos; 登录失败。”</div></pre></td></tr></table></figure></p>
+        <h1 id="故障排除用户-x-登录失败"><a class="markdownIt-Anchor" href="#故障排除用户-x-登录失败"></a> 故障排除：用户 ‘x’ 登录失败</h1>
+<p>因密码或用户名错误而使身份验证失败并导致连接尝试被拒时，类似下面的消息将返回到客户端：<code>“用户 '&lt;user_name&gt;' 登录失败”</code>。（Microsoft SQL Server，错误: 18456）”。</p>
+<a id="more"></a>
+<h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
+<p>返回到客户端的其他信息有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">“用户 &apos;&lt;user_name&gt;&apos; 登录失败。（.Net SqlClient 数据访问接口）”</div><div class="line">------------------------------</div><div class="line">“服务器名称: &lt;computer_name&gt;”</div><div class="line">“错误号: 18456”</div><div class="line">“严重性: 14”</div><div class="line">“状态: 1”</div><div class="line">“行号: 65536”</div><div class="line">也可能返回以下消息：</div><div class="line">“消息 18456，级别 14，状态 1，服务器 &lt;computer_name&gt;，第 1 行”</div><div class="line">“用户 &apos;&lt;user_name&gt;&apos; 登录失败。”</div></pre></td></tr></table></figure>
 <p>在 SQL Server 错误日志中，对应的错误包含映射到身份验证失败条件的错误状态。将错误状态与以下列表进行比较以确定登录失败的原因。</p>
 <table>
 <thead>
@@ -401,48 +405,49 @@
 </thead>
 <tbody>
 <tr>
-<td> 1</td>
+<td>1</td>
 <td>一个意外的内部处理错误。</td>
 </tr>
 <tr>
-<td> 2</td>
+<td>2</td>
 <td>用户 ID 无效。</td>
 </tr>
 <tr>
-<td> 5</td>
+<td>5</td>
 <td>用户 ID 无效。</td>
 </tr>
 <tr>
-<td> 6</td>
+<td>6</td>
 <td>尝试同时使用 SQL Server 身份验证与 Windows 登录名。</td>
 </tr>
 <tr>
-<td> 7</td>
+<td>7</td>
 <td>登录已禁用，密码不正确。</td>
 </tr>
 <tr>
-<td> 8</td>
+<td>8</td>
 <td>密码不正确。</td>
 </tr>
 <tr>
-<td> 9</td>
+<td>9</td>
 <td>密码无效。</td>
 </tr>
 <tr>
-<td> 11</td>
+<td>11</td>
 <td>登录有效，但服务器访问失败。</td>
 </tr>
 <tr>
-<td> 12</td>
+<td>12</td>
 <td>登录是有效的登录，但服务器访问失败。</td>
 </tr>
 <tr>
-<td> 18</td>
+<td>18</td>
 <td>必须更改密码。</td>
 </tr>
 </tbody>
 </table>
-<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><ol>
+<h1 id="解决办法"><a class="markdownIt-Anchor" href="#解决办法"></a> 解决办法</h1>
+<ol>
 <li>打开数据库 — 用 Windows 身份登陆数据库</li>
 <li>然后打开“安全性”–“登录名”中找到用户 “x” 打开其属性面板。</li>
 <li>选择“常规”界面，去掉勾选强制实施密码策略，点击 “确定” 保存。</li>
@@ -593,7 +598,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -606,7 +611,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -655,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#故障排除：用户-‘x’-登录失败"><span class="nav-number">1.</span> <span class="nav-text">故障排除：用户 ‘x’ 登录失败</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#错误信息"><span class="nav-number">1.1.</span> <span class="nav-text">错误信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">2.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#故障排除用户-x-登录失败"><span class="nav-number">1.</span> <span class="nav-text"> 故障排除：用户 ‘x’ 登录失败</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#错误信息"><span class="nav-number">1.1.</span> <span class="nav-text"> 错误信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">2.</span> <span class="nav-text"> 解决办法</span></a></li></ol></div>
             
 
           </div>
@@ -693,7 +698,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>

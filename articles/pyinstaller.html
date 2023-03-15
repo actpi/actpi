@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="简介PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller 进">
+<meta name="description" content="简介 PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller">
 <meta name="keywords" content="Pyinstaller， python， 程序打包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用 Pyinstaller  把 python 程序打包为 exe 文件">
 <meta property="og:url" content="http://blog.actpi.com/articles/pyinstaller.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="简介PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller 进">
+<meta property="og:description" content="简介 PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-11-14T12:24:35.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 Pyinstaller  把 python 程序打包为 exe 文件">
-<meta name="twitter:description" content="简介PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller 进">
+<meta name="twitter:description" content="简介 PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller">
 
 
 
@@ -389,8 +389,11 @@
       
 
       
-        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller 进行打包工作；打包成mac app，需要在 Mac OS 上使用。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>推荐使用 pip 安装，会自动安装相关依赖，若安装完运行报错、还需要安装 pypiwin32 模块。<br>我的是 win 10 系统，直接 pip 安装的没有任何报错，用命令 <code>pip install pyinstaller</code>安装即可。</p>
+        <h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<p>PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。可以在 Windows、Mac OS X 和 Linux 上使用，但是并不是跨平台的，而是说你要是希望打包成 .exe 文件，需要在 Windows 系统上运行 PyInstaller 进行打包工作；打包成mac app，需要在 Mac OS 上使用。</p>
+<h1 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h1>
+<p>推荐使用 pip 安装，会自动安装相关依赖，若安装完运行报错、还需要安装 pypiwin32 模块。<br>
+我的是 win 10 系统，直接 pip 安装的没有任何报错，用命令 <code>pip install pyinstaller</code>安装即可。</p>
 <p>Pyinstaller 有几个常用的 命令开关: -F -c -w -D. 注意大小写.</p>
 <table>
 <thead>
@@ -418,8 +421,11 @@
 </tr>
 </tbody>
 </table>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>安装完后 cd 到 py 程序所在文件夹执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pyinstaller yourprogram.py</div></pre></td></tr></table></figure></p>
-<p>打完包在当前路径的 dist 文件夹内即能看到已打包好的 exe 程序。但是这样打包出来的文件很多，还需要在有 python 的环境才可运行，可以使用上面的 <code>-F</code> 开关把所有环境打包到单个文件内。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pyinstaller  -w -F yourprogram.py</div></pre></td></tr></table></figure></p>
+<h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h1>
+<p>安装完后 cd 到 py 程序所在文件夹执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pyinstaller yourprogram.py</div></pre></td></tr></table></figure>
+<p>打完包在当前路径的 dist 文件夹内即能看到已打包好的 exe 程序。但是这样打包出来的文件很多，还需要在有 python 的环境才可运行，可以使用上面的 <code>-F</code> 开关把所有环境打包到单个文件内。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pyinstaller  -w -F yourprogram.py</div></pre></td></tr></table></figure>
 <p>这样即可把打包好的程序像普通程序一样在任意 Windows 系统上直接运行！</p>
 <blockquote>
 <p>Good Lucy!</p>
@@ -569,7 +575,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -582,7 +588,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -631,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text"> 使用</span></a></li></ol></div>
             
 
           </div>
@@ -669,7 +675,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      24.0k
+      24.3k
     </span>
   
 </div>
