@@ -118,7 +118,7 @@
 <meta property="og:site_name" content="ActPi&#39;s Blog">
 <meta property="og:description" content="安装桌面环境 !!! info 安装了Centos任意桌面版可跳过此步骤 服务依赖于桌面环境的运行，CentOS7 默认最小安装是不带桌面环境的，所以安装 VNC 之前需要首先安装桌面环境 123456## 安装 GNOME 桌面环境 sudo yum groupinstall &quot;GNOME Desktop&quot;## 设置默认启动方式为界面启动 sudo ln -sf /lib/systemd/sy">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2023-03-15T08:51:21.718Z">
+<meta property="og:updated_time" content="2023-03-17T08:22:25.618Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Centos7 安装 VNC远程桌面服务">
 <meta name="twitter:description" content="安装桌面环境 !!! info 安装了Centos任意桌面版可跳过此步骤 服务依赖于桌面环境的运行，CentOS7 默认最小安装是不带桌面环境的，所以安装 VNC 之前需要首先安装桌面环境 123456## 安装 GNOME 桌面环境 sudo yum groupinstall &quot;GNOME Desktop&quot;## 设置默认启动方式为界面启动 sudo ln -sf /lib/systemd/sy">
@@ -394,6 +394,7 @@
 安装了Centos任意桌面版可跳过此步骤</p>
 <p>服务依赖于桌面环境的运行，CentOS7 默认最小安装是不带桌面环境的，所以安装 VNC 之前需要首先安装桌面环境</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装 GNOME 桌面环境</span></span></div><div class="line"> sudo yum groupinstall "GNOME Desktop"</div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 设置默认启动方式为界面启动</span></span></div><div class="line"> sudo ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target</div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 重启服务器</span></span></div><div class="line"> sudo reboot</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="安装-vnc-服务端"><a class="markdownIt-Anchor" href="#安装-vnc-服务端"></a> 安装 VNC 服务端</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装 vnc-server</span></span></div><div class="line"> sudo yum install tigervnc tigervnc-server</div></pre></td></tr></table></figure>
 <h2 id="配置-vnc-server"><a class="markdownIt-Anchor" href="#配置-vnc-server"></a> 配置 vnc-server</h2>

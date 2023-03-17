@@ -706,21 +706,21 @@
 
       
         
-          
-           安装 CMake
-
-
-安装gcc等依赖程序
-yum install -y gcc gcc-c++ wget
-
-
-获取CMake源码包
-wget https://cmake.org/files/v3.23/cmake-3.23.2.tar.gz
-
-
-解压并安装
-1234tar -xzvf cmake
-          ...
+          <h2 id="安装-cmake"><a class="markdownIt-Anchor" href="#安装-cmake"></a> 安装 CMake</h2>
+<ol>
+<li>
+<p>安装gcc等依赖程序<br>
+<code>yum install -y gcc gcc-c++ wget</code></p>
+</li>
+<li>
+<p>获取CMake源码包<br>
+<code>wget https://cmake.org/files/v3.23/cmake-3.23.2.tar.gz</code></p>
+</li>
+<li>
+<p>解压并安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar -xzvf cmake-3.23.2.tar.gz</div><div class="line">cd cmake-3.23.2</div><div class="line">./bootstrap </div><div class="line">gmake &amp;&amp; install</div></pre></td></tr></table></figure>
+</li>
+</ol>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/articles/2022/centos_cmake_vscode.html#more" rel="contents">
@@ -877,13 +877,11 @@ wget https://cmake.org/files/v3.23/cmake-3.23.2.tar.gz
 
       
         
-          
-           安装桌面环境
-!!! info
-安装了Centos任意桌面版可跳过此步骤
-服务依赖于桌面环境的运行，CentOS7 默认最小安装是不带桌面环境的，所以安装 VNC 之前需要首先安装桌面环境
-123456## 安装 GNOME 桌面环境 sudo yum groupinstall "GNOME De
-          ...
+          <h2 id="安装桌面环境"><a class="markdownIt-Anchor" href="#安装桌面环境"></a> 安装桌面环境</h2>
+<p>!!! info<br>
+安装了Centos任意桌面版可跳过此步骤</p>
+<p>服务依赖于桌面环境的运行，CentOS7 默认最小安装是不带桌面环境的，所以安装 VNC 之前需要首先安装桌面环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装 GNOME 桌面环境</span></span></div><div class="line"> sudo yum groupinstall "GNOME Desktop"</div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 设置默认启动方式为界面启动</span></span></div><div class="line"> sudo ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target</div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 重启服务器</span></span></div><div class="line"> sudo reboot</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/articles/2022/Centos-vnc.html#more" rel="contents">
