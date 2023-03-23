@@ -4,6 +4,57 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/2021/install-python.html</loc>
+    <lastmod>2023-03-23T07:54:11.119Z</lastmod>
+    <data>
+        <display>
+        <title>源码编译安装 python3</title>
+        <pubTime>2021-06-08T16:00:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html</loc>
+    <lastmod>2023-03-17T08:27:27.780Z</lastmod>
+    <data>
+        <display>
+        <title>jenkins 文件上传与多分支参数化构建</title>
+        <pubTime>2021-01-18T16:00:00.000Z</pubTime>
+        
+        <tag>CI</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.actpi.com/articles/2021/supervisor-install.html</loc>
+    <lastmod>2023-03-17T08:26:51.265Z</lastmod>
+    <data>
+        <display>
+        <title>在 Linux 系统安装 Supervisor 来管理进程</title>
+        <pubTime>2021-07-18T16:00:00.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/2022/centos_cmake_vscode.html</loc>
     <lastmod>2023-03-17T08:22:34.945Z</lastmod>
     <data>
@@ -76,46 +127,12 @@
 
     
   <url>
-    <loc>http://blog.actpi.com/articles/2021/supervisor-install.html</loc>
-    <lastmod>2023-03-14T06:12:37.753Z</lastmod>
-    <data>
-        <display>
-        <title>在 Linux 系统安装 Supervisor 来管理进程</title>
-        <pubTime>2021-07-18T16:00:00.000Z</pubTime>
-        
-        <tag>linux</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.actpi.com/articles/jenkins-install.html</loc>
     <lastmod>2023-03-14T06:07:45.256Z</lastmod>
     <data>
         <display>
         <title>jenkins 搭建过程</title>
         <pubTime>2020-09-21T16:00:00.000Z</pubTime>
-        
-        <tag>CI</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.actpi.com/articles/2021/jenkins-file-mutibrach.html</loc>
-    <lastmod>2023-03-14T03:03:49.218Z</lastmod>
-    <data>
-        <display>
-        <title>jenkins 文件上传与多分支参数化构建</title>
-        <pubTime>2021-01-18T16:00:00.000Z</pubTime>
         
         <tag>CI</tag>
          
