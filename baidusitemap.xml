@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/2023/gitlab-ci.html</loc>
+    <lastmod>2023-03-29T01:24:37.073Z</lastmod>
+    <data>
+        <display>
+        <title>GitLab CI 自动流程简述</title>
+        <pubTime>2023-02-15T01:42:16.000Z</pubTime>
+        
+        <tag>DevOps</tag>
+         
+        <tag>CI/CD</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/2021/install-python.html</loc>
     <lastmod>2023-03-23T07:54:11.119Z</lastmod>
     <data>
@@ -274,25 +293,6 @@
         
         <tag>python</tag>
          
-        <tag>DevOps</tag>
-         
-        <tag>CI/CD</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.actpi.com/articles/2023/gitlab-ci.html</loc>
-    <lastmod>2023-03-13T06:18:31.634Z</lastmod>
-    <data>
-        <display>
-        <title>GitLab CI 自动流程简述</title>
-        <pubTime>2023-02-15T01:42:16.000Z</pubTime>
-        
         <tag>DevOps</tag>
          
         <tag>CI/CD</tag>
