@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/2022/gitlab-ci%E9%80%9A%E8%BF%87%E9%92%89%E9%92%89%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF.html</loc>
+    <lastmod>2023-03-30T01:19:20.851Z</lastmod>
+    <data>
+        <display>
+        <title>GitLab-CI 通过钉钉发送消息</title>
+        <pubTime>2022-08-08T16:00:00.000Z</pubTime>
+        
+        <tag>CI/CD</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/2023/gitlab-ci.html</loc>
     <lastmod>2023-03-29T01:24:37.073Z</lastmod>
     <data>
@@ -11,9 +28,9 @@
         <title>GitLab CI 自动流程简述</title>
         <pubTime>2023-02-15T01:42:16.000Z</pubTime>
         
-        <tag>DevOps</tag>
-         
         <tag>CI/CD</tag>
+         
+        <tag>DevOps</tag>
          
          
            
@@ -293,9 +310,9 @@
         
         <tag>python</tag>
          
-        <tag>DevOps</tag>
-         
         <tag>CI/CD</tag>
+         
+        <tag>DevOps</tag>
          
          
            

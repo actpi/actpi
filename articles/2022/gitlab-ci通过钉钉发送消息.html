@@ -94,7 +94,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python, UTC时间,字符串转换为datetime" />
+  <meta name="keywords" content="DevOps,CI/CD" />
 
 
 
@@ -110,18 +110,18 @@
 
 
 
-<meta name="description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下： 我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
-<meta name="keywords" content="python, UTC时间,字符串转换为datetime">
+<meta name="description" content="在使用Gitlab进行CI/CD的时候，希望在任务结束的时候(成功或失败)能有对应的消息通知机制， 通过钉钉发送消息。  前提 钉钉群添加机器人获取token,secret 备用">
+<meta name="keywords" content="DevOps,CI&#x2F;CD">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型">
-<meta property="og:url" content="http://blog.actpi.com/articles/strptime.html">
+<meta property="og:title" content="GitLab-CI 通过钉钉发送消息">
+<meta property="og:url" content="http://blog.actpi.com/articles/2022/gitlab-ci通过钉钉发送消息.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下： 我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta property="og:description" content="在使用Gitlab进行CI/CD的时候，希望在任务结束的时候(成功或失败)能有对应的消息通知机制， 通过钉钉发送消息。  前提 钉钉群添加机器人获取token,secret 备用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-15T14:46:00.085Z">
+<meta property="og:updated_time" content="2023-03-30T01:19:20.851Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型">
-<meta name="twitter:description" content="今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下： 我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta name="twitter:title" content="GitLab-CI 通过钉钉发送消息">
+<meta name="twitter:description" content="在使用Gitlab进行CI/CD的时候，希望在任务结束的时候(成功或失败)能有对应的消息通知机制， 通过钉钉发送消息。  前提 钉钉群添加机器人获取token,secret 备用">
 
 
 
@@ -151,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.actpi.com/articles/strptime.html"/>
+  <link rel="canonical" href="http://blog.actpi.com/articles/2022/gitlab-ci通过钉钉发送消息.html"/>
 
 
 
 
 
-  <title>Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型 | ActPi's Blog</title>
+  <title>GitLab-CI 通过钉钉发送消息 | ActPi's Blog</title>
   
 
 
@@ -284,7 +284,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/strptime.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2022/gitlab-ci通过钉钉发送消息.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="actpi">
@@ -301,7 +301,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型</h2>
+          <h2 class="post-title" itemprop="name headline">GitLab-CI 通过钉钉发送消息</h2>
         
 
         <div class="post-meta">
@@ -313,8 +313,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T20:59:00+08:00">
-                2018-03-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-08-09T00:00:00+08:00">
+                2022-08-09
               </time>
             
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  762
+                  406
                 </span>
               
 
@@ -368,7 +368,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -389,152 +389,17 @@
       
 
       
-        <p>今天在用 Python 处理 AWS S3存储的时候遇到个时间格式的问题，特别在此记录下：<br>
-我是想获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是<code>2018-03-05T09:20:005Z</code>这种字符串。<a id="more"></a><br>
-它的类型为<code>str</code>,</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>last_modfied</div><div class="line"><span class="string">'2018-03-05T09:20:005Z'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(last_modfied)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></div></pre></td></tr></table></figure>
-<p>首先得对其进行格式转换，转换为<code>datetime</code>类型才好进行日期的比较。这里使用 Python 内置<code>datetime</code>模块来完成：<br>
-<a href="https://docs.python.org/3.5/library/datetime.html#" target="_blank" rel="external">datetime官方文档</a> <code>datetime.strptime()</code>方法根据代表日期和时间的字符串以相应的格式字符串创建日期时间对象。</p>
-<h1 id="使用方法"><a class="markdownIt-Anchor" href="#使用方法"></a> 使用方法：</h1>
-<p><code>datetime.strptime(date_string, format)</code>,以下是C标准（1989版本）要求的所有格式代码的列表，并且这些代码可以在所有平台上使用标准的C实现:</p>
-<table>
-<thead>
-<tr>
-<th>标识</th>
-<th>含义</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%a</td>
-<td>星期几的缩写名称</td>
-<td>Sun, Mon, …, Sa</td>
-</tr>
-<tr>
-<td>%A</td>
-<td>星期几的全名</td>
-<td>Sunday, Monday, …, Saturday</td>
-</tr>
-<tr>
-<td>%w</td>
-<td>星期几为十进制数字，其中0表示星期日，6表示星期六</td>
-<td>0, 1, …, 6</td>
-</tr>
-<tr>
-<td>%d</td>
-<td>一个月中的一天作为零填充的十进制数字</td>
-<td>01, 02, …, 31</td>
-</tr>
-<tr>
-<td>%b</td>
-<td>几月的缩写名称</td>
-<td>Jan, Feb, …, Dec</td>
-</tr>
-<tr>
-<td>%B</td>
-<td>几月的全称</td>
-<td>January, February, …, December</td>
-</tr>
-<tr>
-<td>%m</td>
-<td>几月作为零填充的十进制数字</td>
-<td>01, 02, …, 12</td>
-</tr>
-<tr>
-<td>%y</td>
-<td>没有世纪的以零填充的十进制数字年份</td>
-<td>00, 01, …, 99</td>
-</tr>
-<tr>
-<td>%Y</td>
-<td>有世纪的十进制数字年份</td>
-<td>1001, 1002, …, 2013, 2014, …, 9998, 9999</td>
-</tr>
-<tr>
-<td>%H</td>
-<td>24小时制</td>
-<td>00, 01, …, 23</td>
-</tr>
-<tr>
-<td>%I</td>
-<td>12小时制</td>
-<td>01, 02, …, 12</td>
-</tr>
-<tr>
-<td>%p</td>
-<td>时间设置AM或PM</td>
-<td>AM, PM</td>
-</tr>
-<tr>
-<td>%M</td>
-<td>以零填充的十进制数字分钟</td>
-<td>00, 01, …, 59</td>
-</tr>
-<tr>
-<td>%S</td>
-<td>以零填充的十进制数字秒</td>
-<td>00, 01, …, 59</td>
-</tr>
-<tr>
-<td>%f</td>
-<td>以零填充的十进制数字微秒</td>
-<td>000000, 000001, …, 999999</td>
-</tr>
-<tr>
-<td>%z</td>
-<td>UTC偏移量格式为+ HHMM或-HHMM</td>
-<td>(empty), +0000, -0400, +1030</td>
-</tr>
-<tr>
-<td>%Z</td>
-<td>时区名称</td>
-<td>(empty), UTC, EST, CST</td>
-</tr>
-<tr>
-<td>%j</td>
-<td>一年中的一天以零填充十进制数字</td>
-<td>001, 002, …, 366</td>
-</tr>
-<tr>
-<td>%U</td>
-<td>一年的周数以周日开始，第一个星期日前一年的所有日子都被认为是在第0周</td>
-<td>00, 01, …, 53</td>
-</tr>
-<tr>
-<td>%W</td>
-<td>一年的周数以周一开始，第一个星期日前一年的所有日子都被认为是在第0周</td>
-<td>00, 01, …, 53</td>
-</tr>
-<tr>
-<td>%c</td>
-<td>以本地时区设置的日期和时间表示</td>
-<td>ue Aug 16 21:30:00 1988 (en_US);</td>
-</tr>
-<tr>
-<td>%x</td>
-<td>以本地时区设置的日期</td>
-<td>08/16/1988 (en_US)，1988年8月16日（zh-cn）</td>
-</tr>
-<tr>
-<td>%X</td>
-<td>以本地时区设置的时间</td>
-<td>21:30:00</td>
-</tr>
-<tr>
-<td>%%</td>
-<td>'％'字符。</td>
-<td>%</td>
-</tr>
-</tbody>
-</table>
-<p>转换代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line">date_str = <span class="string">"2018-03-05T09:20:005Z"</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>date_str</div><div class="line"><span class="string">'2018-03-05T09:20:005Z'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(date_str)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></div><div class="line">&gt;&gt;&gt; date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S%fZ')</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(date)</div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">datetime</span>.<span class="title">datetime</span>'&gt;</span></div><div class="line"><span class="class">&gt;&gt;&gt; <span class="title">date</span></span></div><div class="line"><span class="class"><span class="title">datetime</span>.<span class="title">datetime</span><span class="params">(<span class="number">2018</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="number">500000</span>)</span></span></div></pre></td></tr></table></figure>
-<p>转成功换后即可对object日期与现在日期进行比较了。下例为 python 通过 boto s3 删除指定 30 天之前的 object 代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</div><div class="line"></div><div class="line">today = datetime.now()</div><div class="line">outgo_day = timedelta(days=<span class="number">30</span>)</div><div class="line"></div><div class="line">AWS_ACCESS_KEY_ID = Your AWS Access Key ID</div><div class="line">AWS_SECRET_ACCESS_KEY = Your AWS Secret Access Key</div><div class="line"></div><div class="line"></div><div class="line">conn = S3Connection(<span class="string">'&lt;aws access key&gt;'</span>, <span class="string">'&lt;aws secret key&gt;'</span>)</div><div class="line">bucket = conn.get_bucket(<span class="string">'bucket-to-delete'</span>)</div><div class="line"><span class="keyword">for</span> key <span class="keyword">in</span> bucket.list():</div><div class="line">    key.date = datetime.strptime(key.last_modfied, <span class="string">'%Y-%m-%dT%H:%M:%S%fZ'</span>)</div><div class="line">    <span class="keyword">if</span> key.date &lt; today - outgo_day:</div><div class="line">        key.delete()</div></pre></td></tr></table></figure>
-<blockquote>
-<p>以上！</p>
-</blockquote>
+        <p>在使用Gitlab进行CI/CD的时候，希望在任务结束的时候(成功或失败)能有对应的消息通知机制， 通过钉钉发送消息。</p>
+<h2 id="前提"><a class="markdownIt-Anchor" href="#前提"></a> 前提</h2>
+<p>钉钉群添加机器人获取token,secret 备用<a id="more"></a></p>
+<h2 id="编写python发送消息任务程序"><a class="markdownIt-Anchor" href="#编写python发送消息任务程序"></a> 编写python发送消息任务程序</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># encoding=utf-8</span></div><div class="line"><span class="comment"># __Auth__:RanLH</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> argparse</div><div class="line"><span class="keyword">from</span> dingtalkchatbot.chatbot <span class="keyword">import</span> DingtalkChatbot, ActionCard, CardItem</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_notify</span><span class="params">(webhook,secret,message)</span>:</span></div><div class="line">    <span class="comment"># 初始化机器人小丁</span></div><div class="line">    bot = DingtalkChatbot(webhook,secret,pc_slide=<span class="keyword">False</span>) </div><div class="line">    bot.send_link(title=message[<span class="number">0</span>],text=message[<span class="number">1</span>],message_url=message[<span class="number">2</span>],pic_url=message[<span class="number">3</span>])</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_actioncard</span><span class="params">(args)</span>:</span></div><div class="line">    <span class="comment">#V_TITLE = "ci任务执行结果通知"</span></div><div class="line">    <span class="comment"># 失败时：任意任务都发通知</span></div><div class="line">    <span class="keyword">if</span> args.CI_JOB_STATUS == <span class="string">"failed"</span>:</div><div class="line">        V_IMG = <span class="string">"https://s2.loli.net/2022/09/28/WpklwGHgMZuoCXU.png"</span></div><div class="line">        V_STATUS = <span class="string">"执行失败 "</span></div><div class="line">    <span class="comment"># 成功时：仅 merge 任务发通知</span></div><div class="line">    <span class="keyword">elif</span> args.CI_JOB_STATUS == <span class="string">"success"</span> <span class="keyword">and</span> args.CI_JOB_NAME == <span class="string">"Merge_Branch"</span>:</div><div class="line">        V_IMG = <span class="string">"https://s2.loli.net/2022/09/28/R8QKZqrXHUedmB5.png"</span></div><div class="line">        V_STATUS = <span class="string">"执行成功 "</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        sys.exit(<span class="number">10</span>)</div><div class="line">    <span class="comment"># link 格式文本</span></div><div class="line">    V_TITLE = <span class="string">"任务 %s %s"</span> %(args.CI_JOB_NAME,V_STATUS)</div><div class="line">    V_TEXT = <span class="string">"项目:  %s  \n作者: %s"</span> %(args.CI_PROJECT_TITLE,args.GITLAB_USER_NAME)</div><div class="line">    message_url = args.CI_JOB_URL</div><div class="line">    pic_url = V_IMG</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [V_TITLE,V_TEXT,message_url,pic_url]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_args</span><span class="params">()</span>:</span></div><div class="line">    parser = argparse.ArgumentParser(description=<span class="string">'钉钉发送job结果消息、需要传入参数：'</span>)</div><div class="line">    parser.add_argument(<span class="string">'D_TOKEN'</span>, help=<span class="string">'钉钉机器人 TOKEN'</span>)</div><div class="line">    parser.add_argument(<span class="string">'D_SECRET'</span>, help=<span class="string">'钉钉机器人 SECRET'</span>)</div><div class="line">    parser.add_argument(<span class="string">'CI_JOB_STATUS'</span>, help=<span class="string">'变量 CI_JOB_STATUS'</span>)</div><div class="line">    parser.add_argument(<span class="string">'CI_JOB_URL'</span>, help=<span class="string">'变量 CI_JOB_URL'</span>)</div><div class="line">    parser.add_argument(<span class="string">'CI_JOB_NAME'</span>, help=<span class="string">'变量 CI_JOB_NAME'</span>)</div><div class="line">    parser.add_argument(<span class="string">'CI_PROJECT_TITLE'</span>, help=<span class="string">'变量 CI_PROJECT_TITLE'</span>)</div><div class="line">    parser.add_argument(<span class="string">'GITLAB_USER_NAME'</span>, help=<span class="string">'变量 GITLAB_USER_NAME'</span>)</div><div class="line">    <span class="keyword">return</span> parser.parse_args()</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    args = get_args()</div><div class="line">    <span class="comment"># 钉钉机器人 webhook 地址</span></div><div class="line">    url = <span class="string">"https://oapi.dingtalk.com/robot/send?access_token="</span></div><div class="line">    webhook = url + args.D_TOKEN</div><div class="line">    secret = args.D_SECRET</div><div class="line">    <span class="comment">#设置发送的消息内容</span></div><div class="line">    message = set_actioncard(args)</div><div class="line">    send_notify(webhook,secret,message)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<h2 id="集成到-ci"><a class="markdownIt-Anchor" href="#集成到-ci"></a> 集成到 CI</h2>
+<ol>
+<li>在Gitlab群组添加自定义变量</li>
+<li>添加以下内容到 .gitlab-ci.yml 配置 CI 任务</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">after_script:</span></div><div class="line"><span class="bullet">  -</span> <span class="string">python</span> <span class="string">dingtalk_bot.py</span> <span class="string">$D_TOKEN</span> <span class="string">$D_SECRET</span> <span class="string">$CI_JOB_STATUS</span> <span class="string">$CI_JOB_URL</span> <span class="string">$CI_JOB_NAME</span> <span class="string">$CI_PROJECT_TITLE</span> <span class="string">$GITLAB_USER_NAME</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -555,7 +420,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://blog.actpi.com/articles/strptime.html" title="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型">http://blog.actpi.com/articles/strptime.html</a>
+    <a href="http://blog.actpi.com/articles/2022/gitlab-ci通过钉钉发送消息.html" title="GitLab-CI 通过钉钉发送消息">http://blog.actpi.com/articles/2022/gitlab-ci通过钉钉发送消息.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -570,9 +435,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
-          
-            <a href="/tags/格式转换/" rel="tag"><i class="fa fa-tag"></i> 格式转换</a>
+            <a href="/tags/CI-CD/" rel="tag"><i class="fa fa-tag"></i> CI/CD</a>
           
         </div>
       
@@ -585,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/articles/proxy-pass.html" rel="next" title="nginx proxy_pass后的url加和不加反斜杠‘/’的区别">
-                <i class="fa fa-chevron-left"></i> nginx proxy_pass后的url加和不加反斜杠‘/’的区别
+              <a href="/articles/2021/shellnotes.html" rel="next" title="Shell 脚本零碎笔记">
+                <i class="fa fa-chevron-left"></i> Shell 脚本零碎笔记
               </a>
             
           </div>
@@ -595,8 +458,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/articles/oracle-install.html" rel="prev" title="centos 7 安装oracel 12c">
-                centos 7 安装oracel 12c <i class="fa fa-chevron-right"></i>
+              <a href="/articles/2022/Centos-vnc.html" rel="prev" title="Centos7 安装 VNC远程桌面服务">
+                Centos7 安装 VNC远程桌面服务 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -742,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text"> 使用方法：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提"><span class="nav-number">1.</span> <span class="nav-text"> 前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写python发送消息任务程序"><span class="nav-number">2.</span> <span class="nav-text"> 编写python发送消息任务程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成到-ci"><span class="nav-number">3.</span> <span class="nav-text"> 集成到 CI</span></a></li></ol></div>
             
 
           </div>
