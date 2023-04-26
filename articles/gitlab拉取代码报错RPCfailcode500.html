@@ -403,7 +403,7 @@
 <li>快速解决版本<br>
 进入 docker 日志目录手动删除日志 重启 docker 服务</li>
 </ol>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /var/lib/docker/containers/container_id/</div><div class="line"><span class="meta">#</span><span class="bash">以json.log结尾的文件即为业务日志文件</span></div><div class="line">rm -f *json.log</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /var/lib/docker/containers/container_id/</div><div class="line"><span class="meta">#</span>以json.log结尾的文件即为业务日志文件</div><div class="line">rm -f *json.log</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure>
 <ol start="2">
 <li>永久解决办法<br>
 设置 docker 日志文件大小和数量</li>
@@ -552,7 +552,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -652,7 +652,7 @@
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
     <span title="Site words total count">
-      25.8k
+      26.2k
     </span>
   
 </div>
