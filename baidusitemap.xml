@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://blog.actpi.com/articles/2023/compile_mumps.html</loc>
+    <lastmod>2023-05-10T07:50:52.176Z</lastmod>
+    <data>
+        <display>
+        <title>Windows下编译 Mumps Solver</title>
+        <pubTime>2023-05-10T07:12:16.000Z</pubTime>
+        
+        <tag>mumps</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.actpi.com/articles/2023/install_abaqus_linux.html</loc>
     <lastmod>2023-04-26T03:53:47.791Z</lastmod>
     <data>
@@ -45,9 +62,9 @@
         <title>GitLab CI 自动流程简述</title>
         <pubTime>2023-02-15T01:42:16.000Z</pubTime>
         
-        <tag>DevOps</tag>
-         
         <tag>CI/CD</tag>
+         
+        <tag>DevOps</tag>
          
          
            
@@ -344,9 +361,9 @@
         
         <tag>python</tag>
          
-        <tag>DevOps</tag>
-         
         <tag>CI/CD</tag>
+         
+        <tag>DevOps</tag>
          
          
            
