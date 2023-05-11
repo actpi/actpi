@@ -118,7 +118,7 @@
 <meta property="og:site_name" content="ActPi&#39;s Blog">
 <meta property="og:description" content="简介 MUMPS Solver 是一种用于求解大规模线性方程组的开源软件，Mumps官网：https://mumps-solver.org，获取 MUMPS Solver 源代码可在https://mumps-solver.org/index.php?page=dwnld 提交信息后获取。  编译前提  cmake ninja 编译器 OneApi_base_toolkit  —提供C、C++编">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2023-05-10T07:50:52.176Z">
+<meta property="og:updated_time" content="2023-05-11T07:02:27.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下编译 Mumps Solver">
 <meta name="twitter:description" content="简介 MUMPS Solver 是一种用于求解大规模线性方程组的开源软件，Mumps官网：https://mumps-solver.org，获取 MUMPS Solver 源代码可在https://mumps-solver.org/index.php?page=dwnld 提交信息后获取。  编译前提  cmake ninja 编译器 OneApi_base_toolkit  —提供C、C++编">
@@ -538,8 +538,8 @@ endif()</p>
 <p>if(MUMPS_d_FOUND)<br>
 precision_ex(“d”)<br>
 endif()</p>
-<h1 id="test-properties"><a class="markdownIt-Anchor" href="#test-properties"></a> test properties</h1>
-<p>get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)</p>
+<p>//# test properties<br>
+get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)</p>
 <p>if(MUMPS_parallel)<br>
 set_property(TEST ${test_names} PROPERTY RESOURCE_LOCK cpu_mpi)<br>
 endif()</p>
@@ -776,7 +776,7 @@ b. 到<code>build</code>目录下用 <strong>Visual Studio</strong> 打开 <code
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译前提"><span class="nav-number">2.</span> <span class="nav-text"> 编译前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文档"><span class="nav-number">3.</span> <span class="nav-text"> 相关文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译过程"><span class="nav-number">4.</span> <span class="nav-text"> 编译过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#test-properties"><span class="nav-number"></span> <span class="nav-text"> test properties</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#集成-metis-库"><span class="nav-number">1.</span> <span class="nav-text"> 集成 Metis 库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译前提"><span class="nav-number">2.</span> <span class="nav-text"> 编译前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文档"><span class="nav-number">3.</span> <span class="nav-text"> 相关文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译过程"><span class="nav-number">4.</span> <span class="nav-text"> 编译过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成-metis-库"><span class="nav-number">5.</span> <span class="nav-text"> 集成 Metis 库</span></a></li></ol></div>
             
 
           </div>

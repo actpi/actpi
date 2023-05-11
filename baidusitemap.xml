@@ -4,14 +4,14 @@
 
     
   <url>
-    <loc>http://blog.actpi.com/articles/2022/pure-bash-bible.html</loc>
-    <lastmod>2023-05-11T03:16:51.730Z</lastmod>
+    <loc>http://blog.actpi.com/articles/2023/compile_mumps.html</loc>
+    <lastmod>2023-05-11T07:02:27.727Z</lastmod>
     <data>
         <display>
-        <title>Shell 脚本零碎笔记2</title>
-        <pubTime>2022-11-17T16:00:00.000Z</pubTime>
+        <title>Windows下编译 Mumps Solver</title>
+        <pubTime>2023-05-10T07:12:16.000Z</pubTime>
         
-        <tag>shell</tag>
+        <tag>mumps</tag>
          
          
            
@@ -21,14 +21,14 @@
 
     
   <url>
-    <loc>http://blog.actpi.com/articles/2023/compile_mumps.html</loc>
-    <lastmod>2023-05-10T07:50:52.176Z</lastmod>
+    <loc>http://blog.actpi.com/articles/2022/pure-bash-bible.html</loc>
+    <lastmod>2023-05-11T03:16:51.730Z</lastmod>
     <data>
         <display>
-        <title>Windows下编译 Mumps Solver</title>
-        <pubTime>2023-05-10T07:12:16.000Z</pubTime>
+        <title>Shell 脚本零碎笔记2</title>
+        <pubTime>2022-11-17T16:00:00.000Z</pubTime>
         
-        <tag>mumps</tag>
+        <tag>shell</tag>
          
          
            
