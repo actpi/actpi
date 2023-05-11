@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.actpi.com/articles/2022/pure-bash-bible.html</loc>
+    
+    <lastmod>2023-05-11T03:10:29.776Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.actpi.com/articles/2023/compile_mumps.html</loc>
     
     <lastmod>2023-05-10T07:50:52.176Z</lastmod>
