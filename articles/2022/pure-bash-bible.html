@@ -118,7 +118,7 @@
 <meta property="og:site_name" content="ActPi&#39;s Blog">
 <meta property="og:description" content="一个纯bash实现外部命令的脚本集合  读取文件到一个字符串中 替代 cat 命令. 1file_data=&quot;$(&amp;lt;&quot;file&quot;)&quot;  创建一个空文件 替代 touch. 12# 简短的方式.&amp;gt;file">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2023-05-11T03:10:29.776Z">
+<meta property="og:updated_time" content="2023-05-11T03:16:51.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell 脚本零碎笔记2">
 <meta name="twitter:description" content="一个纯bash实现外部命令的脚本集合  读取文件到一个字符串中 替代 cat 命令. 1file_data=&quot;$(&amp;lt;&quot;file&quot;)&quot;  创建一个空文件 替代 touch. 12# 简短的方式.&amp;gt;file">
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  662
+                  719
                 </span>
               
 
@@ -404,6 +404,8 @@
 返回变量$varname的子字符串，从位置offset开始（从0开始计算），长度为length。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> count=frogfootman</span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="variable">$&#123;count:4:4&#125;</span></span></div><div class="line">foot</div></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># test.jpg 删除后缀.jpg 返回 test</span></span></div><div class="line"><span class="meta">$</span><span class="bash">&#123;filename%.*&#125;</span></div><div class="line"><span class="meta">#</span><span class="bash"><span class="comment"># $&#123;branch#*/&#125; 表示删除 $branch 变量中第一个斜杠（/）及其左侧的所有字符</span></span></div><div class="line"><span class="meta">$</span><span class="bash">branch=origin/<span class="built_in">test</span></span></div><div class="line"><span class="meta">$</span><span class="bash">&#123;branch<span class="comment">#*/&#125;=test</span></span></div></pre></td></tr></table></figure>
+<p>文件名仅允许字母、数字、横杠与下划线的组合</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if [[ $&#123;filename&#125; =~ ^[a-zA-Z0-9_-]*[.] ]];then</div><div class="line">    echo -e "\033[32m---文件名校验ok---\033[0m"</div><div class="line">else</div><div class="line">    echo  -e "\033[31m ERROR：有特殊字符、请检查！\033[0m" &amp;&amp; exit -1</div><div class="line">fi</div></pre></td></tr></table></figure>
 <h2 id="长度"><a class="markdownIt-Anchor" href="#长度"></a> 长度</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">`$&#123;#VAR&#125;`： 字符变量的长度.</div><div class="line">`$&#123;#ARR[@]&#125;` ： 数组的长度.</div></pre></td></tr></table></figure>
 <h2 id="改变大小写"><a class="markdownIt-Anchor" href="#改变大小写"></a> 改变大小写</h2>
