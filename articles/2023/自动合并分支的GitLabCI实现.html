@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="CI 任务触发需求  普通提交代码时不触发 当指定commit关键字触发 发起了 Merge Requests则自动触发 测试任务成功后自动合并分支">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitLab CI 实现自动测试然后根据结果合并分支">
+<meta property="og:url" content="http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html">
+<meta property="og:site_name" content="ActPi&#39;s Blog">
+<meta property="og:description" content="CI 任务触发需求  普通提交代码时不触发 当指定commit关键字触发 发起了 Merge Requests则自动触发 测试任务成功后自动合并分支">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-05T01:42:16.000Z">
+<meta property="article:modified_time" content="2023-05-18T01:53:45.827Z">
+<meta property="article:author" content="actpi">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="DevOps">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html","path":"articles/2023/自动合并分支的GitLabCI实现.html","title":"GitLab CI 实现自动测试然后根据结果合并分支"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GitLab CI 实现自动测试然后根据结果合并分支 | ActPi's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ActPi's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Share & Record</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ci-%E4%BB%BB%E5%8A%A1%E8%A7%A6%E5%8F%91%E9%9C%80%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text"> CI 任务触发需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-ciyml"><span class="nav-number">1.1.</span> <span class="nav-text"> .gitlab-ci.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dingtalkpy"><span class="nav-number">1.2.</span> <span class="nav-text"> dingtalk.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-apipy"><span class="nav-number">1.3.</span> <span class="nav-text"> gitlab-api.py</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="actpi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">actpi</p>
+  <div class="site-description" itemprop="description">Records some think,and some experience,or just mean to write it.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/actpi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;actpi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:actpi@qq.com" title="E-Mail → mailto:actpi@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GitLab CI 实现自动测试然后根据结果合并分支 | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GitLab CI 实现自动测试然后根据结果合并分支
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-05 09:42:16" itemprop="dateCreated datePublished" datetime="2023-03-05T09:42:16+08:00">2023-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>801</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="ci-任务触发需求"><a class="markdownIt-Anchor" href="#ci-任务触发需求"></a> CI 任务触发需求</h2>
+<ul>
+<li>普通提交代码时不触发</li>
+<li>当指定<code>commit</code>关键字触发</li>
+<li>发起了 <code>Merge Requests</code>则自动触发</li>
+<li>测试任务成功后自动合并分支<span id="more"></span></li>
+</ul>
+<h3 id="gitlab-ciyml"><a class="markdownIt-Anchor" href="#gitlab-ciyml"></a> .gitlab-ci.yml</h3>
+<p>为了不在代码里体现秘钥信息，可在项目 CI/CD 设置里 <code>variables</code> 添加 token、secret，触发 CI 任务时可自动获取此变量</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#每个 Job 任务结束后通过钉钉发送任务结果信息</span></span><br><span class="line"><span class="attr">after_script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">python</span> <span class="string">dingtalk.py</span> <span class="string">$TOKEN</span> <span class="string">$SECRET</span> <span class="string">$CI_JOB_STATUS</span> <span class="string">$CI_JOB_URL</span> <span class="string">$CI_JOB_NAME</span> <span class="string">$CI_PROJECT_TITLE</span> <span class="string">$GITLAB_USER_NAME</span></span><br><span class="line"><span class="comment">#step 1</span></span><br><span class="line"><span class="attr">build:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="comment"># 指定运行 Runner 标签</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dev</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="comment"># 当 commit 信息为 `run ci`开头或发起了 `Merge Requests`时触发</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_MESSAGE</span> <span class="string">=~</span> <span class="string">/^run</span> <span class="string">ci/</span> <span class="string">||</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">do</span> <span class="string">build</span> <span class="string">job</span></span><br><span class="line"><span class="comment">#step 2</span></span><br><span class="line"><span class="attr">test:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="comment"># 指定运行 Runner 标签</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dev</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_MESSAGE</span> <span class="string">=~</span> <span class="string">/^run</span> <span class="string">ci/</span> <span class="string">||</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line">  <span class="comment">#设置依赖关系</span></span><br><span class="line">  <span class="attr">needs:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">Solve</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">do</span> <span class="string">test</span> <span class="string">job</span></span><br><span class="line"><span class="comment">#step 3: auto merge</span></span><br><span class="line"><span class="attr">Merge_Branch:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dev</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="comment"># 仅在有 MR 时运行</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line">  <span class="comment">#设置依赖关系</span></span><br><span class="line">  <span class="attr">needs:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">Compare</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="comment"># 谁发起了MR就合并谁的MR请求</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">python</span> <span class="string">/opt/gitlab-runner/gitlab-api.py</span> <span class="string">$CI_PROJECT_ID</span> <span class="string">$GITLAB_USER_LOGIN</span></span><br></pre></td></tr></table></figure>
+<h3 id="dingtalkpy"><a class="markdownIt-Anchor" href="#dingtalkpy"></a> <a target="_blank" rel="noopener" href="http://dingtalk.py">dingtalk.py</a></h3>
+<p>通过<code>dingtalkchatbot</code>发送钉钉消息,先在钉钉群里添加一个自定义机器人，记录下URL token 和 secret 秘钥</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># encoding=utf-8</span></span><br><span class="line">__Author__ = <span class="string">&quot;Actpi&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">from</span> dingtalkchatbot.chatbot <span class="keyword">import</span> DingtalkChatbot, ActionCard, CardItem</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_notify</span>(<span class="params">webhook,secret,message</span>):</span><br><span class="line">    <span class="comment"># 初始化机器人小丁</span></span><br><span class="line">    bot = DingtalkChatbot(webhook,secret,pc_slide=<span class="literal">False</span>)  <span class="comment"># 方式一：通常初始化方式</span></span><br><span class="line">    bot.send_link(title=message[<span class="number">0</span>],text=message[<span class="number">1</span>],message_url=message[<span class="number">2</span>],pic_url=message[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_actioncard</span>(<span class="params">args</span>):</span><br><span class="line">    <span class="comment"># 失败时：任意任务都发通知</span></span><br><span class="line">    <span class="keyword">if</span> args.CI_JOB_STATUS == <span class="string">&quot;failed&quot;</span>:</span><br><span class="line">        V_IMG = <span class="string">&quot;https://s2.loli.net/2022/09/28/WpklwGHgMZuoCXU.png&quot;</span></span><br><span class="line">        V_STATUS = <span class="string">&quot;执行失败 &quot;</span></span><br><span class="line">    <span class="comment"># 成功时：仅 merge 任务发通知</span></span><br><span class="line">    <span class="keyword">elif</span> args.CI_JOB_STATUS == <span class="string">&quot;success&quot;</span> <span class="keyword">and</span> args.CI_JOB_NAME == <span class="string">&quot;Merge_Branch&quot;</span>:</span><br><span class="line">        V_IMG = <span class="string">&quot;https://s2.loli.net/2022/09/28/R8QKZqrXHUedmB5.png&quot;</span></span><br><span class="line">        V_STATUS = <span class="string">&quot;执行成功 &quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        sys.exit(<span class="number">10</span>)</span><br><span class="line">    V_TITLE = <span class="string">&quot;任务 %s %s&quot;</span> %(args.CI_JOB_NAME,V_STATUS)</span><br><span class="line">    V_TEXT = <span class="string">&quot;项目:  %s  \n作者: %s&quot;</span> %(args.CI_PROJECT_TITLE,args.GITLAB_USER_NAME)</span><br><span class="line">    message_url = args.CI_JOB_URL</span><br><span class="line">    pic_url = V_IMG</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [V_TITLE,V_TEXT,message_url,pic_url]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_args</span>():</span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">&#x27;钉钉发送job结果消息、需要传入参数：&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;TOKEN&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;钉钉机器人 TOKEN&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;SECRET&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;钉钉机器人 SECRET&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;CI_JOB_STATUS&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;变量 CI_JOB_STATUS&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;CI_JOB_URL&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;变量 CI_JOB_URL&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;CI_JOB_NAME&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;变量 CI_JOB_NAME&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;CI_PROJECT_TITLE&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;变量 CI_PROJECT_TITLE&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;GITLAB_USER_NAME&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;变量 GITLAB_USER_NAME&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> parser.parse_args()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    args = get_args()</span><br><span class="line">    <span class="comment"># 钉钉机器人 webhook 地址</span></span><br><span class="line">    url = <span class="string">&quot;https://oapi.dingtalk.com/robot/send?access_token=&quot;</span></span><br><span class="line">    webhook = url + args.TOKEN</span><br><span class="line">    <span class="comment">#secret = &#x27;SEC11b9...这里填写自己的加密设置密钥&#x27;</span></span><br><span class="line">    secret = args.SECRET</span><br><span class="line">    <span class="comment">#设置发送的消息内容</span></span><br><span class="line">    message = set_actioncard(args)</span><br><span class="line">    send_notify(webhook,secret,message)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h3 id="gitlab-apipy"><a class="markdownIt-Anchor" href="#gitlab-apipy"></a> <a target="_blank" rel="noopener" href="http://gitlab-api.py">gitlab-api.py</a></h3>
+<p>用 <code>python-gitlab</code> api 封装完成分支合并的操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">__Author__ = <span class="string">&quot;Actpi&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> gitlab</span><br><span class="line"><span class="comment"># doc: https://python-gitlab.readthedocs.io/en/stable/api-usage.html</span></span><br><span class="line">url = <span class="string">&quot;https://gitlab.com&quot;</span></span><br><span class="line"><span class="comment"># personal access token</span></span><br><span class="line">access_token = <span class="string">&quot;xxxxxxxxxxxxxxxx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    gl = gitlab.Gitlab(url,access_token)</span><br><span class="line">    <span class="comment"># get the project with id</span></span><br><span class="line">    project = gl.projects.get(CI_PROJECT_ID)</span><br><span class="line">    <span class="comment"># json格式化</span></span><br><span class="line">    <span class="comment"># print(project.to_json(indent=4))</span></span><br><span class="line">    <span class="comment"># 获取当前打开的MR信息</span></span><br><span class="line">    mrs = project.mergerequests.<span class="built_in">list</span>(state=<span class="string">&#x27;opened&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> mrs:</span><br><span class="line">        <span class="keyword">for</span> mr <span class="keyword">in</span> mrs:</span><br><span class="line">            <span class="comment">#谁触发了流水线就合并谁的MR请求</span></span><br><span class="line">            <span class="keyword">if</span> mr.author[<span class="string">&#x27;username&#x27;</span>] == COMMIT_USER:</span><br><span class="line">                <span class="keyword">if</span> mr.has_conflicts:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;有代码冲突、请先解决冲突！&quot;</span>)</span><br><span class="line">                    sys.exit(<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;title: %s\ndescription: %s\ndetails: &quot;</span> %(mr.title,mr.description) )</span><br><span class="line">                    <span class="keyword">if</span> mr.merge_status == <span class="string">&quot;can_be_merged&quot;</span>:</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">&quot;merge &quot;</span>+mr.source_branch+<span class="string">&quot; to &quot;</span>+mr.target_branch+<span class="string">&quot; by &quot;</span>+mr.author[<span class="string">&#x27;username&#x27;</span>]+<span class="string">&quot; at &quot;</span> + mr.created_at)</span><br><span class="line">                        mr.merge()</span><br><span class="line">                    <span class="keyword">elif</span> mr.merge_status == <span class="string">&quot;unchecked&quot;</span>:</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">&quot;当前 MR 状态未被检查确认，需要审核者在 MR 页面点击 Approved 按钮确认！&quot;</span>)</span><br><span class="line">                        sys.exit(<span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">else</span> :</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">&quot;当前MR：%s 状态为: %s, 不能合并，请检查MR详情！&quot;</span> %(mr.title,mr.merge_status))</span><br><span class="line">                        sys.exit(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;No Opened Merge Request.&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &gt; <span class="number">2</span>:</span><br><span class="line">        CI_PROJECT_ID = sys.argv[<span class="number">1</span>]</span><br><span class="line">        CI_COMMIT_AUTHOR = sys.argv[<span class="number">2</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;CI_TRIGGER_AUTHOR: %s&quot;</span> % CI_COMMIT_AUTHOR)</span><br><span class="line">        COMMIT_USER = CI_COMMIT_AUTHOR.split()[<span class="number">0</span>]</span><br><span class="line">        main()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Error:Please Input parameter: PROJECT_ID and CI_COMMIT_AUTHOR&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+              <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/2023/gitlab-ci.html" rel="prev" title="GitLab CI 自动流程简述">
+                  <i class="fa fa-chevron-left"></i> GitLab CI 自动流程简述
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/2023/extend_fs.html" rel="next" title="LVM 添加硬盘并扩容至已有分区">
+                  LVM 添加硬盘并扩容至已有分区 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zNjU5OS8xMzEzNA=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">actpi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

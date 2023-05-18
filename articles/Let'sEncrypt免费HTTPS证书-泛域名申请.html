@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Let’sEncrypt 介绍 Let’s Encrypt: https:&#x2F;&#x2F;letsencrypt.org , 是一个免费的、自动化的、开放的证书颁发机构。它的全球SSL证书市场份额已超过50%，得到主流浏览器和厂商的认可与支持。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Let&#39;sEncrypt免费申请泛域名HTTPS证书">
+<meta property="og:url" content="http://blog.actpi.com/articles/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html">
+<meta property="og:site_name" content="ActPi&#39;s Blog">
+<meta property="og:description" content="Let’sEncrypt 介绍 Let’s Encrypt: https:&#x2F;&#x2F;letsencrypt.org , 是一个免费的、自动化的、开放的证书颁发机构。它的全球SSL证书市场份额已超过50%，得到主流浏览器和厂商的认可与支持。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-20T13:45:23.000Z">
+<meta property="article:modified_time" content="2023-05-18T01:53:45.827Z">
+<meta property="article:author" content="actpi">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="ssl">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.actpi.com/articles/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html","path":"articles/Let'sEncrypt免费HTTPS证书-泛域名申请.html","title":"Let'sEncrypt免费申请泛域名HTTPS证书"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Let'sEncrypt免费申请泛域名HTTPS证书 | ActPi's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ActPi's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Share & Record</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#letsencrypt-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text"> Let’sEncrypt 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%87%AA%E5%8A%A8%E7%BB%AD%E8%AE%A2%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text"> 可自动续订的方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="nav-number">4.</span> <span class="nav-text"> 申请泛域名证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6"><span class="nav-number">4.1.</span> <span class="nav-text"> 申请证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%81%E5%8F%91%E8%AF%81%E4%B9%A6"><span class="nav-number">4.2.</span> <span class="nav-text"> 颁发证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E4%B9%A6%E7%BB%AD%E6%9C%9F"><span class="nav-number">4.3.</span> <span class="nav-text"> 证书续期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#i%E9%85%8D%E5%90%88dnspod-api%E5%85%8D%E6%89%8B%E5%8A%A8%E8%A7%A3%E6%9E%90%E5%BF%AB%E9%80%9F%E8%8E%B7%E5%8F%96%E8%AF%81%E4%B9%A6"><span class="nav-number">4.3.1.</span> <span class="nav-text"> Ⅰ：配合DNSPOD API免手动解析快速获取证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ii-%E9%98%BF%E9%87%8C%E4%BA%91%E4%BA%91%E8%A7%A3%E6%9E%90nds%E5%85%8D%E6%89%8B%E5%8A%A8%E8%A7%A3%E6%9E%90%E5%BF%AB%E9%80%9F%E8%8E%B7%E5%8F%96%E8%AF%81%E4%B9%A6"><span class="nav-number">4.3.2.</span> <span class="nav-text"> Ⅱ、阿里云云解析NDS免手动解析快速获取证书</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E7%BD%91%E7%AB%99%E7%94%B3%E8%AF%B7%E4%B8%8D%E9%9C%80%E8%A6%81%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E7%BB%AD%E8%AE%A2"><span class="nav-number">4.4.</span> <span class="nav-text"> 通过网站申请（不需要实现自动续订）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="actpi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">actpi</p>
+  <div class="site-description" itemprop="description">Records some think,and some experience,or just mean to write it.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/actpi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;actpi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:actpi@qq.com" title="E-Mail → mailto:actpi@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Let'sEncrypt免费申请泛域名HTTPS证书 | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Let'sEncrypt免费申请泛域名HTTPS证书
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-20 21:45:23" itemprop="dateCreated datePublished" datetime="2019-03-20T21:45:23+08:00">2019-03-20</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="letsencrypt-介绍"><a class="markdownIt-Anchor" href="#letsencrypt-介绍"></a> Let’sEncrypt 介绍</h2>
+<p>Let’s Encrypt: <a target="_blank" rel="noopener" href="https://letsencrypt.org">https://letsencrypt.org</a> , 是一个免费的、自动化的、开放的证书颁发机构。它的全球SSL证书市场份额已超过50%，得到主流浏览器和厂商的认可与支持。<span id="more"></span></p>
+<p>Let’s Encrypt 证书提供免费的申请，但没有高额的安全保险，不具备点对点的技术支持，而且申请过程比较复杂，适合具有一定的专业知识的个人站长申请。并且每次申请到的SSL证书有效期只有90天，但是可以通过脚本实现提前自动续约达到自动化永久免费使用的目的。</p>
+<p>在2018年5月，Let’s Encrypt 发布了免费泛域名通配符 SSL 证书：[<a target="_blank" rel="noopener" href="https://community.letsencrypt.org/t/acme-v2-and-wildcard-certificate-support-is-live/55579">https://community.letsencrypt.org/t/acme-v2-and-wildcard-certificate-support-is-live/55579</a>] ，在 HTTPS 全面普及的当下，越来越多的开发者选择了 Let’s Encrypt 证书。</p>
+<h2 id="可自动续订的方案"><a class="markdownIt-Anchor" href="#可自动续订的方案"></a> 可自动续订的方案</h2>
+<p>Let’s Encrypt 官方提供了一系列的申请方法文档，但流程比较复杂，为了简化申请流程，我们可以在Github上找到这个仓库：[<a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh">https://github.com/acmesh-official/acme.sh</a>]</p>
+<p><a target="_blank" rel="noopener" href="http://acme.sh">acme.sh</a> 的具体使用说明见：[<a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E">https://github.com/acmesh-official/acme.sh/wiki/说明</a>]</p>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl  https://get.acme.sh | sh</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O -  https://get.acme.sh | sh</span><br></pre></td></tr></table></figure>
+<h2 id="申请泛域名证书"><a class="markdownIt-Anchor" href="#申请泛域名证书"></a> 申请泛域名证书</h2>
+<p><a target="_blank" rel="noopener" href="http://acme.sh">acme.sh</a> 脚本默认安装在用户主目录</p>
+<p><code>/root/.acme.sh/</code></p>
+<h3 id="申请证书"><a class="markdownIt-Anchor" href="#申请证书"></a> 申请证书</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">./acme.sh --issue  -d *.test.com --dns --yes-I-know-dns-manual-mode-enough-go-ahead-please</span><br><span class="line"></span><br><span class="line">[Mon May 20 14:31:39 CST 2019] Creating domain key</span><br><span class="line">[Mon May 20 14:31:39 CST 2019] The domain key is here: /root/.acme.sh/*.test.com/*.test.com.key</span><br><span class="line">[Mon May 20 14:31:39 CST 2019] Single domain=&#x27;*.test.com&#x27;</span><br><span class="line">[Mon May 20 14:31:39 CST 2019] Getting domain auth token for each domain</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] Getting webroot for domain=&#x27;*.test.com&#x27;</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] Add the following TXT record:</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] Domain: &#x27;_acme-challenge.test.com&#x27;</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] TXT value: &#x27;-CtUNqZ72M8E825dLzc4YRQyshby65Ut5jeGYZcMA&#x27;</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] Please be aware that you prepend _acme-challenge. before your domain</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] so the resulting subdomain will be: _acme-challenge.test.com</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] Please add the TXT records to the domains, and re-run with --renew.</span><br><span class="line">[Mon May 20 14:31:41 CST 2019] Please check log file for more details: /root/.acme.sh/acme.sh.log</span><br></pre></td></tr></table></figure>
+<div class="note info"><p>PS: 解析对应的 TXT 记录，等 TXT 记录生效后，使用如下命令验证域名证书</p>
+</div>
+<h3 id="颁发证书"><a class="markdownIt-Anchor" href="#颁发证书"></a> 颁发证书</h3>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">./acme.sh --renew -d *.test.com --dns  --yes-I-know-dns-manual-mode-enough-go-ahead-please</span><br><span class="line">[Mon May 20 14:39:54 CST 2019] Renew: <span class="string">&#x27;*.test.com&#x27;</span></span><br><span class="line">[Mon May 20 14:39:54 CST 2019] Single domain=<span class="string">&#x27;*.test.com&#x27;</span></span><br><span class="line">[Mon May 20 14:39:54 CST 2019] Getting domain auth token <span class="keyword">for</span> each domain</span><br><span class="line">[Mon May 20 14:39:54 CST 2019] Verifying: *.test.com</span><br><span class="line">[Mon May 20 14:39:58 CST 2019] Success</span><br><span class="line">[Mon May 20 14:39:58 CST 2019] Verify finished, start to sign.</span><br><span class="line">[Mon May 20 14:39:58 CST 2019] Lets finalize the order, Le_OrderFinalize: https://acme-v02.api.letsencrypt.org/acme/finalize/57434696/460828648</span><br><span class="line">[Mon May 20 14:40:00 CST 2019] Download cert, Le_LinkCert: https://acme-v02.api.letsencrypt.org/acme/cert/0394d4c6ac1022960d1b4873927b1749d551</span><br><span class="line">[Mon May 20 14:40:00 CST 2019] Cert success.</span><br><span class="line"></span><br><span class="line">[Mon May 20 14:40:00 CST 2019] Your cert is <span class="keyword">in</span> /root/.acme.sh/*.test.com/*.test.com.cer</span><br><span class="line">[Mon May 20 14:40:00 CST 2019] Your cert key is <span class="keyword">in</span> /root/.acme.sh/*.test.com/*.test.com.key</span><br><span class="line">[Mon May 20 14:40:00 CST 2019] The intermediate CA cert is <span class="keyword">in</span> /root/.acme.sh/*.test.com/ca.cer</span><br><span class="line">[Mon May 20 14:40:00 CST 2019] And the full chain certs is there: /root/.acme.sh/*.test.com/fullchain.cer</span><br><span class="line">[Mon May 20 14:40:00 CST 2019] It seems that you are using dns manual mode. please take care: The dns manual mode can not renew automatically, you must issue it again manually. You<span class="string">&#x27;d better use the other modes instead.</span></span><br><span class="line"><span class="string">[Mon May 20 14:40:00 CST 2019] Call hook error.</span></span><br></pre></td></tr></table></figure>
+<div class="note info"><p>PS: 这里使用的是 --renew</p>
+</div>
+<p>这里会生成.cer密钥</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ll \*.test.com/</span><br><span class="line">total 28</span><br><span class="line">-rw-r--r-- 1 root root 1648 May 20 14:40 ca.cer</span><br><span class="line">-rw-r--r-- 1 root root 3551 May 20 14:40 fullchain.cer</span><br><span class="line">-rw-r--r-- 1 root root 1903 May 20 14:40 *.test.com.cer</span><br><span class="line">-rw-r--r-- 1 root root 1675 May 20 14:31 *.test.com.key</span><br></pre></td></tr></table></figure>
+<h3 id="证书续期"><a class="markdownIt-Anchor" href="#证书续期"></a> 证书续期</h3>
+<p><code>./acme.sh --renew -d *.test.com</code></p>
+<p>默认证书只有3个月时间，到期后自执行上面命令续期，也要添加自动任务，自动续期</p>
+<h4 id="i配合dnspod-api免手动解析快速获取证书"><a class="markdownIt-Anchor" href="#i配合dnspod-api免手动解析快速获取证书"></a> Ⅰ：配合DNSPOD API免手动解析快速获取证书</h4>
+<p>一、域名解析<br />
+将需要申请证书的域名更改DNS服务器添加到DNSPOD进行解析。</p>
+<p>二、创建API<br />
+登入 DNSPOD 后台，在&quot;安全设置&quot;中，添加创建API。保存好ID和Token。</p>
+<p>三、配置API</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> DP_Id=<span class="string">&quot;ID数字&quot;</span></span><br><span class="line"><span class="built_in">export</span> DP_Key=<span class="string">&quot;Token字符串&quot;</span></span><br><span class="line">ID和KEY分别对应获取的API的ID和Token</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<p>四、签发证书SSL</p>
+<p><code>/root/.acme.sh/acme.sh --issue -d test.com -d *.test.com --dns dns_dp --debug</code></p>
+<h4 id="ii-阿里云云解析nds免手动解析快速获取证书"><a class="markdownIt-Anchor" href="#ii-阿里云云解析nds免手动解析快速获取证书"></a> Ⅱ、阿里云云解析NDS免手动解析快速获取证书</h4>
+<p>一、登录阿里云控制台–&gt;云解析DNS–&gt;账户</p>
+<p>生成云解析账号的api的key 和Secret</p>
+<p>二、配置API,设置2个变量</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/root/.acme.sh/dnsapi/dns_ali.sh</span><br><span class="line"><span class="built_in">export</span> Ali_Key=<span class="string">&quot;阿里云key&quot;</span></span><br><span class="line"><span class="built_in">export</span> Ali_Secret=<span class="string">&quot;阿里云Secret&quot;</span></span><br></pre></td></tr></table></figure>
+<p>三、签发证书SSL</p>
+<p><code>acme.sh --issue --dns dns_ali --force -d domain.com -d *.domain.com --debug</code></p>
+<p>证书文件都被自动存放在 /root/.acme.sh/ 对应的域名文件夹中.</p>
+<p><em><strong>注意, 默认生成的证书都放在安装目录下: ~/.acme.sh/<domain>.com, 请不要直接使用此目录下的文件。</strong></em></p>
+<p>例如: 不要直接让 nginx/apache 的配置文件使用这下面的文件. 这里面的文件都是内部使用, 而且目录结构可能会变化.</p>
+<p>正确的使用方法是使用 --installcert 命令,并指定目标位置, 然后证书文件会被copy到相应的位置, 例如:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">acme.sh  --installcert  -d  &lt;domain&gt;.com   \</span><br><span class="line">        --key-file   /etc/nginx/ssl/&lt;domain&gt;.key \</span><br><span class="line">        --fullchain-file /etc/nginx/ssl/fullchain.cer \</span><br><span class="line">        --reloadcmd  <span class="string">&quot;service nginx force-reload&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Nginx 的配置 ssl_certificate 使用 /etc/nginx/ssl/fullchain.cer ，而非 /etc/nginx/ssl/<domain>.cer ，否则 SSL 测试会报 Chain issues Incomplete 错误。</p>
+<p>–installcer t命令可以携带很多参数, 来指定目标文件. 并且可以指定 reloadcmd, 当证书更新以后, reloadcmd会被自动调用,让服务器生效.</p>
+<p>详细参数请参考: [<a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh#3-install-the-issued-cert-to-apachenginx-etc">https://github.com/acmesh-official/acme.sh#3-install-the-issued-cert-to-apachenginx-etc</a>]</p>
+<p>值得注意的是, 这里指定的所有参数都会被自动记录下来, 并在将来证书自动更新以后, 被再次自动调用.</p>
+<h3 id="通过网站申请不需要实现自动续订"><a class="markdownIt-Anchor" href="#通过网站申请不需要实现自动续订"></a> 通过网站申请（不需要实现自动续订）</h3>
+<p>如果不需要实现SSL域名证书自动续订，可以在下面的网站申请Let’s Encrypt免费泛域名SSL证书<br />
+地址：[<a target="_blank" rel="noopener" href="https://www.sslforfree.com/">https://www.sslforfree.com/</a>]<br />
+申请泛域名证书填写示例：<br />
+<code>*.xxx.com xxx.com</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/ssl/" rel="tag"># ssl</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/oracle-install.html" rel="prev" title="centos 7 安装oracel 12c">
+                  <i class="fa fa-chevron-left"></i> centos 7 安装oracel 12c
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/ssl-error.html" rel="next" title="SSL 证书校验错误 Trust anchor for certification path not found">
+                  SSL 证书校验错误 Trust anchor for certification path not found <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zNjU5OS8xMzEzNA=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">actpi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

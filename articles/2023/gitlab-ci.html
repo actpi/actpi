@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="什么是 GitLab CI GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitLab CI 自动流程简述">
+<meta property="og:url" content="http://blog.actpi.com/articles/2023/gitlab-ci.html">
+<meta property="og:site_name" content="ActPi&#39;s Blog">
+<meta property="og:description" content="什么是 GitLab CI GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 .gitlab-ci.yml 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.actpi.com/images/gitlab-ci/1.png">
+<meta property="article:published_time" content="2023-02-15T01:42:16.000Z">
+<meta property="article:modified_time" content="2023-05-18T01:53:45.827Z">
+<meta property="article:author" content="actpi">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="DevOps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.actpi.com/images/gitlab-ci/1.png">
+
+
+<link rel="canonical" href="http://blog.actpi.com/articles/2023/gitlab-ci.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2023/gitlab-ci.html","path":"articles/2023/gitlab-ci.html","title":"GitLab CI 自动流程简述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GitLab CI 自动流程简述 | ActPi's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ActPi's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Share & Record</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-gitlab-ci"><span class="nav-number">1.</span> <span class="nav-text"> 什么是 GitLab CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-runner"><span class="nav-number">2.</span> <span class="nav-text"> GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ci-%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text"> GitLab CI 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ciyml-%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text"> .gitlab-ci.yml 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#job"><span class="nav-number">4.1.</span> <span class="nav-text"> Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#before_script%E5%92%8Cafter_script"><span class="nav-number">4.2.</span> <span class="nav-text"> before_script和after_script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules"><span class="nav-number">4.3.</span> <span class="nav-text"> rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#artifacts"><span class="nav-number">4.4.</span> <span class="nav-text"> artifacts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-%E5%92%8C-except"><span class="nav-number">4.5.</span> <span class="nav-text"> only 和 except</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-pipeline"><span class="nav-number">4.6.</span> <span class="nav-text"> Run Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87gitlab-ci%E6%B5%81%E7%A8%8B"><span class="nav-number">4.7.</span> <span class="nav-text"> 如何跳过gitlab-ci流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%A5%E9%94%99"><span class="nav-number">5.</span> <span class="nav-text"> 使用上的一些报错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fatal-git-fetch-pack-expected-shallow-list"><span class="nav-number">5.1.</span> <span class="nav-text"> fatal: git fetch-pack: expected shallow list</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="actpi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">actpi</p>
+  <div class="site-description" itemprop="description">Records some think,and some experience,or just mean to write it.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/actpi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;actpi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:actpi@qq.com" title="E-Mail → mailto:actpi@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/gitlab-ci.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GitLab CI 自动流程简述 | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GitLab CI 自动流程简述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-15 09:42:16" itemprop="dateCreated datePublished" datetime="2023-02-15T09:42:16+08:00">2023-02-15</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="什么是-gitlab-ci"><a class="markdownIt-Anchor" href="#什么是-gitlab-ci"></a> 什么是 GitLab CI</h2>
+<p>GitLab CI 是GitLab内置的进行持续集成的工具，只需要在仓库根目录下创建 <code>.gitlab-ci.yml</code> 文件，并配置GitLab Runner；每次提交代码的时候，gitlab 将自动识别并且使用 GitLab Runner 执行任务。<span id="more"></span></p>
+<h2 id="gitlab-runner"><a class="markdownIt-Anchor" href="#gitlab-runner"></a> GitLab Runner</h2>
+<p>GitLab-Runner就是一个用来执行 <code>.gitlab-ci.yml</code> 脚本的工具。Runner 就像认真工作的工人，GitLab-CI 就是管理工人的中心，所有工人都要在 GitLab-CI 里面注册。当相应的项目发生变化时，GitLab-CI 就会通知相应的工人执行对应的脚本。gitLab-Runner 可以分类两种类型：Shared Runner（共享型）和 Specific Runner（指定型）。</p>
+<ul>
+<li>Shared Runner：所有工程都能够用的，只有系统管理员能够创建。</li>
+<li>Specific Runner：只有特定的项目可以使用。</li>
+</ul>
+<ol>
+<li>安装<br />
+官方文档: <a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/install/">Install GitLab Runner</a></li>
+<li>注册
+<ul>
+<li>输入 GitLab URL 地址</li>
+<li>输入注册 Token</li>
+<li>指定<code>runner executor</code> 一般为<code>shell</code></li>
+</ul>
+</li>
+</ol>
+<p>!!! Warning<br />
+1. 若是 <code>powershell</code> 需将配置文件里<code>shell</code>改为: <code>shell = &quot;powershell&quot;</code><br />
+2. Runner 默认日志输出太小，可通过更改<code>output_limit = 40960</code>进行调整<br />
+3. Runner 默认为串行方式，可通过<code>concurrent = 2</code>指定能并行运行的数量</p>
+<h2 id="gitlab-ci-流程"><a class="markdownIt-Anchor" href="#gitlab-ci-流程"></a> GitLab CI 流程</h2>
+<p>每个推送到 Gitlab 的提交都会产生一个与该提交关联的管道(pipeline)，管道(pipeline)是一个分成不同阶段(stage)的作业(job)的集合。多个 Stage 是按照顺序执行的，如果其中任何一个 Stage 失败，则后续的 Stage 不会被执行，整个 CI 过程被认为失败。<br />
+<img src="../../images/gitlab-ci/1.png" alt="ci" /></p>
+<h2 id="gitlab-ciyml-文件"><a class="markdownIt-Anchor" href="#gitlab-ciyml-文件"></a> .gitlab-ci.yml 文件</h2>
+<p>GitLab CI 使用 YAML 文件<code>.gitlab-ci.yml</code>来管理项目配置。该文件必须存放于项目仓库的根目录，并且包含了你的项目如何被编译的描述语句,YAML文件使用一系列约束叙述定义了Job启动时所要做的事情。</p>
+<h3 id="job"><a class="markdownIt-Anchor" href="#job"></a> Job</h3>
+<p>Job 是<code>.gitlab-ci.yml</code>文件中最基本的元素，由一系列参数定义了任务启动时所要做的事情，用户可以创建任意个任务；每个任务必须有一个独一无二的名字，但有一些保留 keywords 不能用于 Job 名称.<br />
+Job 被定义为顶级元素，并且至少包括一条script语句，如果一个 Job 没有显式地关联某个 Stage，则会被默认关联到 test Stage。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">test</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job 1:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">make</span> <span class="string">build</span> <span class="string">dependencies</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job 2:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">make</span> <span class="string">build</span> <span class="string">artifacts</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job 3:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">make</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">job 4:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">make</span> <span class="string">deploy</span></span><br></pre></td></tr></table></figure>
+<h3 id="before_script和after_script"><a class="markdownIt-Anchor" href="#before_script和after_script"></a> before_script和after_script</h3>
+<p>before_script 是用于定义一些在所有任务执行前所需执行的命令, 包括部署工作，可以接受一个数组或者多行字符串。after_script 用于定义所有 job 执行过后需要执行的命令，可以接受一个数组或者多行字符串。例如可以在 before_script 做好ssh连接的准备。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#定义全局 before_script:</span></span><br><span class="line"><span class="attr">default:</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">global</span> <span class="string">before</span> <span class="string">script</span></span><br><span class="line"><span class="comment">#覆盖全局before_script</span></span><br><span class="line"><span class="attr">job:</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">execute</span> <span class="string">this</span> <span class="string">instead</span> <span class="string">of</span> <span class="string">global</span> <span class="string">before</span> <span class="string">script</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">my</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">after_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">execute</span> <span class="string">this</span> <span class="string">after</span> <span class="string">my</span> <span class="string">script</span></span><br></pre></td></tr></table></figure>
+<h3 id="rules"><a class="markdownIt-Anchor" href="#rules"></a> rules</h3>
+<p>rules 用来限定 jobs 在什么情况下能够运行</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">echo</span> <span class="string">&quot;Hello, Rules!&quot;</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="comment"># 发起了 merge request</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line">    <span class="comment"># 推送了 tag 版本号</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_TAG</span></span><br><span class="line">    <span class="comment"># commit 信息以 run ci 开头</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_MESSAGE</span> <span class="string">=~</span> <span class="string">/^run</span> <span class="string">ci/</span></span><br></pre></td></tr></table></figure>
+<h3 id="artifacts"><a class="markdownIt-Anchor" href="#artifacts"></a> artifacts</h3>
+<p>用于指定在<strong>作业成功或者失败时应附加到作业的文件或目录的列表</strong>。Job 完成后（默认为仅成功后生成），工件将被发送到 GitLab UI 中提供下载。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">do</span> <span class="string">something</span> </span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="comment"># 失败后生成，默认为仅成功时生成</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">on_failure</span></span><br><span class="line">    <span class="comment"># 文件名，可以用内置变量</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">$&#123;CI_JOB_NAME&#125;</span></span><br><span class="line">    <span class="comment"># 路径只能是相对于当前项目路径，可以使用通配符匹配</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">binaries/</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">log/*.log</span></span><br></pre></td></tr></table></figure>
+<h3 id="only-和-except"><a class="markdownIt-Anchor" href="#only-和-except"></a> only 和 except</h3>
+<ul>
+<li>only 和 except 两个参数说明了job什么时候将会被创建</li>
+<li>only 定义了 job 需要执行的所在分支或者标签</li>
+<li>except 定义了 job 不会执行的所在分支或者标签</li>
+</ul>
+<h3 id="run-pipeline"><a class="markdownIt-Anchor" href="#run-pipeline"></a> Run Pipeline</h3>
+<ol>
+<li>提交代码时自动触发</li>
+<li>gitlab 上手动执行<br />
+在项目所在仓库里进入 CI/CD, 点击: <code>Run Pipeline</code></li>
+<li>Runner 本地运行<br />
+<code>gitlab-runner exec shell 'job1'</code><br />
+<code>gitlab-runner exec shell 'job2'</code></li>
+</ol>
+<h3 id="如何跳过gitlab-ci流程"><a class="markdownIt-Anchor" href="#如何跳过gitlab-ci流程"></a> 如何跳过gitlab-ci流程</h3>
+<p>在 commit 信息中包含<code>[ci skip]</code>或 <code>[skip ci]</code>,提交到仓库以后就会跳过本次 CI</p>
+<h2 id="使用上的一些报错"><a class="markdownIt-Anchor" href="#使用上的一些报错"></a> 使用上的一些报错</h2>
+<h3 id="fatal-git-fetch-pack-expected-shallow-list"><a class="markdownIt-Anchor" href="#fatal-git-fetch-pack-expected-shallow-list"></a> fatal: git fetch-pack: expected shallow list</h3>
+<p>Centos 7 自带的 git 版本是 1.8.3.1，由于版本太低不支持最新的API，需要升级 git 版本。</p>
+<ol>
+<li>安装 git 源<br />
+<code>yum install http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-2.noarch.rpm</code></li>
+<li>更新 git<br />
+<code>yum update git</code></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+              <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/2022/pure-bash-bible.html" rel="prev" title="Shell 脚本零碎笔记2">
+                  <i class="fa fa-chevron-left"></i> Shell 脚本零碎笔记2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html" rel="next" title="GitLab CI 实现自动测试然后根据结果合并分支">
+                  GitLab CI 实现自动测试然后根据结果合并分支 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zNjU5OS8xMzEzNA=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">actpi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

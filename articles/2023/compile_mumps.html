@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="简介 MUMPS Solver 是一种用于求解大规模线性方程组的开源软件，Mumps官网：https:&#x2F;&#x2F;mumps-solver.org，获取 MUMPS Solver 源代码可在https:&#x2F;&#x2F;mumps-solver.org&#x2F;index.php?page&#x3D;dwnld 提交信息后获取。  编译前提  cmake ninja 编译器 OneApi_base_toolkit  —提供C、C++编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows下编译 Mumps Solver">
+<meta property="og:url" content="http://blog.actpi.com/articles/2023/compile_mumps.html">
+<meta property="og:site_name" content="ActPi&#39;s Blog">
+<meta property="og:description" content="简介 MUMPS Solver 是一种用于求解大规模线性方程组的开源软件，Mumps官网：https:&#x2F;&#x2F;mumps-solver.org，获取 MUMPS Solver 源代码可在https:&#x2F;&#x2F;mumps-solver.org&#x2F;index.php?page&#x3D;dwnld 提交信息后获取。  编译前提  cmake ninja 编译器 OneApi_base_toolkit  —提供C、C++编">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-10T07:12:16.000Z">
+<meta property="article:modified_time" content="2023-05-18T01:53:45.827Z">
+<meta property="article:author" content="actpi">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.actpi.com/articles/2023/compile_mumps.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2023/compile_mumps.html","path":"articles/2023/compile_mumps.html","title":"Windows下编译 Mumps Solver"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows下编译 Mumps Solver | ActPi's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ActPi's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Share & Record</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%89%8D%E6%8F%90"><span class="nav-number">2.</span> <span class="nav-text"> 编译前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3"><span class="nav-number">3.</span> <span class="nav-text"> 相关文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text"> 编译过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90-metis-%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text"> 集成 Metis 库</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="actpi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">actpi</p>
+  <div class="site-description" itemprop="description">Records some think,and some experience,or just mean to write it.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/actpi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;actpi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:actpi@qq.com" title="E-Mail → mailto:actpi@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/compile_mumps.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows下编译 Mumps Solver | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows下编译 Mumps Solver
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-10 15:12:16" itemprop="dateCreated datePublished" datetime="2023-05-10T15:12:16+08:00">2023-05-10</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>907</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
+<p>MUMPS Solver 是一种用于求解大规模线性方程组的开源软件，Mumps官网：<a target="_blank" rel="noopener" href="https://mumps-solver.org">https://mumps-solver.org</a>，获取 MUMPS Solver 源代码可在<a target="_blank" rel="noopener" href="https://mumps-solver.org/index.php?page=dwnld">https://mumps-solver.org/index.php?page=dwnld</a> 提交信息后获取。</p>
+<h2 id="编译前提"><a class="markdownIt-Anchor" href="#编译前提"></a> 编译前提</h2>
+<ul>
+<li>cmake</li>
+<li>ninja 编译器</li>
+<li>OneApi_base_toolkit  —提供C、C++编译器与 MKL</li>
+<li>OneApi_hpc_toolkit   —提供Fortran编译器与 MPI <span id="more"></span></li>
+</ul>
+<h2 id="相关文档"><a class="markdownIt-Anchor" href="#相关文档"></a> 相关文档</h2>
+<ul>
+<li>Mumps官方用户手册： <a target="_blank" rel="noopener" href="https://mumps-solver.org/doc/userguide_5.6.0.pdf">https://mumps-solver.org/doc/userguide_5.6.0.pdf</a></li>
+<li>Cmake编译说明文档：<a target="_blank" rel="noopener" href="https://github.com/scivision/mumps/blob/main/Readme_Windows.md">https://github.com/scivision/mumps/blob/main/Readme_Windows.md</a></li>
+<li>编译成功后项目集成使用文档： <a target="_blank" rel="noopener" href="https://github.com/scivision/mumps/issues/3">https://github.com/scivision/mumps/issues/3</a></li>
+</ul>
+<h2 id="编译过程"><a class="markdownIt-Anchor" href="#编译过程"></a> 编译过程</h2>
+<ol>
+<li>
+<p>克隆仓库到本地: <code>git clone https://github.com/scivision/mumps.git</code></p>
+</li>
+<li>
+<p><strong>使用</strong> oneApi 命令行环境以获取对应环境变量、可通过以下两种方式:<br />
+a. 开始菜单找到 <code>Intel oneAPI command prompt for Intel 64 for Visual Studio</code> 右键以管理员身份打开<br />
+b. 任意管理员权限cmd 窗口输入 <code>C:\Program Files (x86)\Intel\oneAPI\setvars.bat</code></p>
+</li>
+<li>
+<p>进到源码仓库目录<br />
+<code>cd /d D:\mumps\mumps-5.6.0.0</code></p>
+</li>
+<li>
+<p>执行编译命令<br />
+<code>cmake -G Ninja -B build -DBUILD_SINGLE=yes -DBUILD_DOUBLE=yes -DBUILD_COMPLEX=yes -DBUILD_COMPLEX16=yes</code><br />
+在输出无任何报错的情况下<br />
+<code>cmake --build build</code></p>
+</li>
+<li>
+<p>运行测试<br />
+<code>ctest --test-dir build</code></p>
+</li>
+<li>
+<p>此时需注意生成的lib文件在build目录下还不能直接用于项目、需要执行安装命令<br />
+<code>cmake –install build</code> 会将对应库文件与头文件安装到路径<code>C:\Program Files (x86)\MUMPS</code>下</p>
+</li>
+<li>
+<p>新建 example 目录、放入以下文件<br />
+a. d_example.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*  This file is part of MUMPS 5.5.1, released</span></span><br><span class="line"><span class="comment">*  on Tue Jul 12 13:17:24 UTC 2022</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/* Example program using the C interface to the</span></span><br><span class="line"><span class="comment">* double real arithmetic version of MUMPS, dmumps_c.</span></span><br><span class="line"><span class="comment">* We solve the system A x = RHS with</span></span><br><span class="line"><span class="comment">*   A = diag(1 2) and RHS = [1 4]^T</span></span><br><span class="line"><span class="comment">* Solution is [1 2]^T */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mpi.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;dmumps_c.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> JOB_INIT -1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> JOB_END -2</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> USE_COMM_WORLD -987654</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> ** argv)</span></span><br><span class="line">&#123;</span><br><span class="line">DMUMPS_STRUC_C id;</span><br><span class="line">MUMPS_INT n = <span class="number">2</span>;</span><br><span class="line">MUMPS_INT8 nnz = <span class="number">2</span>;</span><br><span class="line">MUMPS_INT irn[] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line">MUMPS_INT jcn[] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line"><span class="type">double</span> a[<span class="number">2</span>];</span><br><span class="line"><span class="type">double</span> rhs[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* When compiling with -DINTSIZE64, MUMPS_INT is 64-bit but MPI</span></span><br><span class="line"><span class="comment">ilp64 versions may still require standard int for C interface. */</span></span><br><span class="line"><span class="comment">/* MUMPS_INT myid, ierr; */</span></span><br><span class="line"><span class="type">int</span> myid, ierr;</span><br><span class="line"><span class="type">int</span> error = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">ierr = MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">ierr = MPI_Comm_rank(MPI_COMM_WORLD, &amp;myid);</span><br><span class="line"><span class="comment">/* Define A and rhs */</span></span><br><span class="line">rhs[<span class="number">0</span>]=<span class="number">1.0</span>;rhs[<span class="number">1</span>]=<span class="number">4.0</span>;</span><br><span class="line">a[<span class="number">0</span>]=<span class="number">1.0</span>;a[<span class="number">1</span>]=<span class="number">2.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Initialize a MUMPS instance. Use MPI_COMM_WORLD */</span></span><br><span class="line">id.comm_fortran=USE_COMM_WORLD;</span><br><span class="line">id.par=<span class="number">1</span>; id.sym=<span class="number">0</span>;</span><br><span class="line">id.job=JOB_INIT;</span><br><span class="line">dmumps_c(&amp;id);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Define the problem on the host */</span></span><br><span class="line"><span class="keyword">if</span> (myid == <span class="number">0</span>) &#123;</span><br><span class="line">    id.n = n; id.nnz =nnz; id.irn=irn; id.jcn=jcn;</span><br><span class="line">    id.a = a; id.rhs = rhs;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ICNTL(I) icntl[(I)-1] <span class="comment">/* macro s.t. indices match documentation */</span></span></span><br><span class="line"><span class="comment">/* No outputs */</span></span><br><span class="line">id.ICNTL(<span class="number">1</span>)=<span class="number">-1</span>; id.ICNTL(<span class="number">2</span>)=<span class="number">-1</span>; id.ICNTL(<span class="number">3</span>)=<span class="number">-1</span>; id.ICNTL(<span class="number">4</span>)=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Call the MUMPS package (analyse, factorization and solve). */</span></span><br><span class="line">id.job=<span class="number">6</span>;</span><br><span class="line">dmumps_c(&amp;id);</span><br><span class="line"><span class="keyword">if</span> (id.infog[<span class="number">0</span>]&lt;<span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; (PROC %d) ERROR RETURN: \tINFOG(1)= %d\n\t\t\t\tINFOG(2)= %d\n&quot;</span>,</span><br><span class="line">        myid, id.infog[<span class="number">0</span>], id.infog[<span class="number">1</span>]);</span><br><span class="line">    error = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Terminate instance. */</span></span><br><span class="line">id.job=JOB_END;</span><br><span class="line">dmumps_c(&amp;id);</span><br><span class="line"><span class="keyword">if</span> (myid == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Solution is : (%8.2f  %8.2f)\n&quot;</span>, rhs[<span class="number">0</span>],rhs[<span class="number">1</span>]);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;An error has occured, please check error code returned by MUMPS.\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ierr = MPI_Finalize();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b. CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.13</span>...<span class="number">3.25</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">project</span>(MUMPSExamples</span><br><span class="line"> LANGUAGES C Fortran</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line"><span class="keyword">enable_testing</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_C_COMPILER_ID <span class="keyword">MATCHES</span> <span class="string">&quot;Clang|GNU|Intel&quot;</span>)</span><br><span class="line">  <span class="keyword">add_compile_options</span>($&lt;$&lt;COMPILE_LANGUAGE:C&gt;:-Werror-implicit-<span class="keyword">function</span>-declaration&gt;)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">NOT</span> PROJECT_SOURCE_DIR <span class="keyword">STREQUAL</span> PROJECT_BINARY_DIR)</span><br><span class="line">  <span class="keyword">file</span>(GENERATE OUTPUT .gitignore CONTENT <span class="string">&quot;*&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">find_package</span>(MUMPS CONFIG REQUIRED)</span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;MUMPS_DIR: $&#123;MUMPS_DIR&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span>(precision_ex a)</span><br><span class="line">  <span class="keyword">add_executable</span>(<span class="variable">$&#123;a&#125;</span>_example <span class="variable">$&#123;a&#125;</span>_example.c)</span><br><span class="line">  <span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;a&#125;</span>_example PRIVATE MUMPS::MUMPS)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(MUMPS_parallel)</span><br><span class="line">     <span class="keyword">add_test</span>(NAME <span class="variable">$&#123;a&#125;</span>_example_C</span><br><span class="line">     <span class="keyword">COMMAND</span> <span class="variable">$&#123;MPIEXEC_EXECUTABLE&#125;</span> <span class="variable">$&#123;MPIEXEC_NUMPROC_FLAG&#125;</span> <span class="number">2</span> $&lt;TARGET_FILE:<span class="variable">$&#123;a&#125;</span>_example&gt;)</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">     <span class="keyword">add_test</span>(NAME <span class="variable">$&#123;a&#125;</span>_example_C <span class="keyword">COMMAND</span> <span class="variable">$&#123;a&#125;</span>_example)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endfunction</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(MUMPS_d_FOUND)</span><br><span class="line">  precision_ex(<span class="string">&quot;d&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># test properties</span></span><br><span class="line"><span class="keyword">get_property</span>(test_names DIRECTORY <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span> PROPERTY TESTS)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(MUMPS_parallel)</span><br><span class="line">  <span class="keyword">set_property</span>(<span class="keyword">TEST</span> <span class="variable">$&#123;test_names&#125;</span> PROPERTY RESOURCE_LOCK cpu_mpi)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(WIN32 <span class="keyword">AND</span> CMAKE_VERSION <span class="keyword">VERSION_GREATER_EQUAL</span> <span class="number">3.22</span>)</span><br><span class="line">   <span class="keyword">get_property</span>(imp_mumps <span class="keyword">TARGET</span> MUMPS::COMMON PROPERTY IMPORTED_LOCATION_RELEASE)</span><br><span class="line">   <span class="keyword">if</span>(imp_mumps)</span><br><span class="line">     <span class="keyword">get_filename_component</span>(imp_mumps_dir <span class="variable">$&#123;imp_mumps&#125;</span> DIRECTORY)</span><br><span class="line">   <span class="keyword">endif</span>()</span><br><span class="line">   <span class="keyword">set_property</span>(<span class="keyword">TEST</span> <span class="variable">$&#123;test_names&#125;</span> PROPERTY ENVIRONMENT_MODIFICATION <span class="string">&quot;PATH=path_list_append:$&#123;imp_mumps_dir&#125;;PATH=path_list_append:$&#123;CMAKE_PREFIX_PATH&#125;/bin&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在 <code>oneapi</code> 命令行环境进入到<code>example</code>路径、执行<br />
+<code>cmake -B build -DMUMPS_ROOT=&quot;C:\Program Files (x86)\MUMPS&quot;</code></p>
+</li>
+<li>
+<p>生成可执行程序<br />
+a. 执行<code>cmake --build build</code><br />
+b. 到<code>build</code>目录下用 <strong>Visual Studio</strong> 打开 <code>sln</code>工程文件执行生成</p>
+</li>
+<li>
+<p>执行生成的<code>d_example.exe</code>查看输出是否为<br />
+<code>Solution is : ( 1.00 2.00)</code></p>
+</li>
+</ol>
+<h2 id="集成-metis-库"><a class="markdownIt-Anchor" href="#集成-metis-库"></a> 集成 Metis 库</h2>
+<ol>
+<li>在编译<code>mumps</code>之前需要编译<code>metis</code><br />
+<code>cmake -Dprefix=d:\mumps\metis -P scripts\build_metis.cmake</code></li>
+<li>编译<code>mumps</code><br />
+<code>cmake -G Ninja -B build -DBUILD_SINGLE=yes -DBUILD_DOUBLE=yes -DBUILD_COMPLEX=yes -DBUILD_COMPLEX16=yes -DCMAKE_PREFIX_PATH=d:\mumps\metis -Dmetis=on</code></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/2023/install_abaqus_linux.html" rel="prev" title="centos 7 安装 ABAQUS 6.14 步骤记录">
+                  <i class="fa fa-chevron-left"></i> centos 7 安装 ABAQUS 6.14 步骤记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zNjU5OS8xMzEzNA=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">actpi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

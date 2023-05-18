@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="简介 安装环境：CENTOS 7.3 Mysql Nginx Postfix Dovecot web 模块是最先需要确定的，因为它决定了邮箱系统最核心的数据结构，这里选用国产的 extmail，其他所有模块都按照 extmail 的结构进行配置修改。 如果在main.cf里设置virtual_transport &#x3D; virtual，就表示对于包含在 virtual_mailbox_domains">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器">
+<meta property="og:url" content="http://blog.actpi.com/articles/centos-extmail.html">
+<meta property="og:site_name" content="ActPi&#39;s Blog">
+<meta property="og:description" content="简介 安装环境：CENTOS 7.3 Mysql Nginx Postfix Dovecot web 模块是最先需要确定的，因为它决定了邮箱系统最核心的数据结构，这里选用国产的 extmail，其他所有模块都按照 extmail 的结构进行配置修改。 如果在main.cf里设置virtual_transport &#x3D; virtual，就表示对于包含在 virtual_mailbox_domains">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-05T11:42:16.000Z">
+<meta property="article:modified_time" content="2023-05-18T01:53:45.827Z">
+<meta property="article:author" content="actpi">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.actpi.com/articles/centos-extmail.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/centos-extmail.html","path":"articles/centos-extmail.html","title":"CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器 | ActPi's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ActPi's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Share & Record</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text"> 部署过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text"> 一、准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E5%AE%89%E8%A3%85postfix"><span class="nav-number">2.2.</span> <span class="nav-text"> 二、安装postfix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89-%E5%AE%89%E8%A3%85dovecot"><span class="nav-number">2.3.</span> <span class="nav-text"> 三、安装dovecot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B-%E5%AE%89%E8%A3%85-courier-authlib"><span class="nav-number">2.4.</span> <span class="nav-text"> 四、安装 Courier-authlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94-%E5%AE%89%E8%A3%85extmail"><span class="nav-number">2.5.</span> <span class="nav-text"> 五、安装extmail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD-%E5%AE%89%E8%A3%85extman"><span class="nav-number">2.6.</span> <span class="nav-text"> 六、安装extman</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83-%E5%90%AF%E5%8A%A8nginx%E5%AE%9E%E7%8E%B0web%E8%AE%BF%E9%97%AE"><span class="nav-number">2.7.</span> <span class="nav-text"> 七、启动nginx实现web访问</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="actpi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">actpi</p>
+  <div class="site-description" itemprop="description">Records some think,and some experience,or just mean to write it.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/actpi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;actpi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:actpi@qq.com" title="E-Mail → mailto:actpi@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/centos-extmail.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器 | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-12-05 19:42:16" itemprop="dateCreated datePublished" datetime="2017-12-05T19:42:16+08:00">2017-12-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
+<p>安装环境：<code>CENTOS 7.3</code> <code>Mysql</code> <code>Nginx</code> <code>Postfix</code> <code>Dovecot</code><br />
+web 模块是最先需要确定的，因为它决定了邮箱系统最核心的数据结构，这里选用国产的 <code>extmail</code>，其他所有模块都按照 <code>extmail</code> 的结构进行配置修改。<br />
+如果在<code>main.cf</code>里设置<code>virtual_transport = virtual</code>，就表示对于包含在 <code>virtual_mailbox_domains</code>域名里的邮件，都使用 <code>virtual</code> 进行投递。<br />
+用户信息存储方式也有很多可选的，比如 <code>mysql,ldap</code> 等。<span id="more"></span>这里选 <code>mysql</code>，原因是各个模块，包括 <code>extmail</code> 等对这个支持最好最方便最简单。在投递邮件的时候，需要确定一些数据，比如收件用户的 <code>Maildir</code> 的路径，保存邮件用的 <code>uid，gid</code>，邮箱容量等，这些数据需要 <code>courier-authlib</code> 来提供。<br />
+整个系统模块间的作用和关系是：<br />
+<code>postfix</code> 作为 <code>MTA(Mail Transfer Agent)</code>, 负责创建 <code>smtp</code> 服务（<code>smtpd</code>）接收本域用户或其他域名服务器投递来的邮件，负责向其他服务器投递（发送）邮件，管理邮件队列；<br />
+<code>courier-authlib</code> 为 <code>maildrop</code> 提供与用户相关的信息查询；<br />
+<code>dovecot</code> 提供系统的 <code>POP3</code> 和 <code>IMAP</code> 服务，同时给 <code>postfix</code> 提供 <code>SMTP</code> 的 <code>SASL</code> 认证服务。</p>
+<h2 id="部署过程"><a class="markdownIt-Anchor" href="#部署过程"></a> 部署过程</h2>
+<p>创建邮箱存储目录 <code>/var/mail</code>，子目录结构为 <code>./[domain]/[username]</code></p>
+<h3 id="一-准备工作"><a class="markdownIt-Anchor" href="#一-准备工作"></a> 一、准备工作</h3>
+<ol>
+<li>关闭Selinux,关闭firewalld防火墙</li>
+<li>由于CentOS7默认安装的是MariaDB，所以要添加MySQL的yum源，有些编译需要的devel包只有epel扩展源有，所以把epel源也一并添加。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">rpm -ivh mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">rpm -ivh epel-release-latest-7.noarch.rpm</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>安装编译环境及其他所需要的包</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install nginx vim gcc gcc-c++ openssl openssl-devel db4-devel ntpdate \</span><br><span class="line">mysql mysql-devel mysql-server bzip2 php-mysql cyrus-sasl-md5 perl-GD perl-DBD-MySQL \</span><br><span class="line">perl-GD perl-CPAN perl-CGI perl-CGI-Session cyrus-sasl-lib cyrus-sasl-plain cyrus-sasl \</span><br><span class="line">cyrus-sasl-devel libtool-ltdl-devel telnet mail libicu-devel  -y</span><br></pre></td></tr></table></figure>
+<h3 id="二-安装postfix"><a class="markdownIt-Anchor" href="#二-安装postfix"></a> 二、安装postfix</h3>
+<p>1.卸载系统自带的postfix，删除<code>postfix</code>用户，重新指定<code>uid</code>、<code>gid</code>创建新用户<code>postfix</code>，<code>postdrop</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum remove postfix -y</span><br><span class="line">userdel postfix</span><br><span class="line">groupdel postdrop</span><br><span class="line">groupadd -g 5000 postfix</span><br><span class="line">useradd -g postfix -u 5000 -s /sbin/nologin -M postfix</span><br><span class="line">groupadd -g 5001 postdrop</span><br><span class="line">useradd -g postdrop -u 5001 -s /sbin/nologin -M postdrop</span><br></pre></td></tr></table></figure>
+<p>再把存放邮件目录授权给新建的用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown vmail:vmail /var/mail</span><br><span class="line">chmod 700 /var/mail</span><br></pre></td></tr></table></figure>
+<p>2.下载源码包并编译安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget ftp://ftp.cuhk.edu.hk/pub/packages/mail-server/postfix/official/postfix-3.3.2.tar.gz</span><br><span class="line">tar xf postfix-3.3.2.tar.gz</span><br><span class="line">cd postfix-3.3.2</span><br><span class="line">make makefiles &#x27;CCARGS=-DHAS_MYSQL -I/usr/include/mysql -DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl -DUSE_TLS &#x27; \</span><br><span class="line">&#x27;AUXLIBS=-L/usr/lib64/mysql -lmysqlclient -lz -lrt -lm -L/usr/lib64/sasl2 -lsasl2   -lssl -lcrypto&#x27;</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>make install 的时候会有个交互式的界面，自定义一些目录，我们这里只更改第二项临时文件目录为 <code>/tmp/extmail</code>，其他的全部默认。</p>
+<p>3.改目录的属主和属组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chown -R postfix:postdrop /var/spool/postfix</span><br><span class="line">chown -R postfix:postdrop /var/lib/postfix/</span><br><span class="line">chown root /var/spool/postfix</span><br><span class="line">chown -R root /var/spool/postfix/pid</span><br></pre></td></tr></table></figure>
+<p>4.修改postfix的配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/postfix/main.cf</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">myhostname = mail.example.com        //设置主机名</span><br><span class="line">mydomain = example.com        //指定域名</span><br><span class="line">myorigin = <span class="variable">$mydomain</span>        //指明发件人所在的域名</span><br><span class="line">inet_interfaces =         //all指定postfix系统监听的网络接口</span><br><span class="line">mynetworks_style = host        //指定信任网段类型</span><br><span class="line">mynetworks = 192.168.100.1/24, 127.0.0.0/8        //指定信任的客户端</span><br><span class="line">relay_domains = <span class="variable">$mydestination</span>        //指定允许中转邮件的域名</span><br><span class="line">alias_maps = <span class="built_in">hash</span>:/etc/aliases        //设置邮件的别名</span><br></pre></td></tr></table></figure>
+<p>启动 postfix</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start postfix </span><br></pre></td></tr></table></figure>
+<p>启动后注意查看 /var/log/maillog 里是否有错误消息</p>
+<p>5.用 telnet 测试是否正常</p>
+<ol>
+<li><code>Yum install telnet</code></li>
+<li><code>Telnet 127.0.0.1 25</code></li>
+<li>填写 发件人 <code>MAIL FROM:&lt;test@domain.com&gt;</code></li>
+<li>填写收件人 <code>RCPT TO:xxxx@163.com</code></li>
+<li>写邮件内容 DATA 回车</li>
+</ol>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 输入标题 `Subject: <span class="built_in">test</span> message`</span><br><span class="line">- 写内容 `<span class="built_in">test</span> body`</span><br><span class="line">- 以 . 结束</span><br><span class="line">- 若提示 `250 2.0.0 Ok: queued as 88D6D32A94` 则说明已发送</span><br></pre></td></tr></table></figure>
+<h3 id="三-安装dovecot"><a class="markdownIt-Anchor" href="#三-安装dovecot"></a> 三、安装dovecot</h3>
+<p>1.安装 dovecot</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y dovecot dovecot-mysql</span><br></pre></td></tr></table></figure>
+<p>2.配置 dovecot</p>
+<p><code>cd /etc/dovecot</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim dovecot.conf</span><br></pre></td></tr></table></figure>
+<p>添加下面几行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocols = imap pop3</span><br><span class="line">!include conf.d/*.conf</span><br><span class="line">Listen = * </span><br><span class="line">Base_dir = /var/run/dovecot/</span><br></pre></td></tr></table></figure>
+<p>3.设置认证方式<br />
+<code>cd conf.d</code><br />
+<code>vim 10-auth.conf</code><br />
+<code>disable_plaintext_auth = no</code></p>
+<p>4.设置邮件存放目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim 10-mail.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mail_location = maildir:~/Maildir</span><br><span class="line">mail_location = maildir:/var/mail/%d/%n/Maildir</span><br><span class="line">mail_privileged_group = mail</span><br></pre></td></tr></table></figure>
+<p>5.配置不启用SSL加密<br />
+<code>vim 10-ssl.conf</code><br />
+<code>ssl = no</code><br />
+6.配置dovecot日志<br />
+<code>vim 10-logging.conf</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log_path = /var/log/dovecot.log</span><br><span class="line">info_log_path = /var/log/dovecot.info</span><br><span class="line">log_timestamp = <span class="string">&quot;%Y-%m-%d %H:%M:%S &quot;</span></span><br></pre></td></tr></table></figure>
+<p>7.修改 mysql 认证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp auth-sql.conf.ext auth-sql.conf</span><br><span class="line">Vim auth-sql.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">passdb &#123;  </span><br><span class="line">  driver = sql  </span><br><span class="line">  # Path for SQL configuration file, see example-config/dovecot-sql.conf.ext  </span><br><span class="line">  args = /etc/dovecot/dovecot-mysql.conf&#125;</span><br><span class="line">userdb &#123;  </span><br><span class="line">  driver = sql  </span><br><span class="line">  args = /etc/dovecot/dovecot-mysql.conf&#125;</span><br></pre></td></tr></table></figure>
+<p>8.编辑 dovecot 通过 mysql 认证的配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/dovecot/dovecot-mysql.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">driver = mysql</span><br><span class="line">connect = host=localhost dbname=extmail user=extmail password=extmail</span><br><span class="line">default_pass_scheme = CRYPT</span><br><span class="line">password_query = SELECT username AS user,password AS password FROM mailbox WHERE username = &#x27;%u&#x27;</span><br><span class="line">user_query = SELECT maildir, uidnumber AS uid, gidnumber AS gid FROM mailbox WHERE username = &#x27;%u&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="四-安装-courier-authlib"><a class="markdownIt-Anchor" href="#四-安装-courier-authlib"></a> 四、安装 Courier-authlib</h3>
+<p>先下载<code>courier-unicode-1.2</code>并编译安装，否则编译会报如下错：<br />
+<code>configure: error: The Courier Unicode Library 1.2 appears not to be installed. You may need to install a separate development subpackage, in addition to the main package</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://sourceforge.net/projects/courier/files/courier-unicode/1.2/courier-unicode-1.2.tar.bz2</span><br><span class="line">tar xf courier-unicode-1.2.tar.bz2 </span><br><span class="line"><span class="built_in">cd</span> courier-unicode-1.2</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>1.下载<code>courier-authlib</code>解压并编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://sourceforge.net/projects/courier/files/authlib/0.66.2/courier-authlib-0.66.2.tar.bz2 &amp;&amp;</span><br><span class="line">tar xf courier-authlib-0.66.2.tar.bz2</span><br></pre></td></tr></table></figure>
+<p>编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">--prefix=/usr/local/courier-authlib \</span><br><span class="line">    --sysconfdir=/etc \</span><br><span class="line">	--without-authpam \</span><br><span class="line">	--without-authshadow \</span><br><span class="line">	--without-authvchkpw \</span><br><span class="line">	--without-authpgsql \</span><br><span class="line">	--with-authmysql \</span><br><span class="line">	--with-mysql-libs=/usr/lib64/mysql \</span><br><span class="line">	--with-mysql-includes=/usr/include/mysql \</span><br><span class="line">	--with-redhat \</span><br><span class="line">	--with-authmysqlrc=/etc/authmysqlrc \</span><br><span class="line">	--with-authdaemonrc=/etc/authdaemonrc \</span><br><span class="line">	--with-mailuser=postfix</span><br></pre></td></tr></table></figure>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>2.配置<br />
+<code>chmod 755 /usr/local/courier-authlib/var/spool/authdaemon</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/authdaemonrc.dist  /etc/authdaemonrc</span><br><span class="line">cp /etc/authmysqlrc.dist  /etc/authmysqlrc</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置 Sql 模式</li>
+</ul>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/authdaemonrc</span><br></pre></td></tr></table></figure>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">authmodulelist=<span class="string">&quot;authmysql&quot;</span></span><br><span class="line">authmodulelistorig=<span class="string">&quot;authmysql&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置 MySQL 参数</li>
+</ul>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/authmysqlrc</span><br></pre></td></tr></table></figure>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">MYSQL_SERVER            localhost</span><br><span class="line">MYSQL_USERNAME          extmail</span><br><span class="line">MYSQL_PASSWORD          extmail</span><br><span class="line">MYSQL_SOCKET            /var/lib/mysql/mysql.sock</span><br><span class="line">MYSQL_PORT               3306</span><br><span class="line">MYSQL_DATABASE          extmail</span><br><span class="line">MYSQL_USER_TABLE        mailbox</span><br><span class="line">MYSQL_CRYPT_PWFIELD     password</span><br><span class="line">DEFAULT_DOMAIN          test.com</span><br><span class="line">MYSQL_UID_FIELD         <span class="string">&#x27;5000&#x27;</span></span><br><span class="line">MYSQL_GID_FIELD         <span class="string">&#x27;5000&#x27;</span></span><br><span class="line">MYSQL_LOGIN_FIELD       username</span><br><span class="line">MYSQL_HOME_FIELD        concat(<span class="string">&#x27;/var/mailbox/&#x27;</span>,homedir)</span><br><span class="line">MYSQL_NAME_FIELD        name</span><br><span class="line">MYSQL_MAILDIR_FIELD     concat(<span class="string">&#x27;/var/mailbox/&#x27;</span>,maildir)</span><br></pre></td></tr></table></figure>
+<p>3.Courier-authlib添加服务启动脚本及启动服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost  courier-authlib-0.66.2]# cp courier-authlib.sysvinit /etc/init.d/courier-authlib</span><br><span class="line">[root@localhost  courier-authlib-0.66.2]# chmod +x /etc/init.d/courier-authlib</span><br><span class="line">[root@localhost  courier-authlib-0.66.2]# chkconfig --add courier-authlib</span><br><span class="line">[root@localhost  courier-authlib-0.66.2]# chkconfig courier-authlib on</span><br><span class="line">[root@localhost  courier-authlib-0.66.2]# echo &quot;/usr/local/courier-authlib/lib/courier-authlib&quot; &gt;&gt; /etc/ld.so.conf.d/courier-authlib.conf</span><br><span class="line">[root@localhost  courier-authlib-0.66.1]# ldconfig</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service courier-authlib start</span><br></pre></td></tr></table></figure>
+<p>smtp以及虚拟用户相关的设置：<br />
+<code>vim /usr/lib64/sasl2/smtpd.conf</code>    //文件不存在，需要创建</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwcheck_method: authdaemond</span><br><span class="line">log_level: 3</span><br><span class="line">mech_list: PLAIN LOGIN</span><br><span class="line">authdaemond_path:/usr/local/courier-authlib/var/spool/authdaemon/socket</span><br></pre></td></tr></table></figure>
+<p><code>vim /etc/postfix/main.cf</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##postfix支持SMTP##</span></span><br><span class="line">smtpd_sasl_auth_enable = <span class="built_in">yes</span></span><br><span class="line">smtpd_sasl_local_domain = <span class="string">&#x27;&#x27;</span></span><br><span class="line">smtpd_recipient_restrictions = permit_mynetworks,permit_sasl_authenticated,reject_unauth_destination</span><br><span class="line">broken_sasl_auth_clients=<span class="built_in">yes</span></span><br><span class="line">smtpd_client_restrictions = permit_sasl_authenticated</span><br><span class="line">smtpd_sasl_security_options = noanonymous</span><br><span class="line"><span class="comment">##postfix支持虚拟用户##</span></span><br><span class="line">virtual_mailbox_base = /var/mailbox</span><br><span class="line">virtual_mailbox_maps = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf   //这里的配置文件需在后面extman</span><br><span class="line">里复制过来</span><br><span class="line">virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domains_maps.cf</span><br><span class="line">virtual_alias_domains =</span><br><span class="line">virtual_alias_maps = mysql:/etc/postfix/mysql_virtual_alias_maps.cf</span><br><span class="line">virtual_uid_maps = static:5000</span><br><span class="line">virtual_gid_maps = static:5000</span><br><span class="line">virtual_transport = virtual</span><br></pre></td></tr></table></figure>
+<h3 id="五-安装extmail"><a class="markdownIt-Anchor" href="#五-安装extmail"></a> 五、安装extmail</h3>
+<p><code>extmail</code> 和 <code>extman</code> 可到官网[<a target="_blank" rel="noopener" href="http://www.extmail.org/download">http://www.extmail.org/download</a>]自行下载<br />
+1.创建目录并解压<br />
+<code>mkdir -p /var/www/extsuite</code><br />
+<code>tar xf extmail-1.2.tar.gz -C /var/www/extsuite/</code><br />
+<code>mv /var/www/extsuite/extmail-1.2/ /var/www/extsuite/extmail</code></p>
+<p>2.更改extmail的配置文件<br />
+<code>cd /var/www/extsuite/extmail</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> webmail.cf.default webmail.cf</span><br></pre></td></tr></table></figure>
+<p>编辑配置文件：<code>Vim webmail.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SYS_SESS_DIR = /tmp/extmail                 //更改属组为postfix</span><br><span class="line">SYS_UPLOAD_TMPDIR = /tmp/extmail/upload   //需要使用 mkdir 创建</span><br><span class="line">SYS_USER_LANG = zh_CN</span><br><span class="line">SYS_MIN_PASS_LEN = 8</span><br><span class="line">SYS_MAILDIR_BASE = /var/mailbox</span><br><span class="line">SYS_MYSQL_USER = extmail</span><br><span class="line">SYS_MYSQL_PASS = extmail</span><br><span class="line">SYS_MYSQL_DB = extmail</span><br><span class="line">SYS_MYSQL_HOST = localhost</span><br><span class="line">SYS_MYSQL_SOCKET = /var/lib/mysql/mysql.sock</span><br><span class="line">SYS_MYSQL_TABLE = mailbox</span><br><span class="line">SYS_MYSQL_ATTR_USERNAME = username</span><br><span class="line">SYS_MYSQL_ATTR_DOMAIN = domain</span><br><span class="line">SYS_MYSQL_ATTR_PASSWD = password</span><br><span class="line">SYS_AUTHLIB_SOCKET = /usr/local/courier-authlib/var/spool/authdaemon/socket</span><br></pre></td></tr></table></figure>
+<p>3.建立临时文件目录与session目录<br />
+<code>mkdir -p /tmp/extmail/upload</code><br />
+<code>chown -R postfix.postfix /tmp/extmail/</code></p>
+<h3 id="六-安装extman"><a class="markdownIt-Anchor" href="#六-安装extman"></a> 六、安装extman</h3>
+<ol>
+<li>解压extman<br />
+<code>tar xf extman-1.1.tar.gz -C /var/www/extsuite/</code><br />
+<code>cd /var/www/extsuite/</code><br />
+<code>mv extman-1.1/ extman</code></li>
+<li>更改 extman 配置<br />
+<code>cd extman</code><br />
+<code>cp webman.cf.default webman.cf</code></li>
+<li>更改cgi目录属主属组<br />
+<code>chown -R postfix.postfix /var/www/extsuite/extman/cgi/</code><br />
+<code>chown -R postfix.postfix /var/www/extsuite/extmail/cgi/</code></li>
+<li>导入数据库<br />
+由于数据库不能识别<code>TYPE= MyISAM</code> ，所以这里直接导入会出错，先编辑<code>extmail.sql</code>数据库文件，将<code>TYPE=MyISAM</code>更改为<code>ENGINE=MyISAM</code></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim docs/extmail.sql </span><br><span class="line">:% s/TYPE/ENGINE/g</span><br></pre></td></tr></table></figure>
+<p>再需要修改my.cnf配置文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br><span class="line"><span class="comment">#sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES   //将这行注视掉，重启mysql，需要注意等数据库导入成功后，这项是不可以去掉注释的，不然mysql就启动不了。</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot &lt; extman/docs/extmail.sql </span><br><span class="line">mysql -uroot &lt; extman/docs/init.sql </span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>创建数据库用户 extmail 并授予权限</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> extmail.<span class="operator">*</span> <span class="keyword">to</span> extmail@<span class="string">&#x27;localhost&#x27;</span> identified <span class="keyword">by</span> <span class="string">&#x27;extmail&#x27;</span>;</span><br><span class="line">mysql<span class="operator">&gt;</span> FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>复制配置文件</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/extsuite/extman/docs/</span><br><span class="line"><span class="built_in">cp</span> mysql_virtual_* /etc/postfix/</span><br></pre></td></tr></table></figure>
+<p>为extman创建临时目录：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /tmp/extman</span><br><span class="line"><span class="built_in">chown</span> -R postfix.postfix /tmp/extman/</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>测试虚拟用户<br />
+<code>/usr/local/courier-authlib/sbin/authtest -s login postmaster@extmail.org extmail</code></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Authentication succeeded.                //显示这个表示成功，测试时使用的是postmaster@extmail.org，因为我们导入的数据库init.sql里面自带了这个。</span><br><span class="line">Authenticated: postmaster@extmail.org  (uid 5000, gid 5000)</span><br><span class="line">Home Directory: /var/mailbox/extmail.org/postmaster  //这里需要注意/var/mailbox这个目录现在我们还没有创建，后面web访问的时候如果没有会报错,所以提前创建。</span><br><span class="line">                   Maildir: /var/mailbox/extmail.org/postmaster/Maildir/</span><br><span class="line">                   Quota: (none)</span><br><span class="line">           Encrypted Password: $1$phz1mRrj<span class="variable">$3ok6BjeaoJYWDBsEPZb5C0</span></span><br><span class="line">               Cleartext Password: extmail</span><br><span class="line">                   Options: (none)</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>测试smtp发信：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># printf   &quot;postmaster@extmail.org&quot; | openssl base64</span></span><br><span class="line">cG9zdG1hc3RlckBleHRtYWlsLm9yZw==</span><br><span class="line">[root@localhost ~]<span class="comment">#  printf   &quot;extmail&quot; | openssl base64</span></span><br><span class="line">ZXh0bWFpbA==</span><br><span class="line">[root@localhost ~]<span class="comment"># telnet localhost 25</span></span><br><span class="line">Trying ::1...</span><br><span class="line">telnet: connect to address ::1: Connection refused</span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to localhost.</span><br><span class="line">Escape character is <span class="string">&#x27;^]&#x27;</span>.</span><br><span class="line">220 mail.daen.com ESMTP Postfix</span><br><span class="line">auth login</span><br><span class="line">334 VXNlcm5hbWU6</span><br><span class="line">cG9zdG1hc3RlckBleHRtYWlsLm9yZw==</span><br><span class="line">334 UGFzc3dvcmQ6</span><br><span class="line">ZXh0bWFpbA==</span><br><span class="line">235 2.7.0 Authentication successful     //成功</span><br><span class="line">quit</span><br><span class="line">221 2.0.0 Bye</span><br><span class="line">Connection closed by foreign host.</span><br></pre></td></tr></table></figure>
+<h3 id="七-启动nginx实现web访问"><a class="markdownIt-Anchor" href="#七-启动nginx实现web访问"></a> 七、启动nginx实现web访问</h3>
+<p><code>Nginx</code>本身并不能解析cgi，extmail 自带了解析 cgi 的程序，但是有些地方需要修改下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /var/www/extsuite/extmail/dispatch-init</span></span><br><span class="line">SU_UID=postfix</span><br><span class="line">SU_GID=postfix</span><br></pre></td></tr></table></figure>
+<p>启动dispatch-init：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># /var/www/extsuite/extmail/dispatch-init start</span></span><br><span class="line">Starting extmail FCGI server...</span><br><span class="line">[root@localhost ~]<span class="comment"># /var/www/extsuite/extman/daemon/cmdserver -v -d </span></span><br><span class="line">loaded ok</span><br></pre></td></tr></table></figure>
+<p>添加nginx虚拟主机：<br />
+<code>vim /etc/nginx/conf.d/extmail.conf</code></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">   <span class="attribute">listen</span>       <span class="number">8080</span>;</span><br><span class="line">   <span class="attribute">server_name</span>  mail.example.com;</span><br><span class="line">   <span class="attribute">index</span> index.html index.htm index.php index.cgi;</span><br><span class="line">   <span class="attribute">root</span>  /var/www/extsuite/extmail/html/;</span><br><span class="line">   <span class="section">location</span> /extmail/cgi/ &#123;</span><br><span class="line">             <span class="attribute">fastcgi_pass</span>          <span class="number">127.0.0.1:8888</span>;</span><br><span class="line">             <span class="attribute">fastcgi_index</span>         index.cgi;</span><br><span class="line">             <span class="attribute">fastcgi_param</span>  SCRIPT_FILENAME   /var/www/extsuite/extmail/cgi/<span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">             <span class="attribute">include</span>               fcgi.conf;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="section">location</span>  /extmail/  &#123;</span><br><span class="line">             <span class="attribute">alias</span>  /var/www/extsuite/extmail/html/;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="section">location</span> /extman/cgi/ &#123;</span><br><span class="line">             <span class="attribute">fastcgi_pass</span>          <span class="number">127.0.0.1:8888</span>;</span><br><span class="line">             <span class="attribute">fastcgi_index</span>         index.cgi;</span><br><span class="line">             <span class="attribute">fastcgi_param</span>  SCRIPT_FILENAME   /var/www/extsuite/extman/cgi/<span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">             <span class="attribute">include</span>            fcgi.conf;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="section">location</span> /extman/ &#123;</span><br><span class="line">             <span class="attribute">alias</span>  /var/www/extsuite/extman/html/;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="attribute">access_log</span>  /var/log/extmail_access.log;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建fcgi.conf文件：<br />
+<code>vim /etc/nginx/fcgi.conf</code></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">fastcgi_param</span>  GATEWAY_INTERFACE  CGI/<span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  SERVER_SOFTWARE    nginx;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  QUERY_STRING       <span class="variable">$query_string</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  REQUEST_METHOD     <span class="variable">$request_method</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  CONTENT_TYPE       <span class="variable">$content_type</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  CONTENT_LENGTH     <span class="variable">$content_length</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  SCRIPT_NAME        <span class="variable">$fastcgi_script_name</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  REQUEST_URI        <span class="variable">$request_uri</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  DOCUMENT_ROOT      <span class="variable">$document_root</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  SERVER_PROTOCOL    <span class="variable">$server_protocol</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  REMOTE_ADDR        <span class="variable">$remote_addr</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  REMOTE_PORT        <span class="variable">$remote_port</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  SERVER_ADDR        <span class="variable">$server_addr</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  SERVER_PORT        <span class="variable">$server_port</span>;</span><br><span class="line"><span class="attribute">fastcgi_param</span>  SERVER_NAME        <span class="variable">$server_name</span>;</span><br></pre></td></tr></table></figure>
+<p>安装Unix::Syslog：否则打开页面会无法显示提示需要安装Unix::Syslog</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cd /usr/local/src/</span></span><br><span class="line">[root@localhost /usr/local/src]<span class="comment"># wget http://www.cpan.org/authors/id/M/MH/MHARNISCH/Unix-Syslog-1.1.tar.gz</span></span><br><span class="line">[root@localhost /usr/local/src]<span class="comment"># tar zxvf Unix-Syslog-1.1.tar.gz </span></span><br><span class="line">[root@localhost /usr/local/src]<span class="comment"># cd Unix-Syslog-1.1</span></span><br><span class="line">[root@localhost /usr/local/src/Unix-Syslog-1.1]<span class="comment"># perl Makefile.PL</span></span><br><span class="line">[root@localhost /usr/local/src/Unix-Syslog-1.1]<span class="comment"># make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+<p>启动nginx，访问服务器IP的8080端口即可</p>
+<p>extman的登录账户为root@extmail.org密码为<code>extmail*123*</code>，首次使用需要先添加域，添加之后再修改域。<br />
+然后整个<code>Web</code>页面可以针对性的修改，作自由定制的登陆界面和自定义Logo.</p>
+<blockquote>
+<p>Good Luck! And have fun!</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/pyinstaller.html" rel="prev" title="用 Pyinstaller  把 python 程序打包为 exe 文件">
+                  <i class="fa fa-chevron-left"></i> 用 Pyinstaller  把 python 程序打包为 exe 文件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/forget-root-passwword.html" rel="next" title="MySQL 忘记 root 用户密码的解决办法">
+                  MySQL 忘记 root 用户密码的解决办法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zNjU5OS8xMzEzNA=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">actpi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

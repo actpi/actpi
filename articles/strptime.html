@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="今天在用 Python 处理 AWS S3 存储的时候遇到个时间格式的问题，特别在此记录下： 获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型">
+<meta property="og:url" content="http://blog.actpi.com/articles/strptime.html">
+<meta property="og:site_name" content="ActPi&#39;s Blog">
+<meta property="og:description" content="今天在用 Python 处理 AWS S3 存储的时候遇到个时间格式的问题，特别在此记录下： 获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是2018-03-05T09:20:005Z这种字符串。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-05T12:59:00.000Z">
+<meta property="article:modified_time" content="2023-05-18T01:53:45.831Z">
+<meta property="article:author" content="actpi">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="踩坑">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.actpi.com/articles/strptime.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/strptime.html","path":"articles/strptime.html","title":"Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型 | ActPi's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ActPi's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Share & Record</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tag fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text"> 使用方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="actpi"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">actpi</p>
+  <div class="site-description" itemprop="description">Records some think,and some experience,or just mean to write it.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/actpi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;actpi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:actpi@qq.com" title="E-Mail → mailto:actpi@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/strptime.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型 | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-05 20:59:00" itemprop="dateCreated datePublished" datetime="2018-03-05T20:59:00+08:00">2018-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>778</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>今天在用 Python 处理 AWS S3 存储的时候遇到个时间格式的问题，特别在此记录下：<br />
+获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是<code>2018-03-05T09:20:005Z</code>这种字符串。<span id="more"></span><br />
+它的类型为<code>str</code>,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>last_modfied</span><br><span class="line"><span class="string">&#x27;2018-03-05T09:20:005Z&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(last_modfied)</span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;str&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>首先得对其进行格式转换，转换为<code>datetime</code>类型才好进行日期的比较。这里使用 Python 内置<code>datetime</code>模块来完成：<br />
+<a target="_blank" rel="noopener" href="https://docs.python.org/3.5/library/datetime.html#">datetime官方文档</a> <code>datetime.strptime()</code>方法根据代表日期和时间的字符串以相应的格式字符串创建日期时间对象。</p>
+<h2 id="使用方法"><a class="markdownIt-Anchor" href="#使用方法"></a> 使用方法</h2>
+<p><code>datetime.strptime(date_string, format)</code>,以下是C标准（1989版本）要求的所有格式代码的列表，并且这些代码可以在所有平台上使用标准的C实现:</p>
+<table>
+<thead>
+<tr>
+<th>标识</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%a</td>
+<td>星期几的缩写名称</td>
+<td>Sun, Mon, …, Sa</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>星期几的全名</td>
+<td>Sunday, Monday, …, Saturday</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>星期几为十进制数字，其中0表示星期日，6表示星期六</td>
+<td>0, 1, …, 6</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>一个月中的一天作为零填充的十进制数字</td>
+<td>01, 02, …, 31</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>几月的缩写名称</td>
+<td>Jan, Feb, …, Dec</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>几月的全称</td>
+<td>January, February, …, December</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>几月作为零填充的十进制数字</td>
+<td>01, 02, …, 12</td>
+</tr>
+<tr>
+<td>%y</td>
+<td>没有世纪的以零填充的十进制数字年份</td>
+<td>00, 01, …, 99</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>有世纪的十进制数字年份</td>
+<td>1001, 1002, …, 2013, 2014, …, 9998, 9999</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>24小时制</td>
+<td>00, 01, …, 23</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>12小时制</td>
+<td>01, 02, …, 12</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>时间设置AM或PM</td>
+<td>AM, PM</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>以零填充的十进制数字分钟</td>
+<td>00, 01, …, 59</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>以零填充的十进制数字秒</td>
+<td>00, 01, …, 59</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>以零填充的十进制数字微秒</td>
+<td>000000, 000001, …, 999999</td>
+</tr>
+<tr>
+<td>%z</td>
+<td>UTC偏移量格式为+ HHMM或-HHMM</td>
+<td>(empty), +0000, -0400, +1030</td>
+</tr>
+<tr>
+<td>%Z</td>
+<td>时区名称</td>
+<td>(empty), UTC, EST, CST</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>一年中的一天以零填充十进制数字</td>
+<td>001, 002, …, 366</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>一年的周数以周日开始，第一个星期日前一年的所有日子都被认为是在第0周</td>
+<td>00, 01, …, 53</td>
+</tr>
+<tr>
+<td>%W</td>
+<td>一年的周数以周一开始，第一个星期日前一年的所有日子都被认为是在第0周</td>
+<td>00, 01, …, 53</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>以本地时区设置的日期和时间表示</td>
+<td>ue Aug 16 21:30:00 1988 (en_US);</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>以本地时区设置的日期</td>
+<td>08/16/1988 (en_US)，1988年8月16日（zh-cn）</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>以本地时区设置的时间</td>
+<td>21:30:00</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>'％'字符。</td>
+<td>%</td>
+</tr>
+</tbody>
+</table>
+<p>转换代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">date_str = <span class="string">&quot;2018-03-05T09:20:005Z&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>date_str</span><br><span class="line"><span class="string">&#x27;2018-03-05T09:20:005Z&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(date_str)</span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;str&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>date = datetime.strptime(date_str, <span class="string">&#x27;%Y-%m-%dT%H:%M:%S%fZ&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(date)</span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;datetime.datetime&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>date</span><br><span class="line">datetime.datetime(<span class="number">2018</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">20</span>, <span class="number">0</span>, <span class="number">500000</span>)</span><br></pre></td></tr></table></figure>
+<p>转成功换后即可对 object 日期与现在日期进行比较了。下例为 python 通过 boto s3 删除指定 30 天之前的 object 代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> boto.s3.connection <span class="keyword">import</span> S3Connection</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"></span><br><span class="line">today = datetime.now()</span><br><span class="line">outgo_day = timedelta(days=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">AWS_ACCESS_KEY_ID = Your AWS Access Key ID</span><br><span class="line">AWS_SECRET_ACCESS_KEY = Your AWS Secret Access Key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">conn = S3Connection(<span class="string">&#x27;&lt;aws access key&gt;&#x27;</span>, <span class="string">&#x27;&lt;aws secret key&gt;&#x27;</span>)</span><br><span class="line">bucket = conn.get_bucket(<span class="string">&#x27;bucket-to-delete&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> bucket.<span class="built_in">list</span>():</span><br><span class="line">    key.date = datetime.strptime(key.last_modfied, <span class="string">&#x27;%Y-%m-%dT%H:%M:%S%fZ&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> key.date &lt; today - outgo_day:</span><br><span class="line">        key.delete()</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag"># 踩坑</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/proxy-pass.html" rel="prev" title="nginx proxy_pass后的url加和不加反斜杠‘/’的区别">
+                  <i class="fa fa-chevron-left"></i> nginx proxy_pass后的url加和不加反斜杠‘/’的区别
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/oracle-install.html" rel="next" title="centos 7 安装oracel 12c">
+                  centos 7 安装oracel 12c <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8zNjU5OS8xMzEzNA=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">actpi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
