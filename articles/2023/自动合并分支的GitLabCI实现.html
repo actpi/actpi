@@ -24,16 +24,16 @@
 
     <meta name="description" content="CI 任务触发需求  普通提交代码时不触发 当指定commit关键字触发 发起了 Merge Requests则自动触发 测试任务成功后自动合并分支">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GitLab CI 实现自动测试然后根据结果合并分支">
+<meta property="og:title" content="GitLab CI 实现自动测试、合并分支并用钉钉发送消息">
 <meta property="og:url" content="http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
 <meta property="og:description" content="CI 任务触发需求  普通提交代码时不触发 当指定commit关键字触发 发起了 Merge Requests则自动触发 测试任务成功后自动合并分支">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-05T01:42:16.000Z">
-<meta property="article:modified_time" content="2023-06-05T06:29:16.127Z">
+<meta property="article:modified_time" content="2023-07-04T07:45:24.418Z">
 <meta property="article:author" content="actpi">
-<meta property="article:tag" content="CI&#x2F;CD">
 <meta property="article:tag" content="DevOps">
+<meta property="article:tag" content="CI&#x2F;CD">
 <meta name="twitter:card" content="summary">
 
 
@@ -41,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html","path":"articles/2023/自动合并分支的GitLabCI实现.html","title":"GitLab CI 实现自动测试然后根据结果合并分支"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html","path":"articles/2023/自动合并分支的GitLabCI实现.html","title":"GitLab CI 实现自动测试、合并分支并用钉钉发送消息"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>GitLab CI 实现自动测试然后根据结果合并分支 | ActPi's Blog</title>
+<title>GitLab CI 实现自动测试、合并分支并用钉钉发送消息 | ActPi's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
@@ -135,13 +135,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="GitLab CI 实现自动测试然后根据结果合并分支 | ActPi's Blog">
+      <meta itemprop="name" content="GitLab CI 实现自动测试、合并分支并用钉钉发送消息 | ActPi's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          GitLab CI 实现自动测试然后根据结果合并分支
+          GitLab CI 实现自动测试、合并分支并用钉钉发送消息
         </h1>
 
         <div class="post-meta-container">
@@ -263,8 +263,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
               <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+              <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
           </div>
 
         
@@ -319,7 +319,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:38</span>
+    <span title="站点阅读时长">1:39</span>
   </span>
 </div>
 <div class="busuanzi-count">
