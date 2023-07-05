@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -161,6 +161,197 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/Nginx%E9%99%90%E5%88%B6%E8%BF%9E%E6%8E%A5%E6%95%B0%E4%B8%8E%E9%99%90%E5%88%B6%E8%AF%B7%E6%B1%82%E9%A2%91%E7%8E%87.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/articles/Nginx%E9%99%90%E5%88%B6%E8%BF%9E%E6%8E%A5%E6%95%B0%E4%B8%8E%E9%99%90%E5%88%B6%E8%AF%B7%E6%B1%82%E9%A2%91%E7%8E%87.html" class="post-title-link" itemprop="url">Nginx限制连接数与限制请求频率</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-05-06 22:01:31" itemprop="dateCreated datePublished" datetime="2020-05-06T22:01:31+08:00">2020-05-06</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>729</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="nginx-限制-ip-的连接和并发用到两个模块"><a class="markdownIt-Anchor" href="#nginx-限制-ip-的连接和并发用到两个模块"></a> nginx 限制 IP 的连接和并发用到两个模块</h2>
+<ul>
+<li><code>HttpLimitReqModul</code> 用来限制连单位时间内连接数，使用<code>limit_req_zone</code>和<code>limit_req</code> 命令配合使用来达到限制。一旦并发连接超过指定数量，就会返回<code>503</code>错误。</li>
+<li><code>HttpLimitConnModul</code>用来限制单个ip的并发连接数，使用<code>limit_zone</code>和<code>limit_conn</code>指令</li>
+</ul>
+<p>这两个模块的区别前一个是对一段时间内的连接数限制，后者是对同一时刻的连接数限制.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/Nginx%E9%99%90%E5%88%B6%E8%BF%9E%E6%8E%A5%E6%95%B0%E4%B8%8E%E9%99%90%E5%88%B6%E8%AF%B7%E6%B1%82%E9%A2%91%E7%8E%87.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6%E7%A7%BB%E5%8A%A8%E7%9B%98%E7%AC%A6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/articles/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6%E7%A7%BB%E5%8A%A8%E7%9B%98%E7%AC%A6.html" class="post-title-link" itemprop="url">SQL Server 数据库文件移动盘符</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-09-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-12T00:00:00+08:00">2019-09-12</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>467</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ms-sql-数据库迁移文件"><a class="markdownIt-Anchor" href="#ms-sql-数据库迁移文件"></a> MS SQL 数据库迁移文件</h2>
+<p>这里说的不是将数据库迁移到另外一台服务器，只是在服务器不同磁盘目录内做迁移。移动数据库文件的情况大致有下面一些：</p>
+<ol>
+<li>事先没有规划好，数据库文件或日志文件增长过快，导致某个盘或整个磁盘空间不足，需要移动数据文件或日志文件</li>
+<li>纯粹由于业务需求，数据增长过快。</li>
+<li>为了更好的IO的性能，需要将数据文件、日志文件分布到不同磁盘，减轻IO压力，提供IO性能。</li>
+<li>故障恢复。例如，数据库处于可疑模式或因硬件故障而关闭。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6%E7%A7%BB%E5%8A%A8%E7%9B%98%E7%AC%A6.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -413,11 +604,10 @@
 </li>
 <li>
 <p>安装docker-compose</p>
-</li>
-</ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -L <span class="string">&quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-<span class="subst">$(uname -s)</span>-<span class="subst">$(uname -m)</span>&quot;</span> -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="built_in">chmod</span> +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>使用阿里云镜像为docker加速
+</li>
+<li>
+<p>使用阿里云镜像为docker加速
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/gitlab%E6%96%87%E6%A1%A3.html#more" rel="contents">
@@ -911,188 +1101,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/strptime.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="actpi">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ActPi's Blog">
-      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ActPi's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/articles/strptime.html" class="post-title-link" itemprop="url">Python 把含有 TZ（UTC时间）的字符串 str 转换为 datetime 日期类型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-03-05 20:59:00" itemprop="dateCreated datePublished" datetime="2018-03-05T20:59:00+08:00">2018-03-05</time>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>778</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>今天在用 Python 处理 AWS S3 存储的时候遇到个时间格式的问题，特别在此记录下：<br />
-获取 bucket 下的 object 最后修改时间、然后对所有的超过 30 天的进行删除操作，但是提取到的是<code>2018-03-05T09:20:005Z</code>这种字符串。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/strptime.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/proxy-pass.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="actpi">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ActPi's Blog">
-      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ActPi's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/articles/proxy-pass.html" class="post-title-link" itemprop="url">nginx proxy_pass后的url加和不加反斜杠‘/’的区别</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-02-11 22:07:35" itemprop="dateCreated datePublished" datetime="2018-02-11T22:07:35+08:00">2018-02-11</time>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>371</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>nginx 代理配置完之后, nginx 配置<code>proxy_pass</code>，需要注意转发的路径配置问题.<br />
-在 nginx 中配置 proxy_pass 时，当在后面的<code>url</code>加上了<code>'/'</code>，相当于是绝对根路径，则 nginx 不会把 <code>location</code> 中匹配的路径部分代理走;如果没有<code>'/'</code>，则会把匹配的路径部分也给代理走。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/proxy-pass.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1118,14 +1126,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">28k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:39</span>
+    <span title="站点阅读时长">1:42</span>
   </span>
 </div>
 <div class="busuanzi-count">
