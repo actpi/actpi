@@ -30,7 +30,7 @@
 <meta property="og:description" content="需求 当向 gitlab 推送 tag 时自动生成 Release 发布包的自动 CI 功能  实现 首先在对应仓库生成一个 Project Access Token，授权 api 和 write_repository 权限，然后在仓库的设置-CI&#x2F;CD 新增 Variable 名称为 ACCESS_TOKEN、值为上一步生成的 Token。   当有推送 tag 时、自动触发 gitlab C">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-07-27T02:17:30.323Z">
+<meta property="article:modified_time" content="2023-07-27T02:38:20.210Z">
 <meta property="article:author" content="actpi">
 <meta property="article:tag" content="DevOps">
 <meta property="article:tag" content="CI&#x2F;CD">
@@ -252,7 +252,7 @@
 <li>
 <p>生成 Release 版本并上传到 gitlab 存储空间<br />
 cat deploy_release.sh</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">base_url=https://git.litosim.dev</span><br><span class="line"><span class="comment"># upload</span></span><br><span class="line">output=$(curl --request POST --header <span class="string">&quot;PRIVATE-TOKEN:<span class="variable">$&#123;ACCESS_TOKEN&#125;</span>&quot;</span> \</span><br><span class="line">         --form  <span class="string">&quot;file=@release.tar.gz&quot;</span> <span class="variable">$&#123;CI_API_V4_URL&#125;</span>/projects/<span class="variable">$&#123;CI_PROJECT_ID&#125;</span>/uploads)</span><br><span class="line"><span class="comment"># 文件URL路径提取</span></span><br><span class="line">full_path=$(<span class="built_in">echo</span> <span class="variable">$output</span> | grep -o <span class="string">&#x27;&quot;full_path&quot;:&quot;[^&quot;]*&#x27;</span> | <span class="built_in">cut</span> -d <span class="string">&#x27;&quot;&#x27;</span> -f 4)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">base_url=https://git.example.dev</span><br><span class="line"><span class="comment"># upload</span></span><br><span class="line">output=$(curl --request POST --header <span class="string">&quot;PRIVATE-TOKEN:<span class="variable">$&#123;ACCESS_TOKEN&#125;</span>&quot;</span> \</span><br><span class="line">         --form  <span class="string">&quot;file=@release.tar.gz&quot;</span> <span class="variable">$&#123;CI_API_V4_URL&#125;</span>/projects/<span class="variable">$&#123;CI_PROJECT_ID&#125;</span>/uploads)</span><br><span class="line"><span class="comment"># 文件URL路径提取</span></span><br><span class="line">full_path=$(<span class="built_in">echo</span> <span class="variable">$output</span> | grep -o <span class="string">&#x27;&quot;full_path&quot;:&quot;[^&quot;]*&#x27;</span> | <span class="built_in">cut</span> -d <span class="string">&#x27;&quot;&#x27;</span> -f 4)</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>记录文件 URL，发布到 Release 页面</p>
