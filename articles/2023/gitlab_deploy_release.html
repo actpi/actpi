@@ -22,28 +22,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="在 MySQL 的使用过程中，如果 root 用户密码丢失了，会造成很大的麻烦。但是，可以通过某种特殊的办法登陆到 root 用户下，然后设置新的密码。 下面记录下当忘记MySQL root 密码的解决办法：">
+    <meta name="description" content="需求 当向 gitlab 推送 tag 时自动生成 Release 发布包的自动 CI 功能  实现 首先在对应仓库生成一个 Project Access Token，授权 api 和 write_repository 权限，然后在仓库的设置-CI&#x2F;CD 新增 Variable 名称为 ACCESS_TOKEN、值为上一步生成的 Token。   当有推送 tag 时、自动触发 gitlab C">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 忘记 root 用户密码的解决办法">
-<meta property="og:url" content="http://blog.actpi.com/articles/forget-root-passwword.html">
+<meta property="og:title" content="GitLab CI 自动发布 Release 版本包">
+<meta property="og:url" content="http://blog.actpi.com/articles/2023/gitlab_deploy_release.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="在 MySQL 的使用过程中，如果 root 用户密码丢失了，会造成很大的麻烦。但是，可以通过某种特殊的办法登陆到 root 用户下，然后设置新的密码。 下面记录下当忘记MySQL root 密码的解决办法：">
+<meta property="og:description" content="需求 当向 gitlab 推送 tag 时自动生成 Release 发布包的自动 CI 功能  实现 首先在对应仓库生成一个 Project Access Token，授权 api 和 write_repository 权限，然后在仓库的设置-CI&#x2F;CD 新增 Variable 名称为 ACCESS_TOKEN、值为上一步生成的 Token。   当有推送 tag 时、自动触发 gitlab C">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2018-01-10T13:05:25.000Z">
+<meta property="article:published_time" content="2023-07-17T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-07-27T02:17:30.323Z">
 <meta property="article:author" content="actpi">
-<meta property="article:tag" content="DB">
+<meta property="article:tag" content="DevOps">
+<meta property="article:tag" content="CI&#x2F;CD">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://blog.actpi.com/articles/forget-root-passwword.html">
+<link rel="canonical" href="http://blog.actpi.com/articles/2023/gitlab_deploy_release.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/forget-root-passwword.html","path":"articles/forget-root-passwword.html","title":"MySQL 忘记 root 用户密码的解决办法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2023/gitlab_deploy_release.html","path":"articles/2023/gitlab_deploy_release.html","title":"GitLab CI 自动发布 Release 版本包"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>MySQL 忘记 root 用户密码的解决办法 | ActPi's Blog</title>
+<title>GitLab CI 自动发布 Release 版本包 | ActPi's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
@@ -119,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-skip-grant-tables-%E9%80%89%E9%A1%B9%E5%90%AF%E5%8A%A8-mysql-%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text"> 使用 --skip-grant-tables 选项启动 MySQL 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqld-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text"> mysqld 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqld-nt%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text"> mysqld-nt命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#net-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text"> net 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqld_safe-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text"> mysqld_safe 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-etcinitmysql-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.5.</span> <span class="nav-text"> 使用 &#x2F;etc&#x2F;init&#x2F;mysql 语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E9%99%86-root-%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE%E6%96%B0%E7%9A%84%E5%AF%86%E7%A0%81"><span class="nav-number">1.6.</span> <span class="nav-text"> 登陆 root 用户，设置新的密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E9%99%86-mysql"><span class="nav-number">1.7.</span> <span class="nav-text"> 登陆 MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.8.</span> <span class="nav-text"> 修改密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%9D%83%E9%99%90%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text"> 加载权限表</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text"> 需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text"> 实现</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +176,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/forget-root-passwword.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/gitlab_deploy_release.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -188,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="MySQL 忘记 root 用户密码的解决办法 | ActPi's Blog">
+      <meta itemprop="name" content="GitLab CI 自动发布 Release 版本包 | ActPi's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MySQL 忘记 root 用户密码的解决办法
+          GitLab CI 自动发布 Release 版本包
         </h1>
 
         <div class="post-meta-container">
@@ -204,7 +205,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2018-01-10 21:05:25" itemprop="dateCreated datePublished" datetime="2018-01-10T21:05:25+08:00">2018-01-10</time>
+      <time title="创建时间：2023-07-18 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-18T00:00:00+08:00">2023-07-18</time>
     </span>
 
   
@@ -220,14 +221,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>443</span>
+      <span>237</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -237,43 +238,27 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>在 MySQL 的使用过程中，如果 root 用户密码丢失了，会造成很大的麻烦。但是，可以通过某种特殊的办法登陆到 root 用户下，然后设置新的密码。<br />
-下面记录下当忘记MySQL root 密码的解决办法：<span id="more"></span></p>
-<h2 id="使用-skip-grant-tables-选项启动-mysql-服务"><a class="markdownIt-Anchor" href="#使用-skip-grant-tables-选项启动-mysql-服务"></a> 使用 --skip-grant-tables 选项启动 MySQL 服务</h2>
-<p>skip-grant-tables 选项将使 MySQL 服务器停止权限判断，任何用户都有访问数据库的权力。这个命令选项是跟在 MySQL 服务的命令后面的。</p>
-<details class="note "><summary><p>for windows</p>
-</summary>
-<p>Windows 操作系统中，使用 mysqld、mysqld-nt或者 net start mysql 命令来启动 MySQL 服务。</p>
-<h3 id="mysqld-命令"><a class="markdownIt-Anchor" href="#mysqld-命令"></a> mysqld 命令</h3>
-<p><code>mysqld --skip-grant-tables</code></p>
-<h3 id="mysqld-nt命令"><a class="markdownIt-Anchor" href="#mysqld-nt命令"></a> mysqld-nt命令</h3>
-<p><code>mysqld-nt --skip-grant-tables</code></p>
-<h3 id="net-命令"><a class="markdownIt-Anchor" href="#net-命令"></a> net 命令</h3>
-<p><code>net start mysql --skip-grant-tables</code></p>
-
-</details>
-<details class="note "><summary><p>for linux</p>
-</summary>
-<p>Linux 操作系统中，使用 mysqld_safe 来启动 MySQL 服务，也可以使用 /etc/init.d/mysql 来启动 MySQL 服务。</p>
-<h3 id="mysqld_safe-命令"><a class="markdownIt-Anchor" href="#mysqld_safe-命令"></a> mysqld_safe 命令</h3>
-<p><code>mysql_safe --skip-grant-tables user=mysql</code></p>
-<h3 id="使用-etcinitmysql-语句"><a class="markdownIt-Anchor" href="#使用-etcinitmysql-语句"></a> 使用 /etc/init/mysql 语句</h3>
-<p><code>/etc/init/mysql start --mysqld --skip-grant-tables</code><br />
-成功启动 MySQL 服务后，就可以使用 root 登陆数据库进行密码的修改了。</p>
-<h3 id="登陆-root-用户设置新的密码"><a class="markdownIt-Anchor" href="#登陆-root-用户设置新的密码"></a> 登陆 root 用户，设置新的密码</h3>
-<p>通过上述方式启动 MySQL 服务以后，可以使用 root 用户免密码登陆到 MySQL 控制台。登陆后使用 UPDATE 语句来修改密码。</p>
-<h3 id="登陆-mysql"><a class="markdownIt-Anchor" href="#登陆-mysql"></a> 登陆 MySQL</h3>
-<p><code>mysql -u root</code></p>
-<h3 id="修改密码"><a class="markdownIt-Anchor" href="#修改密码"></a> 修改密码</h3>
-<p><code>UPDATE mysql.user SET password=PASSWORD('somewords') WHERE User='root' AND Host='localhost';</code></p>
-
-</details>
-<div class="note info"><p>这里必须使用 UPDATE 语句来更新 mysql 数据库的 user 表，不能使用 SET 语句。</p>
-</div>
-<h2 id="加载权限表"><a class="markdownIt-Anchor" href="#加载权限表"></a> 加载权限表</h2>
-<p>修改完密码之后，必须使用 FLUSH PRIVILEGES 命令来加载权限表。加载权限表之后新密码才开始生效。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES</span><br></pre></td></tr></table></figure>
-<p>至此，root 用户的密码修改成功，可以使用新的密码来登陆 MySQL.</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="需求"><a class="markdownIt-Anchor" href="#需求"></a> 需求</h2>
+<p>当向 gitlab 推送 tag 时自动生成 Release 发布包的自动 CI 功能</p>
+<h2 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h2>
+<p>首先在对应仓库生成一个 Project Access Token，授权 api 和 write_repository 权限，然后在仓库的设置-CI/CD 新增 Variable 名称为 ACCESS_TOKEN、值为上一步生成的 Token。</p>
+<ol>
+<li>
+<p>当有推送 tag 时、自动触发 gitlab CI 任务<br />
+编写 CI 配置文件 .gitlab-ci.yml</p>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Create_Release:</span></span><br><span class="line"><span class="attr">stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">runner</span> <span class="comment"># 指定runner</span></span><br><span class="line"><span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">tags</span> <span class="comment"># 仅对推送 tag 时触发</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">bash</span> <span class="string">deploy_release.sh</span></span><br></pre></td></tr></table></figure>
+ <span id="more"></span>
+</li>
+<li>
+<p>生成 Release 版本并上传到 gitlab 存储空间<br />
+cat deploy_release.sh</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">base_url=https://git.litosim.dev</span><br><span class="line"><span class="comment"># upload</span></span><br><span class="line">output=$(curl --request POST --header <span class="string">&quot;PRIVATE-TOKEN:<span class="variable">$&#123;ACCESS_TOKEN&#125;</span>&quot;</span> \</span><br><span class="line">         --form  <span class="string">&quot;file=@release.tar.gz&quot;</span> <span class="variable">$&#123;CI_API_V4_URL&#125;</span>/projects/<span class="variable">$&#123;CI_PROJECT_ID&#125;</span>/uploads)</span><br><span class="line"><span class="comment"># 文件URL路径提取</span></span><br><span class="line">full_path=$(<span class="built_in">echo</span> <span class="variable">$output</span> | grep -o <span class="string">&#x27;&quot;full_path&quot;:&quot;[^&quot;]*&#x27;</span> | <span class="built_in">cut</span> -d <span class="string">&#x27;&quot;&#x27;</span> -f 4)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>记录文件 URL，发布到 Release 页面</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[ -z <span class="variable">$&#123;full_path&#125;</span> ] &amp;&amp; <span class="built_in">exit</span> 1</span><br><span class="line"><span class="comment"># &quot;Create release&quot;</span></span><br><span class="line">now=$(<span class="built_in">date</span> +%Y%m%d%H%M)</span><br><span class="line">curl --header <span class="string">&quot;Content-Type:application/json&quot;</span> --header <span class="string">&quot;PRIVATE-TOKEN:<span class="variable">$&#123;ACCESS_TOKEN&#125;</span>&quot;</span> \</span><br><span class="line">  --data <span class="string">&quot;&#123;\&quot;name\&quot;:\&quot;<span class="variable">$&#123;CI_COMMIT_TAG&#125;</span>\&quot;, \&quot;tag_name\&quot;:\&quot;<span class="variable">$&#123;CI_COMMIT_TAG&#125;</span>\&quot;, \&quot;description\&quot;:\&quot;Auto Deploy at <span class="variable">$&#123;now&#125;</span>\&quot;, \&quot;assets\&quot;:&#123; \&quot;links\&quot;:[&#123; \&quot;name\&quot;:\&quot;release.tar.gz\&quot;, \&quot;url\&quot;:\&quot;<span class="variable">$&#123;base_url&#125;</span>/<span class="variable">$&#123;full_path&#125;</span>\&quot;,\&quot;link_type\&quot;:\&quot;package\&quot; &#125;] &#125; &#125;&quot;</span> \</span><br><span class="line">  --request POST <span class="string">&quot;<span class="variable">$&#123;CI_API_V4_URL&#125;</span>/projects/<span class="variable">$&#123;CI_PROJECT_ID&#125;</span>/releases&quot;</span> &gt;/dev/null &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot; Success &quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
     </div>
 
@@ -283,21 +268,19 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/DB/" rel="tag"># DB</a>
+              <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+              <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/articles/centos-extmail.html" rel="prev" title="CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器">
-                  <i class="fa fa-chevron-left"></i> CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器
+                <a href="/articles/2023/git-netlify-blog.html" rel="prev" title="记录用 Netlify 来构建并发布 hexo 博客">
+                  <i class="fa fa-chevron-left"></i> 记录用 Netlify 来构建并发布 hexo 博客
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/articles/nginx-index.html" rel="next" title="Nginx 关于 location 的匹配规则">
-                  Nginx 关于 location 的匹配规则 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
