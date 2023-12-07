@@ -22,15 +22,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="从任意目录查询指定后缀的文件并返回对应完整路 12345678910111213141516def get_log_file(log_dir):    &quot;&quot;&quot;    从指定目录查找后缀为 .log 的文件    :param log_dir: 待查找的目录    :return: 返回所有的 .log 文件路径列表    &quot;&quot;&quot;">
+    <meta name="description" content="用于在指定路径查询日志文件并返回对应的完整路径列表 12345678910111213141516def get_log_file(log_dir):    &quot;&quot;&quot;    从指定目录查找后缀为 .log 的文件    :param log_dir: 待查找的目录    :return: 返回所有的 .log 文件路径列表    &quot;&quot;&quot;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从任意目录查询指定后缀的文件并返回对应完整路径">
 <meta property="og:url" content="http://blog.actpi.com/articles/2023/python%E6%9F%A5%E6%89%BE%E6%8C%87%E5%AE%9A%E5%90%8E%E7%BC%80.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="从任意目录查询指定后缀的文件并返回对应完整路 12345678910111213141516def get_log_file(log_dir):    &quot;&quot;&quot;    从指定目录查找后缀为 .log 的文件    :param log_dir: 待查找的目录    :return: 返回所有的 .log 文件路径列表    &quot;&quot;&quot;">
+<meta property="og:description" content="用于在指定路径查询日志文件并返回对应的完整路径列表 12345678910111213141516def get_log_file(log_dir):    &quot;&quot;&quot;    从指定目录查找后缀为 .log 的文件    :param log_dir: 待查找的目录    :return: 返回所有的 .log 文件路径列表    &quot;&quot;&quot;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-15T01:42:16.000Z">
-<meta property="article:modified_time" content="2023-12-07T03:23:01.562Z">
+<meta property="article:modified_time" content="2023-12-07T03:28:47.364Z">
 <meta property="article:author" content="actpi">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E4%BB%BB%E6%84%8F%E7%9B%AE%E5%BD%95%E6%9F%A5%E8%AF%A2%E6%8C%87%E5%AE%9A%E5%90%8E%E7%BC%80%E7%9A%84%E6%96%87%E4%BB%B6%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%AF%B9%E5%BA%94%E5%AE%8C%E6%95%B4%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text"> 从任意目录查询指定后缀的文件并返回对应完整路</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84%E5%88%97%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text"> 用于在指定路径查询日志文件并返回对应的完整路径列表</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -220,7 +220,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>96</span>
+      <span>114</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -237,8 +237,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="从任意目录查询指定后缀的文件并返回对应完整路"><a class="markdownIt-Anchor" href="#从任意目录查询指定后缀的文件并返回对应完整路"></a> 从任意目录查询指定后缀的文件并返回对应完整路</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_log_file</span>(<span class="params">log_dir</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    从指定目录查找后缀为 .log 的文件</span></span><br><span class="line"><span class="string">    :param log_dir: 待查找的目录</span></span><br><span class="line"><span class="string">    :return: 返回所有的 .log 文件路径列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    log_files = []</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(log_dir):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> file.endswith(<span class="string">&quot;.log&quot;</span>):</span><br><span class="line">                log_files.append(os.path.join(root,file))</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> log_files:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;未发现任何 log 文件！&quot;</span>) </span><br><span class="line">        sys.exit(<span class="number">2</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> log_files</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><h2 id="用于在指定路径查询日志文件并返回对应的完整路径列表"><a class="markdownIt-Anchor" href="#用于在指定路径查询日志文件并返回对应的完整路径列表"></a> 用于在指定路径查询日志文件并返回对应的完整路径列表</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_log_file</span>(<span class="params">log_dir</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    从指定目录查找后缀为 .log 的文件</span></span><br><span class="line"><span class="string">    :param log_dir: 待查找的目录</span></span><br><span class="line"><span class="string">    :return: 返回所有的 .log 文件路径列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    log_files = []</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(log_dir):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            <span class="keyword">if</span> file.endswith(<span class="string">&quot;.log&quot;</span>):</span><br><span class="line">                log_files.append(os.path.join(root,file))</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> log_files:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;未发现任何 log 文件！&quot;</span>) </span><br><span class="line">        sys.exit(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> log_files</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>改动 <code>if file.endswith(&quot;.log&quot;)</code> 可查找任意后缀的文件。</p>
+</blockquote>
 
     </div>
 
