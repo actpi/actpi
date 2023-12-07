@@ -25,26 +25,26 @@
     <meta name="description" content="写在前面 基于python版本3，使用BeautifulSoup和requests库。 因为近来雾霾越来越严重，影响到的人群也是越来越多，一直想做一个PM2.5的统计，正好最近开始学习Python所有就拿它来练手了，新手不足之处还请指教。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 3 爬取城市历史PM2.5数据">
-<meta property="og:url" content="http://blog.actpi.com/articles/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html">
+<meta property="og:url" content="http://blog.actpi.com/articles/before/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
 <meta property="og:description" content="写在前面 基于python版本3，使用BeautifulSoup和requests库。 因为近来雾霾越来越严重，影响到的人群也是越来越多，一直想做一个PM2.5的统计，正好最近开始学习Python所有就拿它来练手了，新手不足之处还请指教。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://blog.actpi.com/images/pm/1.png">
-<meta property="og:image" content="http://blog.actpi.com/images/pm/2.png">
-<meta property="og:image" content="http://blog.actpi.com/images/pm/3.png">
+<meta property="og:image" content="http://blog.actpi.com/articles/images/pm/1.png">
+<meta property="og:image" content="http://blog.actpi.com/articles/images/pm/2.png">
+<meta property="og:image" content="http://blog.actpi.com/articles/images/pm/3.png">
 <meta property="article:published_time" content="2017-09-11T12:52:43.000Z">
-<meta property="article:modified_time" content="2023-09-18T02:49:49.291Z">
+<meta property="article:modified_time" content="2023-12-07T03:23:01.562Z">
 <meta property="article:author" content="actpi">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://blog.actpi.com/images/pm/1.png">
+<meta name="twitter:image" content="http://blog.actpi.com/articles/images/pm/1.png">
 
 
-<link rel="canonical" href="http://blog.actpi.com/articles/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html">
+<link rel="canonical" href="http://blog.actpi.com/articles/before/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html","path":"articles/Python-3-爬取城市历史PM2-5数据.html","title":"Python 3 爬取城市历史PM2.5数据"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/before/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html","path":"articles/before/Python-3-爬取城市历史PM2-5数据.html","title":"Python 3 爬取城市历史PM2.5数据"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Python 3 爬取城市历史PM2.5数据 | ActPi's Blog</title>
@@ -138,7 +138,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/before/Python-3-%E7%88%AC%E5%8F%96%E5%9F%8E%E5%B8%82%E5%8E%86%E5%8F%B2PM2-5%E6%95%B0%E6%8D%AE.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -289,7 +289,7 @@
             <div class="post-nav-item">
             </div>
             <div class="post-nav-item">
-                <a href="/articles/ttf-404.html" rel="next" title="nginx 字体文件 404 错误 解决记录">
+                <a href="/articles/before/ttf-404.html" rel="next" title="nginx 字体文件 404 错误 解决记录">
                   nginx 字体文件 404 错误 解决记录 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

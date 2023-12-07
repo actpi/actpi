@@ -22,29 +22,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="12txr xf elasticsearch-5.6.4.tar.gzyum -y install java 123vim &#x2F;etc&#x2F;security&#x2F;limits.conf* soft nofile 65536* hard nofile 65536 12345678vim &#x2F;etc&#x2F;security&#x2F;limits.d&#x2F;90-nproc.conf  soft nproc  2048vim &#x2F;etc">
+    <meta name="description" content="在 MySQL 的使用过程中，如果 root 用户密码丢失了，会造成很大的麻烦。但是，可以通过某种特殊的办法登陆到 root 用户下，然后设置新的密码。 下面记录下当忘记MySQL root 密码的解决办法：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES 安装参数修改记录">
-<meta property="og:url" content="http://blog.actpi.com/articles/ES%E5%AE%89%E8%A3%85.html">
+<meta property="og:title" content="MySQL 忘记 root 用户密码的解决办法">
+<meta property="og:url" content="http://blog.actpi.com/articles/before/forget-root-passwword.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="12txr xf elasticsearch-5.6.4.tar.gzyum -y install java 123vim &#x2F;etc&#x2F;security&#x2F;limits.conf* soft nofile 65536* hard nofile 65536 12345678vim &#x2F;etc&#x2F;security&#x2F;limits.d&#x2F;90-nproc.conf  soft nproc  2048vim &#x2F;etc">
+<meta property="og:description" content="在 MySQL 的使用过程中，如果 root 用户密码丢失了，会造成很大的麻烦。但是，可以通过某种特殊的办法登陆到 root 用户下，然后设置新的密码。 下面记录下当忘记MySQL root 密码的解决办法：">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-08-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-18T02:49:49.291Z">
+<meta property="article:published_time" content="2018-01-10T13:05:25.000Z">
+<meta property="article:modified_time" content="2023-12-07T03:23:01.562Z">
 <meta property="article:author" content="actpi">
-<meta property="article:tag" content="笔记">
-<meta property="article:tag" content="linux">
+<meta property="article:tag" content="DB">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://blog.actpi.com/articles/ES%E5%AE%89%E8%A3%85.html">
+<link rel="canonical" href="http://blog.actpi.com/articles/before/forget-root-passwword.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/ES%E5%AE%89%E8%A3%85.html","path":"articles/ES安装.html","title":"ES 安装参数修改记录"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/before/forget-root-passwword.html","path":"articles/before/forget-root-passwword.html","title":"MySQL 忘记 root 用户密码的解决办法"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>ES 安装参数修改记录 | ActPi's Blog</title>
+<title>MySQL 忘记 root 用户密码的解决办法 | ActPi's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
@@ -107,7 +106,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -120,6 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-skip-grant-tables-%E9%80%89%E9%A1%B9%E5%90%AF%E5%8A%A8-mysql-%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text"> 使用 --skip-grant-tables 选项启动 MySQL 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqld-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text"> mysqld 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqld-nt%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text"> mysqld-nt命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#net-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text"> net 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqld_safe-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text"> mysqld_safe 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-etcinitmysql-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.5.</span> <span class="nav-text"> 使用 &#x2F;etc&#x2F;init&#x2F;mysql 语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E9%99%86-root-%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE%E6%96%B0%E7%9A%84%E5%AF%86%E7%A0%81"><span class="nav-number">1.6.</span> <span class="nav-text"> 登陆 root 用户，设置新的密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E9%99%86-mysql"><span class="nav-number">1.7.</span> <span class="nav-text"> 登陆 MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.8.</span> <span class="nav-text"> 修改密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%9D%83%E9%99%90%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text"> 加载权限表</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/ES%E5%AE%89%E8%A3%85.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/before/forget-root-passwword.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -188,12 +188,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="ES 安装参数修改记录 | ActPi's Blog">
+      <meta itemprop="name" content="MySQL 忘记 root 用户密码的解决办法 | ActPi's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ES 安装参数修改记录
+          MySQL 忘记 root 用户密码的解决办法
         </h1>
 
         <div class="post-meta-container">
@@ -204,7 +204,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-08-16 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-16T00:00:00+08:00">2019-08-16</time>
+      <time title="创建时间：2018-01-10 21:05:25" itemprop="dateCreated datePublished" datetime="2018-01-10T21:05:25+08:00">2018-01-10</time>
     </span>
 
   
@@ -220,14 +220,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>38</span>
+      <span>443</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -237,9 +237,43 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">txr xf elasticsearch-5.6.4.tar.gz</span><br><span class="line">yum -y install java</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/security/limits.conf</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf  </span><br><span class="line"></span><br><span class="line">soft <span class="built_in">nproc</span>  2048</span><br><span class="line"></span><br><span class="line">vim /etc/sysctl.conf</span><br><span class="line">vm.max_map_count=655360</span><br><span class="line"></span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><p>在 MySQL 的使用过程中，如果 root 用户密码丢失了，会造成很大的麻烦。但是，可以通过某种特殊的办法登陆到 root 用户下，然后设置新的密码。<br />
+下面记录下当忘记MySQL root 密码的解决办法：<span id="more"></span></p>
+<h2 id="使用-skip-grant-tables-选项启动-mysql-服务"><a class="markdownIt-Anchor" href="#使用-skip-grant-tables-选项启动-mysql-服务"></a> 使用 --skip-grant-tables 选项启动 MySQL 服务</h2>
+<p>skip-grant-tables 选项将使 MySQL 服务器停止权限判断，任何用户都有访问数据库的权力。这个命令选项是跟在 MySQL 服务的命令后面的。</p>
+<details class="note "><summary><p>for windows</p>
+</summary>
+<p>Windows 操作系统中，使用 mysqld、mysqld-nt或者 net start mysql 命令来启动 MySQL 服务。</p>
+<h3 id="mysqld-命令"><a class="markdownIt-Anchor" href="#mysqld-命令"></a> mysqld 命令</h3>
+<p><code>mysqld --skip-grant-tables</code></p>
+<h3 id="mysqld-nt命令"><a class="markdownIt-Anchor" href="#mysqld-nt命令"></a> mysqld-nt命令</h3>
+<p><code>mysqld-nt --skip-grant-tables</code></p>
+<h3 id="net-命令"><a class="markdownIt-Anchor" href="#net-命令"></a> net 命令</h3>
+<p><code>net start mysql --skip-grant-tables</code></p>
+
+</details>
+<details class="note "><summary><p>for linux</p>
+</summary>
+<p>Linux 操作系统中，使用 mysqld_safe 来启动 MySQL 服务，也可以使用 /etc/init.d/mysql 来启动 MySQL 服务。</p>
+<h3 id="mysqld_safe-命令"><a class="markdownIt-Anchor" href="#mysqld_safe-命令"></a> mysqld_safe 命令</h3>
+<p><code>mysql_safe --skip-grant-tables user=mysql</code></p>
+<h3 id="使用-etcinitmysql-语句"><a class="markdownIt-Anchor" href="#使用-etcinitmysql-语句"></a> 使用 /etc/init/mysql 语句</h3>
+<p><code>/etc/init/mysql start --mysqld --skip-grant-tables</code><br />
+成功启动 MySQL 服务后，就可以使用 root 登陆数据库进行密码的修改了。</p>
+<h3 id="登陆-root-用户设置新的密码"><a class="markdownIt-Anchor" href="#登陆-root-用户设置新的密码"></a> 登陆 root 用户，设置新的密码</h3>
+<p>通过上述方式启动 MySQL 服务以后，可以使用 root 用户免密码登陆到 MySQL 控制台。登陆后使用 UPDATE 语句来修改密码。</p>
+<h3 id="登陆-mysql"><a class="markdownIt-Anchor" href="#登陆-mysql"></a> 登陆 MySQL</h3>
+<p><code>mysql -u root</code></p>
+<h3 id="修改密码"><a class="markdownIt-Anchor" href="#修改密码"></a> 修改密码</h3>
+<p><code>UPDATE mysql.user SET password=PASSWORD('somewords') WHERE User='root' AND Host='localhost';</code></p>
+
+</details>
+<div class="note info"><p>这里必须使用 UPDATE 语句来更新 mysql 数据库的 user 表，不能使用 SET 语句。</p>
+</div>
+<h2 id="加载权限表"><a class="markdownIt-Anchor" href="#加载权限表"></a> 加载权限表</h2>
+<p>修改完密码之后，必须使用 FLUSH PRIVILEGES 命令来加载权限表。加载权限表之后新密码才开始生效。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES</span><br></pre></td></tr></table></figure>
+<p>至此，root 用户的密码修改成功，可以使用新的密码来登陆 MySQL.</p>
 
     </div>
 
@@ -249,21 +283,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
-              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/DB/" rel="tag"># DB</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/articles/gitlab%E6%96%87%E6%A1%A3.html" rel="prev" title="Docker 版 Gitlab 搭建">
-                  <i class="fa fa-chevron-left"></i> Docker 版 Gitlab 搭建
+                <a href="/articles/before/centos-extmail.html" rel="prev" title="CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器">
+                  <i class="fa fa-chevron-left"></i> CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/articles/%E4%BD%BF%E7%94%A8ES%E7%B4%A2%E5%BC%95%E6%A8%A1%E6%9D%BF%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%AE%A1%E7%90%86.html" rel="next" title="ES 索引生命周期管理">
-                  ES 索引生命周期管理 <i class="fa fa-chevron-right"></i>
+                <a href="/articles/before/nginx-index.html" rel="next" title="Nginx 关于 location 的匹配规则">
+                  Nginx 关于 location 的匹配规则 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

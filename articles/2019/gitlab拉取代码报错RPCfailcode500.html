@@ -22,29 +22,31 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="问题发现 代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异  原因探究  怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一">
+    <meta name="description" content="问题描述 GitLab 使用git pull 时出现：  error： RPC failed;result&#x3D;22 HTTP code&#x3D;500 fatal： The remote end hung up unexpectedly">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git提交文件后CRLF和LF的换行处理问题">
-<meta property="og:url" content="http://blog.actpi.com/articles/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html">
+<meta property="og:title" content="gitlab拉取代码报错RPCfail code 500">
+<meta property="og:url" content="http://blog.actpi.com/articles/2019/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="问题发现 代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异  原因探究  怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对 修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致 拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题 将两个环境的文件同时在 notepadd++ 打开，发现格不一">
+<meta property="og:description" content="问题描述 GitLab 使用git pull 时出现：  error： RPC failed;result&#x3D;22 HTTP code&#x3D;500 fatal： The remote end hung up unexpectedly">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-07-01T13:05:25.000Z">
-<meta property="article:modified_time" content="2023-09-18T02:49:49.291Z">
+<meta property="og:image" content="http://blog.actpi.com/articles/images/2019/gitlab-500.png">
+<meta property="article:published_time" content="2019-07-28T03:45:25.000Z">
+<meta property="article:modified_time" content="2023-12-07T03:23:01.562Z">
 <meta property="article:author" content="actpi">
 <meta property="article:tag" content="Git">
 <meta property="article:tag" content="踩坑">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.actpi.com/articles/images/2019/gitlab-500.png">
 
 
-<link rel="canonical" href="http://blog.actpi.com/articles/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html">
+<link rel="canonical" href="http://blog.actpi.com/articles/2019/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html","path":"articles/git提交文件后CRLF和LF的换行处理问题.html","title":"git提交文件后CRLF和LF的换行处理问题"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2019/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html","path":"articles/2019/gitlab拉取代码报错RPCfailcode500.html","title":"gitlab拉取代码报错RPCfail code 500"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>git提交文件后CRLF和LF的换行处理问题 | ActPi's Blog</title>
+<title>gitlab拉取代码报错RPCfail code 500 | ActPi's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
@@ -120,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8F%91%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text"> 问题发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E6%8E%A2%E7%A9%B6"><span class="nav-number">2.</span> <span class="nav-text"> 原因探究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%A0%B9%E6%BA%90"><span class="nav-number">3.</span> <span class="nav-text"> 问题根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text"> 解决办法</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text"> 问题原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text"> 解决方案</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -135,7 +137,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -176,7 +178,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2019/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -189,12 +191,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="git提交文件后CRLF和LF的换行处理问题 | ActPi's Blog">
+      <meta itemprop="name" content="gitlab拉取代码报错RPCfail code 500 | ActPi's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          git提交文件后CRLF和LF的换行处理问题
+          gitlab拉取代码报错RPCfail code 500
         </h1>
 
         <div class="post-meta-container">
@@ -205,7 +207,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-07-01 21:05:25" itemprop="dateCreated datePublished" datetime="2019-07-01T21:05:25+08:00">2019-07-01</time>
+      <time title="创建时间：2019-07-28 11:45:25" itemprop="dateCreated datePublished" datetime="2019-07-28T11:45:25+08:00">2019-07-28</time>
     </span>
 
   
@@ -221,7 +223,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>381</span>
+      <span>159</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -238,26 +240,27 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="问题发现"><a class="markdownIt-Anchor" href="#问题发现"></a> 问题发现</h2>
-<p>代码提交 gitlab 后拉取下来 rsync 同步到测试服时发现文件有差异</p>
-<h2 id="原因探究"><a class="markdownIt-Anchor" href="#原因探究"></a> 原因探究</h2>
-<ol>
-<li>怀疑提交 git 后文件状态改变，修改 rsync 同步参数改为计算 MD5 值进行比对</li>
-<li>修改参数后仍然有差异,拉取文件进行 MD5 值计算，发现确实 MD5 值不一致</li>
-<li>拉取文件进行差异对比，发现文件内容完全一样，怀疑文件有格式问题</li>
-<li>将两个环境的文件同时在 notepadd++ 打开，发现格不一致 windows(CRLF) 与 unix(LF)</li>
-<li>经检查原始文件格式为 windows(CRLF)，提交到 git 后变为 unix(LF)</li>
-</ol>
+    <div class="post-body" itemprop="articleBody"><h2 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h2>
+<p>GitLab 使用git pull 时出现：</p>
+<p><img src="../images/2019/gitlab-500.png" alt="500" /></p>
+<p><code>error： RPC failed;result=22 HTTP code=500</code><br />
+<code>fatal： The remote end hung up unexpectedly</code></p>
 <span id="more"></span>
-<h2 id="问题根源"><a class="markdownIt-Anchor" href="#问题根源"></a> 问题根源</h2>
-<p>CRLF 和 LF 是文本换行的不同方式：<br />
-CRLF 是 carriagereturnline feed 的缩写，中文意思是回车换行，&quot;\r\n&quot;, windows 系统的换行方式<br />
-LF 是 line feed 的缩写，中文意思是换行，&quot;\n&quot;, 是 Linux 系统的换行方式</p>
-<p>git会通过CRLF和LF的配置来对源文件文本进行格式处理<br />
-在使用 git 提交代码的时候，git 会自动将代码文件当中 CRLF 转换为 LF，再进行同步即有差异</p>
-<h2 id="解决办法"><a class="markdownIt-Anchor" href="#解决办法"></a> 解决办法</h2>
-<p>修改 git 全局配置文件，core.autocrlf <code>true</code> 改为 <code>false</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git config --global core.autocrlf <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">core.autocrlf 是 git 中负责处理 line endings 的变量</span><br><span class="line"></span><br><span class="line">设置为 <span class="literal">true</span>，添加文件到 git 仓库时，将把 crlf 变成 lf</span><br><span class="line">设置为 <span class="literal">false</span> 时，line-endings 将不做转换操作。文本文件保持原来的换行方式</span><br></pre></td></tr></table></figure>
+<h2 id="问题原因"><a class="markdownIt-Anchor" href="#问题原因"></a> 问题原因</h2>
+<p>Gitlab 服务器为使用 docker 启动，docker 日志把磁盘写满了导致无法继续写入日志。</p>
+<h2 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h2>
+<ol>
+<li>
+<p>快速解决版本<br />
+进入 docker 日志目录手动删除日志 重启 docker 服务</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /var/lib/docker/containers/container_id/</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以json.log结尾的文件即为业务日志文件</span></span><br><span class="line">rm -f *json.log</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>永久解决办法<br />
+设置 docker 日志文件大小和数量</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">&quot;registry-mirrors&quot;: [&quot;http://f613ce8f.m.daocloud.io&quot;],</span><br><span class="line">&quot;log-driver&quot;:&quot;json-file&quot;,</span><br><span class="line">&quot;log-opts&quot;: &#123;&quot;max-size&quot;:&quot;5G&quot;, &quot;max-file&quot;:&quot;3&quot;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
     </div>
 
@@ -275,13 +278,13 @@ LF 是 line feed 的缩写，中文意思是换行，&quot;\n&quot;, 是 Linux �
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/articles/ssl-error.html" rel="prev" title="SSL 证书校验错误 Trust anchor for certification path not found">
-                  <i class="fa fa-chevron-left"></i> SSL 证书校验错误 Trust anchor for certification path not found
+                <a href="/articles/2019/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html" rel="prev" title="git提交文件后CRLF和LF的换行处理问题">
+                  <i class="fa fa-chevron-left"></i> git提交文件后CRLF和LF的换行处理问题
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/articles/gitlab%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%8A%A5%E9%94%99RPCfailcode500.html" rel="next" title="gitlab拉取代码报错RPCfail code 500">
-                  gitlab拉取代码报错RPCfail code 500 <i class="fa fa-chevron-right"></i>
+                <a href="/articles/2019/gitlab%E6%96%87%E6%A1%A3.html" rel="next" title="Docker 版 Gitlab 搭建">
+                  Docker 版 Gitlab 搭建 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

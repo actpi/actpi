@@ -25,23 +25,23 @@
     <meta name="description" content="简介 安装环境：CENTOS 7.3 Mysql Nginx Postfix Dovecot web 模块是最先需要确定的，因为它决定了邮箱系统最核心的数据结构，这里选用国产的 extmail，其他所有模块都按照 extmail 的结构进行配置修改。 如果在main.cf里设置virtual_transport &#x3D; virtual，就表示对于包含在 virtual_mailbox_domains">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器">
-<meta property="og:url" content="http://blog.actpi.com/articles/centos-extmail.html">
+<meta property="og:url" content="http://blog.actpi.com/articles/before/centos-extmail.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
 <meta property="og:description" content="简介 安装环境：CENTOS 7.3 Mysql Nginx Postfix Dovecot web 模块是最先需要确定的，因为它决定了邮箱系统最核心的数据结构，这里选用国产的 extmail，其他所有模块都按照 extmail 的结构进行配置修改。 如果在main.cf里设置virtual_transport &#x3D; virtual，就表示对于包含在 virtual_mailbox_domains">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-12-05T11:42:16.000Z">
-<meta property="article:modified_time" content="2023-09-18T02:49:49.291Z">
+<meta property="article:modified_time" content="2023-12-07T03:23:01.562Z">
 <meta property="article:author" content="actpi">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://blog.actpi.com/articles/centos-extmail.html">
+<link rel="canonical" href="http://blog.actpi.com/articles/before/centos-extmail.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/centos-extmail.html","path":"articles/centos-extmail.html","title":"CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/before/centos-extmail.html","path":"articles/before/centos-extmail.html","title":"CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>CentOS 7 基于 Postfix Dovecot Extmail 搭建邮件服务器 | ActPi's Blog</title>
@@ -135,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -176,7 +176,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/centos-extmail.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/before/centos-extmail.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -430,12 +430,12 @@ web 模块是最先需要确定的，因为它决定了邮箱系统最核心的�
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/articles/pyinstaller.html" rel="prev" title="用 Pyinstaller  把 python 程序打包为 exe 文件">
+                <a href="/articles/before/pyinstaller.html" rel="prev" title="用 Pyinstaller  把 python 程序打包为 exe 文件">
                   <i class="fa fa-chevron-left"></i> 用 Pyinstaller  把 python 程序打包为 exe 文件
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/articles/forget-root-passwword.html" rel="next" title="MySQL 忘记 root 用户密码的解决办法">
+                <a href="/articles/before/forget-root-passwword.html" rel="next" title="MySQL 忘记 root 用户密码的解决办法">
                   MySQL 忘记 root 用户密码的解决办法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

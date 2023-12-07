@@ -22,28 +22,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.actpi.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Nginx 介绍 Nginx 是一个 web 服务器。它类似于 Lighttpd，作为轻量级的 web server，可以替代重量级的 Apache&#x2F;IIS。">
+    <meta name="description" content="问题描述 在使用 acme.sh脚本签发的Let’s Encrypt 免费SSL证书，在android中无法通过SSL系统验证，出现以下异常Trust anchor for certification path not found 123javax.net.ssl.SSLHandshakeException:  java.security.cert.CertPathValidatorExcept">
 <meta property="og:type" content="article">
-<meta property="og:title" content="把 Nginx 创建为 Windows 服务">
-<meta property="og:url" content="http://blog.actpi.com/articles/winsw.html">
+<meta property="og:title" content="SSL 证书校验错误 Trust anchor for certification path not found">
+<meta property="og:url" content="http://blog.actpi.com/articles/2019/ssl-error.html">
 <meta property="og:site_name" content="ActPi&#39;s Blog">
-<meta property="og:description" content="Nginx 介绍 Nginx 是一个 web 服务器。它类似于 Lighttpd，作为轻量级的 web server，可以替代重量级的 Apache&#x2F;IIS。">
+<meta property="og:description" content="问题描述 在使用 acme.sh脚本签发的Let’s Encrypt 免费SSL证书，在android中无法通过SSL系统验证，出现以下异常Trust anchor for certification path not found 123javax.net.ssl.SSLHandshakeException:  java.security.cert.CertPathValidatorExcept">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2017-10-26T12:59:43.000Z">
-<meta property="article:modified_time" content="2023-09-18T02:49:49.295Z">
+<meta property="article:published_time" content="2019-06-06T02:26:59.000Z">
+<meta property="article:modified_time" content="2023-12-07T03:23:01.562Z">
 <meta property="article:author" content="actpi">
-<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="ssl">
+<meta property="article:tag" content="踩坑">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://blog.actpi.com/articles/winsw.html">
+<link rel="canonical" href="http://blog.actpi.com/articles/2019/ssl-error.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/winsw.html","path":"articles/winsw.html","title":"把 Nginx 创建为 Windows 服务"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://blog.actpi.com/articles/2019/ssl-error.html","path":"articles/2019/ssl-error.html","title":"SSL 证书校验错误 Trust anchor for certification path not found"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>把 Nginx 创建为 Windows 服务 | ActPi's Blog</title>
+<title>SSL 证书校验错误 Trust anchor for certification path not found | ActPi's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108110955-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-108110955-1","only_pageview":false}</script>
@@ -119,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text"> Nginx 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text"> Nginx 运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#winsw-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text"> winsw 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-winsw"><span class="nav-number">4.</span> <span class="nav-text"> 下载 winsw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text"> 配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%BA%E6%9C%8D%E5%8A%A1"><span class="nav-number">6.</span> <span class="nav-text"> 安装为服务</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8F%91%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text"> 问题发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="nav-number">3.</span> <span class="nav-text"> 问题原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">4.</span> <span class="nav-text"> 解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">5.</span> <span class="nav-text"> 最后</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -175,7 +176,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/winsw.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2019/ssl-error.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -188,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="把 Nginx 创建为 Windows 服务 | ActPi's Blog">
+      <meta itemprop="name" content="SSL 证书校验错误 Trust anchor for certification path not found | ActPi's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          把 Nginx 创建为 Windows 服务
+          SSL 证书校验错误 Trust anchor for certification path not found
         </h1>
 
         <div class="post-meta-container">
@@ -204,7 +205,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2017-10-26 20:59:43" itemprop="dateCreated datePublished" datetime="2017-10-26T20:59:43+08:00">2017-10-26</time>
+      <time title="创建时间：2019-06-06 10:26:59" itemprop="dateCreated datePublished" datetime="2019-06-06T10:26:59+08:00">2019-06-06</time>
     </span>
 
   
@@ -220,14 +221,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>880</span>
+      <span>568</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -237,31 +238,42 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="nginx-介绍"><a class="markdownIt-Anchor" href="#nginx-介绍"></a> Nginx 介绍</h2>
-<p>Nginx 是一个 web 服务器。它类似于 Lighttpd，作为轻量级的 web server，可以替代重量级的 Apache/IIS。<span id="more"></span>Nginx 专为性能优化而开发，是一个快速且能经受高负载考验的 web server。它来自于 Linux 世界但同样可以运行在 Windows 上面(由本地语言构建)。唯一的问题就是它不支持 Windows Services。<br />
-尽管 Nginx 以快速和提供高性能而具有很大的声誉，但并非是在 Windows 平台上。访问 <a target="_blank" rel="noopener" href="http://nginx.org/en/docs/windows.html">官方网址</a>，你会发现，对于 Windows 平台的支持被认为是测试版，根据 Nginx 的实现来看它并不提供(和 Linux 平台)相同的性能水平。</p>
-<h2 id="nginx-运行模式"><a class="markdownIt-Anchor" href="#nginx-运行模式"></a> Nginx 运行模式</h2>
-<p>Nginx 在windows 下是绿色免安装的。官方已经提供了一个很棒的 <a target="_blank" rel="noopener" href="http://wiki.nginx.org/Main">wiki</a>，上面有丰富的服务器相关信息。可以使用默认的配置，它使用 Nginx 目录下的 html 文件夹服务于端口 80。只需简单地执行 nginx.exe 即可启动 Nginx。但你想要停止它的时候问题来了，你需要执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx.exe -s stop</span><br></pre></td></tr></table></figure>
-<p>虽然这很简单，但是如果它能够像 apache 或 IIS 那样作为一个服务工作的话会更好。那样的话，我们就可以设置机器启动时 Nginx 自动启动，还可以方便地启动、停止或者重启服务，设置恢复选项、依赖的服务，等等，不受用户登陆的影响。</p>
-<h2 id="winsw-介绍"><a class="markdownIt-Anchor" href="#winsw-介绍"></a> winsw 介绍</h2>
-<p>winsw 是一个开源的小工具，它可以将 Windows 上的任何一个程序注册为服务，如果不需要，也可以方便的卸载服务。GitHub 项目地址为 <a target="_blank" rel="noopener" href="https://github.com/kohsuke/winsw">winsw</a>。</p>
-<h2 id="下载-winsw"><a class="markdownIt-Anchor" href="#下载-winsw"></a> 下载 winsw</h2>
-<p>首先要下载 winsw。它是一个单个的可执行文件，我们到<a target="_blank" rel="noopener" href="https://github.com/kohsuke/winsw/releases">Github release</a>页面就可以下载 winsw 了。一般来说当然是下载最新的。winsw 可以运行在 .NET2 和 .NET4 两个版本上，当然如果使用 Win10 等比较新的系统，最好下载更新版本的 .NET。下载完之后最好把文件改成一个比较短小好记的名字，例如 winsw-nginx.exe 这样的，方便后面输入命令。</p>
-<h2 id="配置文件"><a class="markdownIt-Anchor" href="#配置文件"></a> 配置文件</h2>
-<p>需要编写一个和程序同名的 XML 文件作为 winsw 的配置文件。文件大体上长这样，这是官网的例子。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;!-- ID of the service. It should be unique accross the Windows system--&gt;</span><br><span class="line">  &lt;<span class="built_in">id</span>&gt;myapp&lt;/id&gt;</span><br><span class="line">  &lt;!-- Display name of the service --&gt;</span><br><span class="line">  &lt;name&gt;MyApp Service (powered by WinSW)&lt;/name&gt;</span><br><span class="line">  &lt;!-- Service description --&gt;</span><br><span class="line">  &lt;description&gt;This service is a service cratead from a minimal configuration&lt;/description&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;!-- Path to the executable, <span class="built_in">which</span> should be started --&gt;</span><br><span class="line">  &lt;executable&gt;%BASE%\myExecutable.exe&lt;/executable&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<p>很明显，你应该稍微更改文件，这取决于你自己的文件路径。比如我的配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">  &lt;<span class="built_in">id</span>&gt;Nginx&lt;/id&gt;</span><br><span class="line">  &lt;name&gt;Nginx Service&lt;/name&gt;</span><br><span class="line">  &lt;description&gt;Nginx service is a web service&lt;/description&gt;</span><br><span class="line">  &lt;executable&gt;E:\nginx-1.10.3\nginx.exe&lt;/executable&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<p>对于有更多技术需求的朋友，你也可以在该文件中设置 Nginx 依赖的服务。</p>
-<h2 id="安装为服务"><a class="markdownIt-Anchor" href="#安装为服务"></a> 安装为服务</h2>
-<p>最后，我们要安装服务了。只需要简单地执行以下语句，你将在你的服务列表里找到 <code>&quot;Nginx&quot;</code> 服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E:\nginx-1.10.3\winsw-nginx.exe install</span><br></pre></td></tr></table></figure>
-<p>运行成功后会在当前目录下生成几个以 winsw-nginx 开头的日志文件。<br />
-如果不再需要这个服务，使用 <code>winsw uninstall</code>即可卸载服务。当然还有诸如 <code>start</code>、<code>stop</code> 这样的命令启动和关闭服务。</p>
-<blockquote>
-<p>以上！ 按照这种方法可以把任何 exe 程序做成 Windows 服务！可自行探索相关用法！</p>
-</blockquote>
+    <div class="post-body" itemprop="articleBody"><h2 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h2>
+<p>在使用 <a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh">acme.sh</a>脚本签发的Let’s Encrypt 免费SSL证书，在android中无法通过SSL系统验证，出现以下异常<code>Trust anchor for certification path not found</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">javax.net.ssl.SSLHandshakeException:</span><br><span class="line">  java.security.cert.CertPathValidatorException:</span><br><span class="line">    Trust anchor <span class="keyword">for</span> certification path not found.</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="问题发现"><a class="markdownIt-Anchor" href="#问题发现"></a> 问题发现</h2>
+<p>安卓客户端无法连接域名服务器，浏览器直接打开网址正常，ssl连接正常，在SDK里连接失败。</p>
+<p>错误消息为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">javax.net.ssl.SSLHandshakeException:</span><br><span class="line">  java.security.cert.CertPathValidatorException:</span><br><span class="line">    Trust anchor <span class="keyword">for</span> certification path not found.</span><br></pre></td></tr></table></figure>
+<h2 id="问题原因"><a class="markdownIt-Anchor" href="#问题原因"></a> 问题原因</h2>
+<p>直接让 nginx配置文件使用了<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh">acme.sh</a>脚本签发的<code>&lt;doman&gt;.cer</code>文件，这里面的文件都是内部使用,直接使用会导致服务器证书链配置错误，缺少中间证书设置。</p>
+<h2 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h2>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/6825226/trust-anchor-not-found-for-android-ssl-connection">参考stackoverflow</a></p>
+<ol>
+<li>
+<p>使用openssl检查证书</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl s_client -debug -connect www.mafxcc.com:443</span><br></pre></td></tr></table></figure>
+<p>可能会出现：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Verify <span class="built_in">return</span> code: 21 (unable to verify the first certificate)</span><br></pre></td></tr></table></figure>
+<p>而且在前面的输出里有：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">depth=0 OU = Domain Control Validated, CN = www.domain.com</span><br><span class="line">verify error:num=20:unable to get <span class="built_in">local</span> issuer certificate</span><br><span class="line">verify <span class="built_in">return</span>:1 depth=0 OU = Domain Control Validated, CN =  www.domain.com</span><br><span class="line">verify error:num=27:certificate not trusted</span><br><span class="line">verify <span class="built_in">return</span>:1 depth=0 OU = Domain Control Validated, CN =  www.domain.com</span><br><span class="line">verify error:num=21:unable to verify the first certificate`</span><br></pre></td></tr></table></figure>
+<p>证书链只包含一个元素：</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Certificate chain  </span><br><span class="line">0 s:CN = domain.com  </span><br><span class="line">i:C = US, O = Let<span class="string">&#x27;s Encrypt, CN = Let&#x27;</span>s Encrypt Authority X3</span><br></pre></td></tr></table></figure>
+<p>但是应该有将一个链中的签名权限引用回安卓信任的权限(Verisign、GlobalSign等):</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---  </span><br><span class="line">Certificate chain  </span><br><span class="line">0 s:CN = domain.com  </span><br><span class="line">i:C = US, O = Let<span class="string">&#x27;s Encrypt, CN = Let&#x27;</span>s Encrypt Authority X3  </span><br><span class="line">1 s:C = US, O = Let<span class="string">&#x27;s Encrypt, CN = Let&#x27;</span>s Encrypt Authority X3  </span><br><span class="line">i:O = Digital Signature Trust Co., CN = DST Root CA X3  </span><br><span class="line">---  </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在用<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh">acme.sh</a>把证书生成以后, 需要把证书<strong>安装</strong>到真正需要用它的地方</p>
+<p><strong>注意</strong>: 默认生成的证书都放在安装目录下: ~/.acme.sh/<domain>.com/, 不要直接使用此目录下的文件, 例如:<br />
+不要直接让 nginx/apache 的配置文件使用这下面的文件. 这里面的文件都是内部使用, 而且目录结构可能会变化.</p>
+<p>正确的使用方法是使用 <code>--installcert</code> 命令,并指定目标位置, 然后证书文件会被安装到相应的位置, 例如:</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ acme.sh --installcert -d &lt;domain&gt;.com \</span><br><span class="line">--key-file /etc/nginx/ssl/&lt;domain&gt;.key \</span><br><span class="line">--fullchain-file /etc/nginx/ssl/fullchain.cer \</span><br><span class="line">--reloadcmd <span class="string">&quot;service nginx force-reload&quot;</span>  </span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="最后"><a class="markdownIt-Anchor" href="#最后"></a> 最后</h2>
+<p>在 Nginx 的配置 <code>ssl_certificate</code> 使用 <code>/etc/nginx/ssl/fullchain.cer</code> ，而非 <code>/etc/nginx/ssl/&lt;domain&gt;.cer</code> !</p>
+<p>重启 Nginx 后再次验证 SSL证书。</p>
 
     </div>
 
@@ -271,20 +283,21 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/nginx/" rel="tag"># nginx</a>
+              <a href="/tags/ssl/" rel="tag"># ssl</a>
+              <a href="/tags/%E8%B8%A9%E5%9D%91/" rel="tag"># 踩坑</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/articles/hexo-git-cname.html" rel="prev" title="用 hexo + gitpage 搭建博客以及 gitpage 绑定自定义域名">
-                  <i class="fa fa-chevron-left"></i> 用 hexo + gitpage 搭建博客以及 gitpage 绑定自定义域名
+                <a href="/articles/2019/Let'sEncrypt%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6-%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7.html" rel="prev" title="Let'sEncrypt免费申请泛域名HTTPS证书">
+                  <i class="fa fa-chevron-left"></i> Let'sEncrypt免费申请泛域名HTTPS证书
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/articles/docker-nginx-proxy.html" rel="next" title="在 docker 容器里使用 nginx-proxy 实现自动反向代理及负载均衡">
-                  在 docker 容器里使用 nginx-proxy 实现自动反向代理及负载均衡 <i class="fa fa-chevron-right"></i>
+                <a href="/articles/2019/git%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E5%90%8ECRLF%E5%92%8CLF%E7%9A%84%E6%8D%A2%E8%A1%8C%E5%A4%84%E7%90%86%E9%97%AE%E9%A2%98.html" rel="next" title="git提交文件后CRLF和LF的换行处理问题">
+                  git提交文件后CRLF和LF的换行处理问题 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
