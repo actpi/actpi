@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://blog.actpi.com/images/gitlab-ci/1.png">
 <meta property="article:published_time" content="2023-02-15T01:42:16.000Z">
-<meta property="article:modified_time" content="2023-12-07T03:59:52.763Z">
+<meta property="article:modified_time" content="2024-01-09T02:48:15.408Z">
 <meta property="article:author" content="actpi">
 <meta property="article:tag" content="DevOps">
 <meta property="article:tag" content="CI&#x2F;CD">
@@ -122,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-gitlab-ci"><span class="nav-number">1.</span> <span class="nav-text"> 什么是 GitLab CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-runner"><span class="nav-number">2.</span> <span class="nav-text"> GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ci-%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text"> GitLab CI 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ciyml-%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text"> .gitlab-ci.yml 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#job"><span class="nav-number">4.1.</span> <span class="nav-text"> Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#before_script%E5%92%8Cafter_script"><span class="nav-number">4.2.</span> <span class="nav-text"> before_script和after_script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules"><span class="nav-number">4.3.</span> <span class="nav-text"> rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#artifacts"><span class="nav-number">4.4.</span> <span class="nav-text"> artifacts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-%E5%92%8C-except"><span class="nav-number">4.5.</span> <span class="nav-text"> only 和 except</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-pipeline"><span class="nav-number">4.6.</span> <span class="nav-text"> Run Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87gitlab-ci%E6%B5%81%E7%A8%8B"><span class="nav-number">4.7.</span> <span class="nav-text"> 如何跳过gitlab-ci流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%A5%E9%94%99"><span class="nav-number">5.</span> <span class="nav-text"> 使用上的一些报错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fatal-git-fetch-pack-expected-shallow-list"><span class="nav-number">5.1.</span> <span class="nav-text"> fatal: git fetch-pack: expected shallow list</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-gitlab-ci"><span class="nav-number">1.</span> <span class="nav-text"> 什么是 GitLab CI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-runner"><span class="nav-number">2.</span> <span class="nav-text"> GitLab Runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ci-%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text"> GitLab CI 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab-ciyml-%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text"> .gitlab-ci.yml 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#job"><span class="nav-number">4.1.</span> <span class="nav-text"> Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#before_script%E5%92%8Cafter_script"><span class="nav-number">4.2.</span> <span class="nav-text"> before_script和after_script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules"><span class="nav-number">4.3.</span> <span class="nav-text"> rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#artifacts"><span class="nav-number">4.4.</span> <span class="nav-text"> artifacts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#only-%E5%92%8C-except"><span class="nav-number">4.5.</span> <span class="nav-text"> only 和 except</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-pipeline"><span class="nav-number">4.6.</span> <span class="nav-text"> Run Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%B7%B3%E8%BF%87gitlab-ci%E6%B5%81%E7%A8%8B"><span class="nav-number">4.7.</span> <span class="nav-text"> 如何跳过gitlab-ci流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A9%E6%9F%90%E4%B8%AA%E6%AD%A5%E9%AA%A4%E8%B7%B3%E8%BF%87%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81"><span class="nav-number">4.8.</span> <span class="nav-text"> 如何让某个步骤跳过下载源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8A%A5%E9%94%99"><span class="nav-number">5.</span> <span class="nav-text"> 使用上的一些报错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fatal-git-fetch-pack-expected-shallow-list"><span class="nav-number">5.1.</span> <span class="nav-text"> fatal: git fetch-pack: expected shallow list</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -137,7 +137,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -223,7 +223,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -279,8 +279,9 @@ Job 被定义为顶级元素，并且至少包括一条script语句，如果一�
 <p>rules 用来限定 jobs 在什么情况下能够运行</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">echo</span> <span class="string">&quot;Hello, Rules!&quot;</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="comment"># 发起了 merge request</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line">    <span class="comment"># 推送了 tag 版本号</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_TAG</span></span><br><span class="line">    <span class="comment"># commit 信息以 run ci 开头</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_MESSAGE</span> <span class="string">=~</span> <span class="string">/^run</span> <span class="string">ci/</span></span><br></pre></td></tr></table></figure>
 <h3 id="artifacts"><a class="markdownIt-Anchor" href="#artifacts"></a> artifacts</h3>
-<p>用于指定在<strong>作业成功或者失败时应附加到作业的文件或目录的列表</strong>。Job 完成后（默认为仅成功后生成），工件将被发送到 GitLab UI 中提供下载。</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">do</span> <span class="string">something</span> </span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="comment"># 失败后生成，默认为仅成功时生成</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">on_failure</span></span><br><span class="line">    <span class="comment"># 文件名，可以用内置变量</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">$&#123;CI_JOB_NAME&#125;</span></span><br><span class="line">    <span class="comment"># 路径只能是相对于当前项目路径，可以使用通配符匹配</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">binaries/</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">log/*.log</span></span><br></pre></td></tr></table></figure>
+<p>用于指定在<strong>作业成功或者失败时应附加到作业的文件或目录的列表</strong>。Job 完成后（默认为仅成功后生成），工件将被发送到 GitLab UI 中提供下载。<br />
+默认情况下 artifacts 仅在作业成功时生成、且会在下一个 stage 时下载到当前工作路径下，如果不需要下载则添加关键字 <code>dependencies: []</code>。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">job:</span></span><br><span class="line">  <span class="attr">script:</span> <span class="string">do</span> <span class="string">something</span> </span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="comment"># 失败后生成，默认为仅成功时生成</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">on_failure</span></span><br><span class="line">    <span class="comment"># 文件名，可以用内置变量</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">$&#123;CI_JOB_NAME&#125;</span></span><br><span class="line">    <span class="comment"># 路径只能是相对于当前项目路径，可以使用通配符匹配</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">binaries/</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">log/*.log</span></span><br><span class="line">    <span class="attr">dependencies:</span> [] <span class="comment"># 不需要下载</span></span><br></pre></td></tr></table></figure>
 <h3 id="only-和-except"><a class="markdownIt-Anchor" href="#only-和-except"></a> only 和 except</h3>
 <ul>
 <li>only 和 except 两个参数说明了job什么时候将会被创建</li>
@@ -298,6 +299,9 @@ Job 被定义为顶级元素，并且至少包括一条script语句，如果一�
 </ol>
 <h3 id="如何跳过gitlab-ci流程"><a class="markdownIt-Anchor" href="#如何跳过gitlab-ci流程"></a> 如何跳过gitlab-ci流程</h3>
 <p>在 commit 信息中包含<code>[ci skip]</code>或 <code>[skip ci]</code>,提交到仓库以后就会跳过本次 CI</p>
+<h3 id="如何让某个步骤跳过下载源码"><a class="markdownIt-Anchor" href="#如何让某个步骤跳过下载源码"></a> 如何让某个步骤跳过下载源码</h3>
+<p>在相对应的任务修改默认值为 <code>false</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line">   <span class="attr">GIT_CHECKOUT:</span> <span class="string">&quot;false&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="使用上的一些报错"><a class="markdownIt-Anchor" href="#使用上的一些报错"></a> 使用上的一些报错</h2>
 <h3 id="fatal-git-fetch-pack-expected-shallow-list"><a class="markdownIt-Anchor" href="#fatal-git-fetch-pack-expected-shallow-list"></a> fatal: git fetch-pack: expected shallow list</h3>
 <p>Centos 7 自带的 git 版本是 1.8.3.1，由于版本太低不支持最新的API，需要升级 git 版本。</p>
@@ -353,7 +357,7 @@ Job 被定义为顶级元素，并且至少包括一条script语句，如果一�
 
 <div class="copyright">
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -365,14 +369,14 @@ Job 被定义为顶级元素，并且至少包括一条script语句，如果一�
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">29k</span>
+    <span title="站点总字数">30k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:46</span>
+    <span title="站点阅读时长">1:50</span>
   </span>
 </div>
 <div class="busuanzi-count">

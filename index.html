@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -161,6 +161,110 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2024/subprocess.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/articles/2024/subprocess.html" class="post-title-link" itemprop="url">对子进程的运行时间做限制，当超时时强制终止</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-09 09:52:30" itemprop="dateCreated datePublished" datetime="2024-01-09T09:52:30+08:00">2024-01-09</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>949</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="终止运行超时的进程"><a class="markdownIt-Anchor" href="#终止运行超时的进程"></a> 终止运行超时的进程</h2>
+<p>subprocess 模块主要用于创建子进程，并连接它们的输入、输出和错误管道，获取它们的返回状态，在某种特殊情况下，我们需要对子进程的运行时间做限制，当超时时强制终止并获取输出。<br />
+subprocess 模块首先推荐使用的是它的 <code>run</code> 方法，更高级的用法是使用 <code>Popen</code>。</p>
+<p><strong><code>Popen</code> 方法语法格式如下</strong>：</p>
+<p><code>subprocess.Popen(args, bufsize=-1, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=True, shell=False, cwd=None, env=None, universal_newlines=False, startupinfo=None, creationflags=0,restore_signals=True, start_new_session=False, pass_fds=(),*, encoding=None, errors=None)</code></p>
+<p>常用参数：</p>
+<ul>
+<li>args：表示要执行的命令，可以是字符串或者序列类型（如：list，元组）</li>
+<li>bufsize：缓冲区大小。当创建标准流的管道对象时使用，默认-1。<br />
+0：不使用缓冲区<br />
+1：表示行缓冲，仅当universal_newlines=True时可用，也就是文本模式<br />
+正数：表示缓冲区字节大小<br />
+负数：表示使用系统默认的缓冲区大小。</li>
+<li>stdin、stdout 和 stderr：子进程的标准输入、输出和错误。其值可以是 subprocess.PIPE、subprocess.DEVNULL、一个已经存在的文件描述符、已经打开的文件对象或者 None。subprocess.PIPE 表示为子进程创建新的管道。subprocess.DEVNULL 表示使用 os.devnull。默认使用的是 None，表示什么都不做。另外，stderr 可以合并到 stdout 里一起输出。</li>
+<li>timeout：设置命令超时时间。如果命令执行时间超时，子进程将被杀死，并弹出 TimeoutExpired 异常。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/articles/2024/subprocess.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -233,7 +337,7 @@
 <h2 id="原因及解决"><a class="markdownIt-Anchor" href="#原因及解决"></a> 原因及解决</h2>
 <p>这是由于 Jenkins 在执行 shell 脚本时，默认会在命令行中加上 <code>-e</code> 选项，该选项的作用是在脚本中遇到错误时会立即退出。这样可以确保在脚本发生错误时及时停止执行，避免继续执行可能导致更严重问题的命令。</p>
 <blockquote>
-<p>在 Shell 脚本前手动添加  set +e  来禁用该选项。即可继续执行后续命令。</p>
+<p>在 Shell 脚本前手动添加  <code>set +e</code>  来禁用该选项。即可继续执行后续命令。</p>
 </blockquote>
 <p>PS：Jenkins 在执行 shell 脚本时，默认会在命令行中加上 <code>-xe</code> 选项, 该选项的作用是在脚本运行时打印每一行命令以及运行中遇到错误时会立即退出。这样可以确保在脚本发生错误立即中断。</p>
 
@@ -1024,101 +1128,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="actpi">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ActPi's Blog">
-      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ActPi's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html" class="post-title-link" itemprop="url">GitLab CI 实现自动测试、合并分支并用钉钉发送消息</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-03-05 09:42:16" itemprop="dateCreated datePublished" datetime="2023-03-05T09:42:16+08:00">2023-03-05</time>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>801</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="ci-任务触发需求"><a class="markdownIt-Anchor" href="#ci-任务触发需求"></a> CI 任务触发需求</h2>
-<ul>
-<li>普通提交代码时不触发</li>
-<li>当指定<code>commit</code>关键字触发</li>
-<li>发起了 <code>Merge Requests</code>则自动触发</li>
-<li>测试任务成功后自动合并分支
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/2023/%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84GitLabCI%E5%AE%9E%E7%8E%B0.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1132,7 +1141,7 @@
 
 <div class="copyright">
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1144,14 +1153,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">29k</span>
+    <span title="站点总字数">30k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:46</span>
+    <span title="站点阅读时长">1:50</span>
   </span>
 </div>
 <div class="busuanzi-count">
