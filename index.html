@@ -130,7 +130,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -208,7 +208,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>949</span>
+      <span>950</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -230,7 +230,7 @@
 <p>subprocess 模块主要用于创建子进程，并连接它们的输入、输出和错误管道，获取它们的返回状态，在某种特殊情况下，我们需要对子进程的运行时间做限制，当超时时强制终止并获取输出。<br />
 subprocess 模块首先推荐使用的是它的 <code>run</code> 方法，更高级的用法是使用 <code>Popen</code>。</p>
 <p><strong><code>Popen</code> 方法语法格式如下</strong>：</p>
-<p><code>subprocess.Popen(args, bufsize=-1, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=True, shell=False, cwd=None, env=None, universal_newlines=False, startupinfo=None, creationflags=0,restore_signals=True, start_new_session=False, pass_fds=(),*, encoding=None, errors=None)</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.Popen(args, bufsize=-1, executable=None, stdin=None, stdout=None, stderr=None, preexec_fn=None, close_fds=True, shell=False, cwd=None, env=None, universal_newlines=False, startupinfo=None, creationflags=0,restore_signals=True, start_new_session=False, pass_fds=(),*, encoding=None, errors=None)</span><br></pre></td></tr></table></figure>
 <p>常用参数：</p>
 <ul>
 <li>args：表示要执行的命令，可以是字符串或者序列类型（如：list，元组）</li>
@@ -249,6 +249,90 @@ subprocess 模块首先推荐使用的是它的 <code>run</code> 方法，更高
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/%E6%97%B6%E9%97%B4%E6%8D%A2%E7%AE%97.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="actpi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ActPi's Blog">
+      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ActPi's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/articles/2023/%E6%97%B6%E9%97%B4%E6%8D%A2%E7%AE%97.html" class="post-title-link" itemprop="url">python 将秒数换算为小时分钟</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-16 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-16T00:00:00+08:00">2023-12-16</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>89</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="记录程序的执行时间并进行单位换算"><a class="markdownIt-Anchor" href="#记录程序的执行时间并进行单位换算"></a> 记录程序的执行时间，并进行单位换算</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_seconds</span>(<span class="params">seconds</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    将给定的秒数转换为小时、分钟和秒。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    hour = seconds // <span class="number">3600</span></span><br><span class="line">    minute = (seconds % <span class="number">3600</span>) // <span class="number">60</span></span><br><span class="line">    second = seconds % <span class="number">60</span></span><br><span class="line">    <span class="keyword">if</span> hour == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> minute == <span class="number">0</span>:</span><br><span class="line">            run_time = <span class="string">f&quot;<span class="subst">&#123;second&#125;</span> 秒&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            run_time = <span class="string">f&quot;<span class="subst">&#123;minute&#125;</span> 分 <span class="subst">&#123;second&#125;</span> 秒&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        run_time = <span class="string">f&quot;<span class="subst">&#123;hour&#125;</span> 小时 <span class="subst">&#123;minute&#125;</span> 分 <span class="subst">&#123;second&#125;</span> 秒&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> run_time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    start = datetime.datetime.now()</span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line">    end = datetime.datetime.now()</span><br><span class="line"></span><br><span class="line">    run_time = convert_seconds((end-start).seconds)</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -1013,99 +1097,6 @@ subprocess 模块首先推荐使用的是它的 <code>run</code> 方法，更高
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/articles/2023/install_abaqus_linux.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://blog.actpi.com/articles/2023/extend_fs.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="actpi">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ActPi's Blog">
-      <meta itemprop="description" content="Records some think,and some experience,or just mean to write it.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ActPi's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/articles/2023/extend_fs.html" class="post-title-link" itemprop="url">LVM 添加硬盘并扩容至已有分区</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-10 14:42:16" itemprop="dateCreated datePublished" datetime="2023-04-10T14:42:16+08:00">2023-04-10</time>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>544</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="lvm-简介"><a class="markdownIt-Anchor" href="#lvm-简介"></a> LVM 简介</h2>
-<p>LVM是 Logical Volume Manager（逻辑卷管理）的简写，它是 Linux 环境下对磁盘分区进行管理的一种机制。LVM 将一个或多个物理卷（PV）虚拟为一个卷组（VG），相当于一个大的硬盘，我们可以在上面划分一些逻辑卷（LV）。当卷组的空间不够使用时，可以将新的磁盘分区加入进来。也可以从卷组剩余空间上划分一些空间给空间不够用的逻辑卷使用。</p>
-<h2 id="扩容场景"><a class="markdownIt-Anchor" href="#扩容场景"></a> 扩容场景</h2>
-<p>通过LVM创建的逻辑卷磁盘空间不足需要新增硬盘进行扩容，大多数情况为添加一块物理磁盘并将此磁盘空间全部添加到指定分区。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/articles/2023/extend_fs.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
